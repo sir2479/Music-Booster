@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mud.repository.commentMapper">
+ <insert id="saveComment">
+    <selectKey keyProperty="comment_id" resultType="long" order="BEFORE">
+      select comment_seq.nextval from dual
+    </selectKey>
+    insert into comment(
+      comment_id,
+      comment_board_id,
+      comment_user,
+      comment_content,
+      comment_create_time,
+      comment_edit_time
+    ) values (
+      #{comment_id},
+      #{comment_board_id},
+      #{comment_user},
+      #{comment_content},
+      #{comment_create_time},
+      #{comment_edit_time}
+    )
+  </insert>
+  
+  <update id="updateComment">
+    update comment
+    <set>
+        <if test="comment_content != null">comment_content = #{comment_content}</if>
+    </set>
+    where comment_id = #{comment_id}
+  </update>
+  
+  <delete id="deleteComment">
+    delete from comment where comment_id = #{comment_id}
+  </delete>
+  
+</mapper>
