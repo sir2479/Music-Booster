@@ -7,11 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.model.board.Board;
 
 
-@Mapper
-public interface BoardMapper {
-	void saveBoard(Board board);
-	List<Board> findAllBoards();
-    Board findBoard(Long board_id);
-    void updateBoard(Board updateBoard);
-    void removeBoard(Long board_id);
-}
+
+
+//@Mapper
+//public interface BoardMapper {
+//	void saveBoard(Board board);
+//	List<Board> findAllBoards();
+//    Board findBoard(Long board_id);
+//    void updateBoard(Board updateBoard);
+//    void removeBoard(Long board_id);
+//}

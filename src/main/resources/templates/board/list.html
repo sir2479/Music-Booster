@@ -22,7 +22,7 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>Board</title>
+    <title>Blank Page</title>
   </head>
 
   <body>
@@ -329,6 +329,13 @@
 
                     </tbody>
                   </table>
+                  
+                    <p>
+  <div class="center">                  
+    <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
+    <input type="button" onclick="location.href='/board/write'" class="btn btn-sm btn-outline-primary" value="글쓰기">
+  </div>
+  
                 </div>
               </div>
               <!--/ Basic Bootstrap Table -->
