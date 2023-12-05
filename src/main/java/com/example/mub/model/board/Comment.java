@@ -1,4 +1,4 @@
-package com.example.model.board;
+package com.example.mub.model.board;
 
 import java.time.LocalDateTime;
 

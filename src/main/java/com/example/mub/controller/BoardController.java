@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.mub.controller;
 
 import java.util.List;
 
@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.example.model.board.Board;
-//import com.example.model.board.BoardUpdateForm;
-import com.example.model.board.BoardWriteForm;
+import com.example.mub.model.board.Board;
+import com.example.mub.model.board.BoardWriteForm;
 import com.example.repository.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
