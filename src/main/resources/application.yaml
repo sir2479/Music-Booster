@@ -18,6 +18,6 @@ spring:
         50MB
         
 mybatis:
-  type-aliases-package: com.example.mub.model
-#  config-location: classpath:config/mybatis-config.xml
+#  type-aliases-package: com.example.mub.model
+  config-location: classpath:config/mybatis-config.xml
   mapper-locations: classpath:mapper/**/*.xml
