@@ -5,5 +5,9 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.example.mub.model.member.Member" alias="member"/>
+        <typeAlias type="com.example.mub.model.board.Board" alias="board"/>
+        <typeAlias type="com.example.mub.model.comments.Comments" alias="comments"/>
+        <typeAlias type="com.example.mub.model.artist.Artist" alias="artist"/>
+        <typeAlias type="com.example.mub.model.music.Music" alias="music"/>
     </typeAliases>
 </configuration>

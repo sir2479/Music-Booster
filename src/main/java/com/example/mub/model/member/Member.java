@@ -1,6 +1,5 @@
 package com.example.mub.model.member;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import lombok.Data;
