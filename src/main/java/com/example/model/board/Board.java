@@ -18,18 +18,18 @@ public class Board {
 	
 	
 //	public void addHit() {
-//		this.hit++;
+//		this.board_hit++;
 //	}
 	
-//	public static BoardUpdateForm toBoardUpdateForm(Board board) {
-//		BoardUpdateForm boardUpdateForm = new BoardUpdateForm();
-//		boardUpdateForm.setBoard_id(board.getBoard_id());
-//		boardUpdateForm.setTitle(board.getTitle());
-//		boardUpdateForm.setContents(board.getContents());
-//		boardUpdateForm.setMember_id(board.getMember_id());
-//		boardUpdateForm.setHit(board.getHit());
-//		boardUpdateForm.setCreated_time(board.getCreated_time());
-//		return boardUpdateForm;
-//	}
+	public static BoardUpdateForm toBoardUpdateForm(Board board) {
+		BoardUpdateForm boardUpdateForm = new BoardUpdateForm();
+		boardUpdateForm.setBoard_id(board.getBoard_id());
+		boardUpdateForm.setBoard_title(board.getBoard_title());
+		boardUpdateForm.setBoard_content(board.getBoard_content());
+		boardUpdateForm.setBoard_member(board.getBoard_member());
+		boardUpdateForm.setBoard_hit(board.getBoard_hit());
+		boardUpdateForm.setBoard_create_time(board.getBoard_create_time());
+		return boardUpdateForm;
+	}
 	
 }
