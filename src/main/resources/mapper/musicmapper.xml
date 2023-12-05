@@ -3,33 +3,23 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mud.repository.commentMapper">
-	<insert id="savemusic">
-		insert into member(
-		music_id,
-		music_name,
-		music_genre,
-		music_lyrics,
-		music_artistid
-		) VALUES (
-		#{music_id},
-		#{music_name},
-		#{music_genre},
-		#{music_lyrics},
-		#{music_artistid}
-		)
-	</insert>
 	
 	<select id="findAllMusics" resultType="music">
 	  select * from music
 	</select>
 	
-	<select id="findMusicByName" resultType="music">
-	  select * from music where music_name=#{music_name}
+	<select id="findMusic" resultType="music">
+	  select * from music where 
+	  <if test="music_id != null">
+	  music_id = #{music_id}
+	  </if>
+	  <if test="music_name != null">
+	  or music_name = like '%' || #{music_name} || '%'
+	  </if>
+	  <if test="music_lyrics != null">
+	  or music_lyrics = like '%' || #{music_lyrics} || '%'
+	  </if>
 	</select>
-	
-	<select id="findMusicByArtist" resultType="music">
-	  select * from music where music_artistid=#{music_artistid}
-	</select>
-	
+
 	
 </mapper>
