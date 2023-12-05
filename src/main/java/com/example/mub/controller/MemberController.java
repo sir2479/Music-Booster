@@ -8,14 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("board")
-public class BoardController {
+@RequestMapping("member")
+public class MemberController {
 
-	@GetMapping("list")
-	public String list() {
+	@GetMapping("update")
+	public String update() {
 
-		return "board/list";
+		return "member/update";
 	}
-	
 	
 }
