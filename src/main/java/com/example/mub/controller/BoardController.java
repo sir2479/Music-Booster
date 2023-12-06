@@ -12,9 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	@GetMapping("list")
-	public String board() {
+	public String list() {
 
 		return "board/list";
 	}
+	
 	
 }
