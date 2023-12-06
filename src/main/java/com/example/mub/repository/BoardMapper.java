@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.mub.repository;
 
 import java.util.List;
 
