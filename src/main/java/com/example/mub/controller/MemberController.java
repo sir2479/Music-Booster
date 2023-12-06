@@ -123,8 +123,11 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("update")
-	public String update() {
+	// 내정보 회원정보 수정
+	@PostMapping("update")
+	public String update(@Validated @ModelAttribute("update") Member update, 
+			BindingResult result) {
+			
 
 		return "member/update";
 	}

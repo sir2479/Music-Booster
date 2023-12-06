@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mud.repository.BoardMapper">
+<mapper namespace="com.example.mub.repository.MemberMapper">
   <insert id="saveMember">
     insert into member(
       member_id,
@@ -12,8 +12,8 @@
       member_name,
       phone,
       birthday,
-      position,
-      profile
+      position
+      
       ) VALUES (
         #{member_id},
         #{member_email},
@@ -22,10 +22,14 @@
         #{member_name},
         #{phone},
         #{birthday},
-        #{position},
-        #{profile}             
+        #{position}           
     )
   </insert>
+  
+  <select id="findMember" resultType="member">
+    select * from member where member_id = #{member_id}
+  </select>
+  
   <update id="updateMember">
     update member
     <set>
@@ -40,7 +44,9 @@
     </set>
       where member_id = #{member_id}
   </update>
+  
   <delete id="deleteMember">
     delete from member where member_id=#{member_id}
   </delete>
+  
 </mapper>
