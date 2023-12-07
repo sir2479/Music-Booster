@@ -24,12 +24,16 @@ public class MemberService {
 	@Transactional
 	public void saveMember(Member member) {
 		log.info("멥퍼전");
-		log.info("member: {}", member );
+		log.info("member: {}", member);
 		memberMapper.saveMember(member);
 		log.info("멥퍼후");
 		
 	}
-
+	
+	public void updateMember(Member member) {
+		memberMapper.updateMember(member);
+	}
+	
 
 	
 }
