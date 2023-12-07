@@ -12,17 +12,13 @@
      board_category,
      board_title,
      board_member,
-     board_content,
-     board_edit_time,
-     board_hit
+     board_content
      ) values (
        #{board_id},
        #{board_category},
        #{board_title},
        #{board_member},
-       #{board_content},
-       #{board_edit_time},
-       #{board_hit}
+       #{board_content}
      )
   </insert>
   
@@ -30,7 +26,25 @@
     select * from board
   </select>
   
-  <select id="findBoard" resultType="board" >
+  <select id="findBoard" resultType="board">
+    select * from board where board_id = #{board_id}
+  </select>
+  
+  <update id="updateBoard">
+    update board
+    <set>
+    	<if test="board_title != null">board_title = #{board_title},</if>
+    	<if test="board_content != null">board_content = #{board_content},</if>
+    	edit_time = sysdate
+    </set>
+    where board_id = #{board_id}
+  </update>
+  
+  <delete id="removeBoard">
+    delete from board where board_id = #{board_id}
+  </delete>
+  
+  <select id="searchBoard" resultType="board" >
     select * from board where 
     <if test="board_id != null">
     board_id = like '%' || #{board_id} || '%'
@@ -42,19 +56,5 @@
      or board_content = like '%' || #{board_content} || '%'
     </if>
   </select>
-  
-  <update id="updateBoard">
-    update board
-    <set>
-    	<if test="board_category != null">board_category = #{board_category},</if>
-    	<if test="board_title != null">board_title = #{board_title},</if>
-    	<if test="board_content != null">board_content = #{board_content}</if>
-    </set>
-    where board_id = #{board_id}
-  </update>
-  
-  <delete id="removeBoard">
-    delete from board where board_id = #{board_id}
-  </delete>
   
 </mapper>
