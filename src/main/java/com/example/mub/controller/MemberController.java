@@ -68,8 +68,6 @@ public class MemberController {
 		memberService.saveMember(MemberSignup.toMember(signup));
 		
 		
-		//Member member = 
-		
 		return "redirect:/";
 	}
 	
@@ -101,7 +99,7 @@ public class MemberController {
 		}
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("login", member);
+		session.setAttribute("loginMember", member);
 		
 		log.info("로그인 성공", member);
 		
