@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mub.repository.BoardMapper">
+  <insert id="saveBoard">
+    insert into board(
+      board_id,
+      board_category,
+      board_title,
+      board_member,
+      board_content,
+      board_craete_time,
+      board_edit_time,
+      board_hit
+      
+      ) VALUES (
+        #{board_id},
+        #{board_category},
+        #{board_title},
+        #{board_member},
+        #{board_content},
+        #{board_craete_time},
+        #{board_edit_time},
+        #{board_hit}           
+    )
+  </insert>
+  
+    <select id="findAllBoards" resultType="board">
+    select * from board
+  </select>
+  
+  <select id="findBoard" resultType="board">
+    select * from board where board_id = #{board_id}
+  </select>
+  
+  <update id="updateBoard">
+    update board
+    <set>
+      <if test="board_catagory != null">board_catagory = #{board_catagory}</if>
+      <if test="board_title != null">board_title = #{board_title}</if>
+      <if test="board_content != null">board_content = #{board_content}</if>
+      <if test="member_name != null">merber_name = #{member_name}</if>
+      <if test="board_edit_time != null">board_edit_time = *{sysdate}</if>
+
+    </set>
+      where board_id = #{board_id}
+  </update>
+  
+  <delete id="removeBoard">
+    delete from board where board_id=#{board_id}
+  </delete>
+  
+</mapper>
