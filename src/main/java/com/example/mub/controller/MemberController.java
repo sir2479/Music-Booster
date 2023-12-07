@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.mub.model.member.Member;
 import com.example.mub.model.member.MemberLogin;
 import com.example.mub.model.member.MemberSignup;
+import com.example.mub.model.member.MemberUpdate;
 import com.example.mub.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,13 +124,33 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	// 내정보 회원정보 수정
-	@PostMapping("update")
-	public String update(@Validated @ModelAttribute("update") Member update, 
-			BindingResult result) {
-			
-
+	// 내정보 수정 페이지 이동
+	@GetMapping("update")
+	public String update(Model model) {
+		model.addAttribute("update", new MemberUpdate());
 		return "member/update";
 	}
+	
+	// 회원 정보 수정
+	@PostMapping("update")
+	public String update_action(@Validated @ModelAttribute("update") MemberUpdate memberupdate,
+								BindingResult result,
+								HttpServletRequest request,
+								@RequestParam(defaultValue = "/") String redirectURL) {
+		
+	
+		Member member = memberService.updateMember(update.getMember());
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("update", member);
+		
+	
+		return "redirect:/";
+		
+	}
+	
+	
+	
+
 	
 }

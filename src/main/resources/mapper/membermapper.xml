@@ -39,7 +39,6 @@
       <if test="member_name != null">merber_name = #{member_name}</if>
       <if test="phone != null">phone = #{phone}</if>
       <if test="birthday != null">birthday = #{birthday}</if>
-      <if test="position != null">position = #{position}</if>
       <if test="profile != null">profile = #{profile}</if>
     </set>
       where member_id = #{member_id}
