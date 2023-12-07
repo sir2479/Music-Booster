@@ -77,13 +77,14 @@ public class BoardController {
     
 	
 	@GetMapping("/list")
-	public String board(//@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
+	public String board(@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
             Model model) {
 	      
 		// 데이터베이스에 저장된 모든 Board 객체를 리스트 형태로 받는다.
-//		List<Board> boards = boardMapper.findAllBoards();
+		List<Board> boards = boardMapper.findAllBoards();
 		// Board 리스트를 model 에 저장한다.
-//		model.addAttribute("boards", boards);
+		model.addAttribute("boards", boards);
+		log.info("boards: {}", boards);
 		// board/list.html 를 찾아서 리턴한다.
 		return "board/list";
 		}
