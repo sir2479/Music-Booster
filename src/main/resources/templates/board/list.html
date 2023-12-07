@@ -58,6 +58,7 @@
                     <thead>
                       <tr>
                         <th>NO</th>
+                        <th>카테고리</th>
                         <th>제목</th>
                         <th>작성자</th>
                         <th>조회수</th>
@@ -65,6 +66,7 @@
                       </tr>
                       <tr th:each="board, boardStat: ${boards}">
 					      <td th:text="${boardStat.count}" class="center"></td>
+					      <td th:text="${board.board_category}" class="center"></td>
 					      <td class="center">
 							  	<a th:text="${board.board_title}" th:href="@{/board/read(board_id=${board.board_id})}"></a>
 							  </td>
