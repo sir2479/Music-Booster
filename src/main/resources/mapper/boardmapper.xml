@@ -26,6 +26,7 @@
   
   <select id="findAllBoards" resultType="board">
     select * from board
+    	order by board_create_time desc
   </select>
   
   <select id="findBoard" resultType="board">

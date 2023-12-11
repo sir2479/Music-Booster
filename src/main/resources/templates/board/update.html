@@ -85,10 +85,15 @@
                     <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post">
                   </table>
                   
+    <input type="hidden" th:field="*{board_hit}">
+    <input type="hidden" th:field="*{board_create_time}">
+    <input type="hidden" th:field="*{board_member}">                  
+                  
                     <p>
   <div class="center">                  
-    <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
-    <input type="button" onclick="location.href='/board/write'" class="btn btn-sm btn-outline-primary" value="글쓰기">
+      <input type="button" onclick="location.href='/board/list'" value="목록으로">
+      <input type="submit" value="수정하기">
+      <input type="reset" value="취소">
   </div>
   
                 </div>
