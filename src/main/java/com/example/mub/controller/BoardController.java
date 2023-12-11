@@ -18,21 +18,18 @@ import com.example.mub.model.board.BoardWriteForm;
 import com.example.mub.model.member.Member;
 import com.example.mub.repository.BoardMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 @RequestMapping("board")
+@RequiredArgsConstructor
 public class BoardController {
-
 	
     // 데이터베이스 접근을 위한 BoardMapper 필드 선언
     private final BoardMapper boardMapper;
-//
-//    // BoardMapper 객체 필드 주입(생성자 주입 방식)
-    public BoardController(BoardMapper boardMapper) {
-        this.boardMapper = boardMapper;
-    }
+
     
 
     
@@ -84,7 +81,7 @@ public class BoardController {
     }
     
 	
-	@GetMapping("/list")
+	@GetMapping("list")
 	public String board(@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
             Model model) {
 	      
