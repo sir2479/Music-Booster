@@ -34,6 +34,8 @@ public class BoardController {
         this.boardMapper = boardMapper;
     }
     
+
+    
     // 글쓰기 페이지 이동
     @GetMapping("write")
     public String writeForm(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
@@ -45,6 +47,7 @@ public class BoardController {
 //         writeForm.html의 필드 표시를 위해 빈 BoardWriteForm 객체를 생성하여 model 에 저장한다.
     	log.info("model: {}", model);
         model.addAttribute("writeForm", new BoardWriteForm());
+               
 //         board/writeForm.html 을 찾아 리턴한다.
         return "board/write";
     }
@@ -67,6 +70,11 @@ public class BoardController {
 
         // 파라미터로 받은 BoardWriteForm 객체를 Board 타입으로 변환한다.
         Board board = BoardWriteForm.toBoard(boardWriteForm);
+        
+        board.setBoard_member("abcd");
+        
+        board.setBoard_category("notice");
+        
         // board 객체에 로그인한 사용자의 아이디를 추가한다.
 //        board.setBoard_member(loginMember.getMember_id());
         // 데이터베이스에 저장한다.
@@ -85,14 +93,14 @@ public class BoardController {
 		List<Board> boards = boardMapper.findAllBoards();
 		// Board 리스트를 model 에 저장한다.
 		model.addAttribute("boards", boards);
-		log.info("boards: {}", boards);
+
 		// board/list.html 를 찾아서 리턴한다.
 		return "board/list";
 		}
 	
     // 게시글 읽기
     @GetMapping("read")
-    public String read(//@SessionAttribute(value = "loginMember", required = false) // Member loginMember,
+    public String read(@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
                        @RequestParam Long board_id,
                        Model model) {
         // 로그인 상태가 아니면 로그인 페이지로 보낸다.
@@ -103,8 +111,11 @@ public class BoardController {
         log.info("id: {}", board_id);
 
         // board_id 에 해당하는 게시글을 데이터베이스에서 찾는다.
-//        Board board = boardMapper.findBoard(board_id);
-        // board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
+        Board board = boardMapper.findBoard(board_id);
+        
+        log.info("board: {}", board);
+        
+         //board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
 //        if (board == null) {
 //            log.info("게시글 없음");
 //            return "redirect:/board/list";
@@ -115,7 +126,7 @@ public class BoardController {
         // 조회수를 증가하여 데이터베이스에 업데이트 한다.
 //        boardMapper.updateBoard(board);
         // 모델에 Board 객체를 저장한다.
-//        model.addAttribute("board", board);
+        model.addAttribute("board", board);
         // board/read.html 를 찾아서 리턴한다.
         return "board/read";
     }

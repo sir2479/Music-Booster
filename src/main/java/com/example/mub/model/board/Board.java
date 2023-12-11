@@ -17,9 +17,9 @@ public class Board {
 	
 	
 	
-//	public void addHit() {
-//		this.board_hit++;
-//	}
+	public void addHit() {
+		this.board_hit++;
+	}
 	
 	public static BoardUpdateForm toBoardUpdateForm(Board board) {
 		BoardUpdateForm boardUpdateForm = new BoardUpdateForm();
