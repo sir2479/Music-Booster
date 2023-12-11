@@ -16,4 +16,7 @@ public class Member {
 	private LocalDate hire_date;	
 	private String position;	
 	private String profile;	
+	
+
+	
 }

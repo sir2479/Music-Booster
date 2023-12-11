@@ -13,7 +13,7 @@
  -->
 <!-- beautify ignore:start -->
 <html
-  lang="en"
+  lang="ko"
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
@@ -22,9 +22,7 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>Board list</title>
-    <link rel="stylesheet" href="/default.css">
-
+    <title>공지사항 수정</title>
   </head>
 
   <body>
@@ -48,33 +46,23 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">공지사항 /</span> 커뮤니티 - 공지사항</h4>
+			    <span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
 
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">공지사항</h5>
+                <h5 class="card-header">Table Basic</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>NO</th>
-                        <th>카테고리</th>
                         <th>제목</th>
-                        <th>작성자</th>
+                        <th>내용</th>
                         <th>조회수</th>
                         <th>작성일</th>
+                        <th>작성자</th>
                       </tr>
-                      <tr th:each="board, boardStat: ${boards}">
-					      <td th:text="${boardStat.count}" class="center"></td>
-					      <td th:text="${board.board_category}" class="center"></td>
-					      <td class="center">
-							  	<a th:text="${board.board_title}" th:href="@{/board/read(board_id=${board.board_id})}"></a>
-							  </td>
-					      <td th:text="${board.board_member}" class="center"></td>
-					      <td th:text="${board.board_hit}" class="center"></td>
-					      <td th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}" class="center"></td>
-					  </tr>
-					</thead>
+                    </thead>
+                    <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post">
                   </table>
                   
                     <p>

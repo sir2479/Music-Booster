@@ -45,7 +45,7 @@
   </update>
   
   <delete id="deleteMember">
-    delete from member where member_id=#{member_id}
+    delete from member where member_id = #{member_id}
   </delete>
   
 </mapper>
