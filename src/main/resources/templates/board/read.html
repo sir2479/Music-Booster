@@ -70,14 +70,14 @@
 				        <th>내용</th>
 				        <td th:text="*{board.board_content}"></td>
 				      </tr>
-<!--				      <tr>
+				      <tr>
 				        <th>작성일</th>
-				        <td><span th:text="*{#temporals.format(board_create_time, 'yyyy-MM-dd HH:mm')}"></span></td>
-				      </tr>-->
-<!--				      <tr>
+				        <td><span th:text="*{#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}"></span></td>
+				      </tr>
+				      <tr>
 				        <th>조회수</th>
 				        <td th:text="*{board.board_hit}"></td>
-				      </tr>-->
+				      </tr>
 <!--				      <tr>
 				        <th>수정일</th>
 				        <td><span th:text="*{#temporals.format(board_edit_time, 'yyyy-MM-dd HH:mm')}"></span></td>
@@ -88,10 +88,10 @@
                     <p>
     <div class="center">
      <input type="button" onclick="location.href='/board/list'" value="목록으로">
-<!--      <th:block th:if="${session.loginMember.member_id == board.board_member}">
+      <th:block th:if="${session.loginMember.member_id == board.board_member}">
         <input type="button" th:onclick="|location.href='/board/update?board_id=${board.board_id}'|" value="수정하기">
         <input type="button" th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|" value="삭제하기">
-      </th:block> -->
+      </th:block> 
   </div>
   
                 </div>

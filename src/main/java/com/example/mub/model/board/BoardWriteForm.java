@@ -17,6 +17,8 @@ public class BoardWriteForm {
 	
 	private String board_member;	// 작성자
 	
+	private String board_create_time;	//작성일
+	
 	
 	public static Board toBoard(BoardWriteForm boardWriteForm) {
 		Board board = new Board();

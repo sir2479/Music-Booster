@@ -52,15 +52,35 @@
               <div class="card">
                 <h5 class="card-header">Table Basic</h5>
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>제목</th>
-                        <th>내용</th>
-                        <th>조회수</th>
-                        <th>작성일</th>
-                        <th>작성자</th>
-                      </tr>
+                   <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post" enctype="multipart/form-data">
+            	      <table class="table">
+             	      <thead>
+     					 <tr>
+				        <th>제목</th>
+				        <td>
+				          <input type="text" th:field="*{board_title}">
+				          <div class="error" th:errors="*{board_title}"></div>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>내용</th>
+				        <td>
+				          <textarea rows="10" cols="30" th:field="*{board_content}"></textarea>
+				          <div class="error" th:errors="*{board_content}"></div>
+				        </td>
+				      </tr>
+				      <tr>
+				        <th>조회수</th>
+				        <td th:text="*{board_hit}"></td>
+				      </tr>
+				      <tr>
+				        <th>작성일</th>
+				        <td><span th:text="*{#temporals.format(board_create_time, 'yyyy-MM-dd HH:mm')}"></span></td>
+				      </tr>
+				      <tr>
+				        <th>작성자</th>
+				        <td th:text="*{board_member}"></td>
+				      </tr>
                     </thead>
                     <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post">
                   </table>
