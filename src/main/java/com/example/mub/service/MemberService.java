@@ -29,8 +29,10 @@ public class MemberService {
 		log.info("멥퍼후");
 		
 	}
-	
-
+	@Transactional
+	public void updateMember(Member member) {
+		memberMapper.updateMember(member);
+	}
 	
 
 	

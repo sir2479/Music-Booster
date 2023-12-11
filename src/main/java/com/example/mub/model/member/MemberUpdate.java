@@ -28,15 +28,15 @@ public class MemberUpdate {
 	@NotNull @DateTimeFormat(pattern="yyyy-MM-dd") @Past
 	private LocalDate birthday;	
 	
-	public static Member toMember(MemberSignup memberSignup) {
+	public Member toMember(MemberUpdate memberUpdate) {
 		Member member = new Member();
-		member.setMember_id(memberSignup.getMember_id());
-		member.setMember_email(memberSignup.getMember_email());
-		member.setNickname(memberSignup.getNickname());
-		member.setPassword(memberSignup.getPassword());
-		member.setMember_name(memberSignup.getMember_name());
-		member.setPhone(memberSignup.getPhone());
-		member.setBirthday(memberSignup.getBirthday());
+		member.setMember_id(memberUpdate.getMember_id());
+		member.setMember_email(memberUpdate.getMember_email());
+		member.setNickname(memberUpdate.getNickname());
+		member.setPassword(memberUpdate.getPassword());
+		member.setMember_name(memberUpdate.getMember_name());
+		member.setPhone(memberUpdate.getPhone());
+		member.setBirthday(memberUpdate.getBirthday());
 		return member;
 }
 }

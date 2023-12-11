@@ -142,8 +142,8 @@ public class MemberController {
 		if(result.hasErrors()) {
 			return "member/update";
 		}
-	
-		Member member = memberService.updateMember(memberupdate);
+		Member member = memberupdate.toMember(memberupdate);
+		memberService.updateMember(member);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("update", member);
@@ -153,7 +153,6 @@ public class MemberController {
 		
 
 	}
-	
 	
 	
 
