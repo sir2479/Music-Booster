@@ -136,8 +136,11 @@ public class MemberController {
 								HttpServletRequest request,
 								@RequestParam(defaultValue = "/") String redirectURL) {
 		
+		if(result.hasErrors()) {
+			return "member/update";
+		}
 	
-		Member member = memberService.updateMember(update.getMember());
+		Member member = memberService.updateMember(memberupdate);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("update", member);
