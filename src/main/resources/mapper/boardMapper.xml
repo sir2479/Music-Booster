@@ -26,6 +26,7 @@
   
   <select id="findAllBoards" resultType="board">
     select * from board
+    	order by board_create_time desc
   </select>
   
   <select id="findBoard" resultType="board">
@@ -37,9 +38,15 @@
     <set>
     	<if test="board_title != null">board_title = #{board_title},</if>
     	<if test="board_content != null">board_content = #{board_content},</if>
-    	edit_time = sysdate
+    	<if test="board_edit_time != null">board_edit_time = sysdate, </if>
     </set>
     where board_id = #{board_id}
+  </update>
+
+  <update id="addHit">
+    update board set
+    	board_hit = board_hit+1
+    		where board_id = #{board_id}
   </update>
   
   <delete id="removeBoard">

@@ -17,18 +17,16 @@ public class Board {
 	
 	
 	
-//	public void addHit() {
-//		this.board_hit++;
-//	}
+
 	
 	public static BoardUpdateForm toBoardUpdateForm(Board board) {
 		BoardUpdateForm boardUpdateForm = new BoardUpdateForm();
 		boardUpdateForm.setBoard_id(board.getBoard_id());
 		boardUpdateForm.setBoard_title(board.getBoard_title());
-		boardUpdateForm.setBoard_content(board.getBoard_content());
 		boardUpdateForm.setBoard_member(board.getBoard_member());
-		boardUpdateForm.setBoard_hit(board.getBoard_hit());
+		boardUpdateForm.setBoard_content(board.getBoard_content());
 		boardUpdateForm.setBoard_create_time(board.getBoard_create_time());
+		boardUpdateForm.setBoard_edit_time(board.getBoard_edit_time());
 		return boardUpdateForm;
 	}
 	

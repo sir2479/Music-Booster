@@ -15,9 +15,8 @@ public class BoardUpdateForm {
     @NotBlank
     private String board_title;
     @NotBlank
-    private String board_content;
     private String board_member;
-    private Long board_hit;
+    private String board_content;
     private LocalDateTime board_create_time;
-
+    private LocalDateTime board_edit_time;
 }
