@@ -137,8 +137,6 @@ public class MemberController {
 	public String update(BindingResult result) {
 		
 		return "redirect:/";
-		
-		
 	}
 	
 	
