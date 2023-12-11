@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.example.mub.model.member.Member;
 import com.example.mub.model.member.MemberLogin;
@@ -68,8 +69,6 @@ public class MemberController {
 		memberService.saveMember(MemberSignup.toMember(signup));
 		
 		
-		//Member member = 
-		
 		return "redirect:/";
 	}
 	
@@ -101,9 +100,10 @@ public class MemberController {
 		}
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("login", member);
+		session.setAttribute("loginMember", member);
 		
 		log.info("로그인 성공", member);
+		log.info("loginmember: {}", memberLogin);
 		
 		
 		return "redirect:/";
@@ -134,10 +134,13 @@ public class MemberController {
 	
 	// 내정보 회원정보 수정
 	@PostMapping("update")
-	public String update(@Validated @ModelAttribute("update") Member update, 
-			BindingResult result) {
-
+	public String update(BindingResult result) {
+		
 		return "redirect:/";
+		
+		
 	}
+	
+	
 	
 }

@@ -30,9 +30,7 @@ public class MemberService {
 		
 	}
 	
-	public void updateMember(Member member) {
-		memberMapper.updateMember(member);
-	}
+
 	
 
 	
