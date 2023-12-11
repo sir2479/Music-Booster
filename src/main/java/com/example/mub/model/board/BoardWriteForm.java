@@ -12,10 +12,10 @@ public class BoardWriteForm {
 	@NotBlank
 	private String board_title; //글 제목
 
-	@NotBlank
-	private String board_content; //내용
-	
 	private String board_member;	// 작성자
+
+	@NotBlank
+	private String board_content; //내용	
 	
 	private String board_create_time;	//작성일
 	

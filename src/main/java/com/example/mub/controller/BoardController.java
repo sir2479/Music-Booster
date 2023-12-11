@@ -120,11 +120,12 @@ public class BoardController {
         }
 
         // 조회수 1 증가
-        board.addHit();
+//        board.addHit();
         // 조회수를 증가하여 데이터베이스에 업데이트 한다.
-        boardMapper.updateBoard(board);
+        boardMapper.addHit(board_id);
         // 모델에 Board 객체를 저장한다.
         model.addAttribute("board", board);
+        
         // board/read.html 를 찾아서 리턴한다.
         return "board/read";
     }
@@ -135,9 +136,9 @@ public class BoardController {
                              @RequestParam Long board_id,
                              Model model) {
         // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-        if (loginMember == null) {
-            return "redirect:/member/login";
-        }
+//        if (loginMember == null) {
+//            return "redirect:/member/login";
+//        }
 
         log.info("id: {}", board_id);
 
