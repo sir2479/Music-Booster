@@ -22,7 +22,7 @@
           
           <ul class="menu-inner py-1">
             <!-- 홈으로 -->
-            <li class="menu-item active">
+            <li class="menu-item" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}">
               <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">메인화면</div>
@@ -66,7 +66,8 @@
             </li>
             
             <!-- 공지사항 -->
-            <li class="menu-item">
+            <li class="menu-item" 
+            	th:classappend="${#httpServletRequest.requestURI == '/board/list' ? 'active' : ''}">
               <a href="/board/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">공지사항</div>
