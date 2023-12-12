@@ -13,7 +13,6 @@
       phone,
       birthday,
       position
-      
       ) VALUES (
         #{member_id},
         #{member_email},
