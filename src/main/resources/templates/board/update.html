@@ -46,11 +46,11 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+			    <span class="text-muted fw-light">공지사항 /</span>공지사항 수정</h4>
 
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">Table Basic</h5>
+                <h5 class="card-header">공지사항 / 수정</h5>
                 <div class="table-responsive text-nowrap">
                    <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post" enctype="multipart/form-data">
             	      <table class="table">
@@ -91,10 +91,9 @@
                   
                     <p>
   <div class="center">                  
-      <input type="button" onclick="location.href='/board/list'" value="목록으로">
-      <input type="submit" value="수정하기">
-      <input type="reset" value="취소">
-  </div>
+      <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
+      <input type="submit" value="수정하기" class="btn btn-sm btn-outline-primary">
+		  </div>
   
                 </div>
               </div>

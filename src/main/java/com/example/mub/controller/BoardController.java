@@ -18,6 +18,8 @@ import com.example.mub.model.board.BoardUpdateForm;
 import com.example.mub.model.board.BoardWriteForm;
 import com.example.mub.model.member.Member;
 import com.example.mub.repository.BoardMapper;
+import com.example.mub.service.BoardService;
+import com.example.mub.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +32,13 @@ public class BoardController {
 	
     // 데이터베이스 접근을 위한 BoardMapper 필드 선언
     private final BoardMapper boardMapper;
+    private final BoardService boardService;
+    
+    //리플
+    private final int countPerPage = 10;
+    private final int pagePerGroup = 5;
+
+
 
     
 
@@ -76,23 +85,45 @@ public class BoardController {
         // board 객체에 로그인한 사용자의 아이디를 추가한다.
         board.setBoard_member(loginMember.getMember_id());
         // 데이터베이스에 저장한다.
-        boardMapper.saveBoard(board);
+        boardService.saveBoard(board);
         // board/list 로 리다이렉트한다.
         return "redirect:/board/list";
     }
     
 	
 	@GetMapping("list")
-	public String board(@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
-            Model model) {
-	      
-		log.info("보드메퍼: {}", boardMapper.findAllBoards());
+	public String board(@RequestParam(value="page", defaultValue="1")int page,
+						@RequestParam(value="searchText", defaultValue = "") String searchText,
+						Model model) {
+	    try {  
+		int total = boardService.getTotal(searchText);
+		
+		log.info("서치 테스트: {}", searchText);
+		
+
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		log.info("navi: {}", navi);
+		
+		
+		List<Board> boards = boardService.findAllBoards(searchText ,navi.getStartRecord(), navi.getCountPerPage());
+		
 		// 데이터베이스에 저장된 모든 Board 객체를 리스트 형태로 받는다.
-		List<Board> boards = boardMapper.findAllBoards();
+//		if (boards.size()==0 && boards.isEmpty()) 
+//		{
+//			log.info("검색 결과가 없습니다.");
+//			return "redirect:/board/list";
+//		}
+		log.info("보드콘트롤러에서 실행됨: 가져온 boards: {}", boards);
 		// Board 리스트를 model 에 저장한다.
 		model.addAttribute("boards", boards);
+		model.addAttribute("navi", navi);
+		model.addAttribute("searchText", searchText);
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
 
 		// board/list.html 를 찾아서 리턴한다.
+	    log.info("보드콘트롤러에서 실행됨: 리턴 직전 문장 실행됨");
 		return "board/list";
 		}
 	

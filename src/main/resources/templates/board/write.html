@@ -65,18 +65,15 @@
                         <th>내용</th>
                                 <td>
 						          <textarea rows="30" cols="90" th:field="*{board_content}"></textarea>
-       							   <div th:errorClass="error" th:errors="*{board_content}"></div>
+       							  <div th:errorClass="error" th:errors="*{board_content}"></div>
 						        </td>
                       </tr>
-
-
                   </table>
                   
                     <p>
   <div class="center">  
       <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
       <input type="submit" value="등록하기" class="btn btn-sm btn-outline-primary">
-      <input type="reset" value="취소" class="btn btn-sm btn-outline-primary">                
   </div>
   
                 </div>

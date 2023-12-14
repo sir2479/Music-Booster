@@ -20,8 +20,7 @@
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
-  <head th:replace="~{head :: #head}"></head>
-  <head>
+  <head th:replace="~{head :: #head}">
     <title>Read</title>
   </head>
 
@@ -52,31 +51,39 @@
               <div class="card">
                 <h5 class="card-header">게시글</h5>
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table" th:object="${board}">
                     <thead>
 				      <tr>
 				        <th>카테고리</th>
-				        <td th:text="*{board.board_category}"></td>
+				        <td th:text="*{board_category}"></td>
 				      </tr>						
 				      <tr>
 				        <th>제목</th>
-				        <td th:text="*{board.board_title}"></td>
+				        <td th:text="*{board_title}"></td>
 				      </tr>
 				      <tr>
 				        <th>작성자</th>
-				        <td th:text="*{board.board_member}"></td>
+				        <td th:text="*{board_member}"></td>
 				      </tr>
 				      <tr>
 				        <th>내용</th>
-				        <td th:text="*{board.board_content}"></td>
+				        <td th:text="*{board_content}"></td>
 				      </tr>
 				      <tr>
 				        <th>작성일</th>
-				        <td><span th:text="*{#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}"></span></td>
-				      </tr>
+				        <td><span th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}"></span></td>
+<!--				        	<a th:if="'board_edit_time'!=null th:text=''"></td>
+-->				      </tr>
+					  <span th:if="*{board_edit_time} != null">
+						  	        <th>수정일</th>
+				        <td th:text="*{#temporals.format(board_edit_time, 'yyyy-MM-dd HH:mm')}"></span></td>
+					  </span>
+					  
+
+
 				      <tr>
 				        <th>조회수</th>
-				        <td th:text="*{board.board_hit}"></td>
+				        <td th:text="*{board_hit}"></td>
 				      </tr>
 <!--				      <tr>
 				        <th>수정일</th>
@@ -86,13 +93,15 @@
                   </table>
                   
                     <p>
-    <div class="center">
-     <input type="button" onclick="location.href='/board/list'" value="목록으로">
-<!--      <th:block th:if="${session.loginMember.member_id == board.board_member}">
-        <input type="button" th:onclick="|location.href='/board/update?board_id=${board.board_id}'|" value="수정하기">
-        <input type="button" th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|" value="삭제하기">
-      </th:block> -->
-  </div>
+				    <div class="center">
+				     <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
+				      <th:block th:if="${session.loginMember != null}">
+				      <span th:if="${session.loginMember.member_id == board.board_member}">
+				        <input type="button" th:onclick="|location.href='/board/update?board_id=${board.board_id}'|" value="수정하기" class="btn btn-sm btn-outline-primary">
+				        <input type="button" th:onclick="|location.href='/board/delete?board_id=${board.board_id}'|" value="삭제하기" class="btn btn-sm btn-outline-primary">			
+					</span> 
+				      </th:block>
+				  </div>
   
                 </div>
               </div>
