@@ -42,7 +42,7 @@ public class BoardController {
         if (loginMember == null) {
             return "redirect:/member/login";
         }
-//         writeForm.html의 필드 표시를 위해 빈 BoardWriteForm 객체를 생성하여 model 에 저장한다.
+//      writeForm.html의 필드 표시를 위해 빈 BoardWriteForm 객체를 생성하여 model 에 저장한다.
         model.addAttribute("writeForm", new BoardWriteForm());
         log.info("model: {}", model);
                
@@ -98,7 +98,7 @@ public class BoardController {
 	
     // 게시글 읽기
     @GetMapping("read")
-    public String read(@SessionAttribute(value = "loginMember", required = false)  Member loginMember,
+    public String read(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
                        @RequestParam Long board_id,
                        Model model) {
         // 로그인 상태가 아니면 로그인 페이지로 보낸다.
@@ -112,6 +112,8 @@ public class BoardController {
         Board board = boardMapper.findBoard(board_id);
         
         log.info("board: {}", board);
+        
+
         
          //board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
         if (board == null) {

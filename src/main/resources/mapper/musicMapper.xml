@@ -2,13 +2,34 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mub.repository.musicMapper">
+<mapper namespace="com.example.mub.repository.MusicMapper">
+
+	<insert id="uploadMusic">
+	   <selectKey keyProperty="music_id" resultType="Long" order="BEFORE">
+	     select music_seq.nextval from dual
+	   </selectKey>
+	   insert into music(
+	     music_id,
+	     music_name,
+	     music_genre,
+	     music_lyrics
+	     ) values (
+	       #{music_id},
+	       #{music_name},
+	       #{music_genre},
+	       #{music_lyrics}
+	     )
+  	</insert>
 	
 	<select id="findAllMusics" resultType="music">
 	  select * from music
 	</select>
 	
-	<select id="findMusic" resultType="music">
+	<select id="findMusicByMusicId" resultType="music">
+	  select * from music where music_id = #{music_id}
+	</select>
+	
+	<select id="searchMusic" resultType="music">
 	  select * from music where 
 	  <if test="music_id != null">
 	  music_id = #{music_id}
