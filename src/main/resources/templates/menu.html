@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<!-- Menu -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="/" class="app-brand-link">
+              <span class="app-brand-logo demo">
+                <a class="sidebar-brand" href="/">
+				  <img src="/assets/img/mub/mub_logo.png" 
+				  style="height: 250px; padding: 2px; position: relative; right: 20px; top: -15px;" alt="logo" />
+				</a>
+              </span>
+              
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+          
+          <ul class="menu-inner py-1">
+            <!-- 홈으로 -->
+            <li class="menu-item active">
+              <a href="/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">메인화면</div>
+              </a>
+            </li>
+
+            <!-- User -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">유저</div>
+              </a>
+              <ul class="menu-sub">
+				<li class="menu-item" th:if="${session.loginMember}">
+                  <a href="member/update" class="menu-link">
+                    <div data-i18n="Without menu">내 정보</div>
+                  </a>
+                </li>
+                <li class="menu-item" th:unless="${session.loginMember}">
+                  <a href="member/signup" class="menu-link">
+                    <div data-i18n="Without menu">회원가입</div>
+                  </a>
+                </li>
+                <li class="menu-item" th:unless="${session.loginMember}">
+                  <a href="member/login" class="menu-link">
+                    <div data-i18n="Without navbar">로그인</div>
+                  </a>
+                </li>
+                <li class="menu-item" th:if="${session.loginMember}">
+                  <a href="member/logout" class="menu-link">
+                    <div data-i18n="Container">로그아웃</div>
+                  </a>
+                </li>         
+              </ul>
+            </li>
+
+
+			<!-- 게시판 -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">게시판</span>
+            </li>
+            
+            <!-- 공지사항 -->
+            <li class="menu-item">
+              <a href="tables-basic" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">공지사항</div>
+              </a>
+            </li>            
+            <!-- 새소식 -->
+            <li class="menu-item">
+              <a href="tables-basic" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Tables">새소식</div>
+              </a>
+            </li>
+            <!-- 장르 커뮤니티 -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">장르 커뮤니티</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="pages-account-settings-account.html" class="menu-link">
+                    <div data-i18n="Account">장르1</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">장르2</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-connections.html" class="menu-link">
+                    <div data-i18n="Connections">장르3</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            
+            
+            <!-- 아티스트 -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">아티스트</span></li>
+            <!-- 아티스트 -->
+            <li class="menu-item">
+              <a href="artist/artist-home" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <div data-i18n="Boxicons">아티스트</div>
+              </a>
+            </li>
+          
+
+           
+            <!-- Music -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">음악</span></li>
+            <li class="menu-item">
+              <a href="tables-basic" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <div data-i18n="Boxicons">음악랭킹</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a
+                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                target="_blank"
+                class="menu-link"
+              >
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                <div data-i18n="Support">음악추천</div>
+              </a>
+            </li>
+      
+            <!-- 임시 -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">임시</span></li>
+            <li class="menu-item">
+              <a
+                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                target="_blank"
+                class="menu-link"
+              >
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Documentation">설명서</div>
+              </a>
+            </li>
+            
+            <li class="menu-item">
+              <a href="blank-page" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Boxicons">blank-page</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+</html>
