@@ -26,12 +26,28 @@
   
   <select id="findAllBoards" resultType="board">
     select * from board
-    	order by board_create_time desc
+        <if test="_parameter != null">
+    	where board_title like '%' || #{searchText} || '%'
+ 	   </if>
+    order by board_create_time desc
+  </select>
+  
+    <select id="getTotal" resultType="int">
+  	select count(*) from board
+  	<if test="_parameter != null">
+    	where board_title like '%' || #{searchText} || '%'
+    </if>
   </select>
   
   <select id="findBoard" resultType="board">
     select * from board where board_id = #{board_id}
   </select>
+  
+    <update id="addHit">
+    update board set
+    	board_hit = board_hit+1
+    		where board_id = #{board_id}
+  </update>
   
   <update id="updateBoard">
     update board
@@ -43,11 +59,7 @@
     where board_id = #{board_id}
   </update>
 
-  <update id="addHit">
-    update board set
-    	board_hit = board_hit+1
-    		where board_id = #{board_id}
-  </update>
+
   
   <delete id="removeBoard">
     delete from board where board_id = #{board_id}

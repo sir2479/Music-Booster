@@ -20,8 +20,7 @@
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
-  <head th:replace="~{head :: #head}"></head>
-  <head>
+  <head th:replace="~{head :: #head}">
     <title>Read</title>
   </head>
 
@@ -86,7 +85,7 @@
                   </table>            
                     <p>
 				    <div class="center">
-				     <input type="button" onclick="location.href='/board/list'" value="목록으로">
+				     <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
 						<th:block th:if="${session.loginMember != null}">
 				        <input type="button" th:if="${session.loginMember.member_id == board.board_member}" 
 				        	th:onclick="|location.href='/board/update?board_id=${board.board_id}'|" value="수정하기">

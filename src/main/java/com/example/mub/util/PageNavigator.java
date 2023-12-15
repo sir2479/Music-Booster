@@ -33,6 +33,8 @@ public class PageNavigator {
         if (currentPage > totalPageCount) currentPage = totalPageCount;
 
         this.currentPage = currentPage;
+        
+        if(totalPageCount <1) totalPageCount =1;
 
         //현재 그룹
         currentGroup = (currentPage - 1) / pagePerGroup;
@@ -49,4 +51,5 @@ public class PageNavigator {
         //전체 레코드 중 현재 페이지 첫 글의 위치
         startRecord = (currentPage - 1) * countPerPage;
     }
+
 }
