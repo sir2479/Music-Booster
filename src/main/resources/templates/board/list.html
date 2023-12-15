@@ -39,7 +39,6 @@
 	  function search(){
 		  let searchText = document.getElementById("searchText").value;
 		  location.href="/board/list?searchText=" + searchText;
-		
 	  }
   </script>
     </head>
@@ -126,16 +125,16 @@
 								  	<a th:href="@{/board/list(page=${navi.currentPage - 1}, searchText=${searchText})}"><</a>&nbsp;&nbsp;
 								  </th:block>-->
 								  	
-<th:block th:if="${navi.endPageGroup ne 0}">
-    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-        <span th:if="${counter == navi.currentPage}">
-            <span th:text="${counter}"></span>&nbsp;
-        </span>
-        <span th:unless="${counter == navi.currentPage}">
-            <a th:href="@{/board/list(page=${counter})}" th:text="${counter}"></a>&nbsp;
-        </span>
-    </th:block>
-</th:block>
+									<th:block th:if="${navi.endPageGroup ne 0}">
+									    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+									        <span th:if="${counter == navi.currentPage}">
+									            <span th:text="${counter}"></span>&nbsp;
+									        </span>
+									        <span th:unless="${counter == navi.currentPage}">
+									            <a th:href="@{/board/list(page=${counter})}" th:text="${counter}"></a>&nbsp;
+									        </span>
+									    </th:block>
+									</th:block>
 									  
 <!--								  <th:block th:if="${navi.currentPage < navi.totalPageCount}">
 								  &nbsp;<a th:href="@{/board/list(page=${navi.currentPage + 1}, searchText=${searchText})}">></a>&nbsp;

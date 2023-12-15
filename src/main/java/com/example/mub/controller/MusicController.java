@@ -25,14 +25,7 @@ public class MusicController {
 	@GetMapping("music-home")
     public String music(Model model) {
 		
-		Music music = musicService.findMusicByMusicId(5L);
-		log.info("music: {}", music);
 		
-		MusicFile musicFile = musicService.findMusicFileByMusicId(music.getMusic_id());
-		log.info("musicFile: {}", musicFile);
-		
-		model.addAttribute("music", music);
-		model.addAttribute("musicFile", musicFile);
 
         return "music/music-home";
     }
