@@ -27,6 +27,10 @@ public class MemberUpdate {
 	private String phone;	
 	@NotNull @DateTimeFormat(pattern="yyyy-MM-dd") @Past
 	private LocalDate birthday;	
+	@NotNull @DateTimeFormat(pattern="yyyy-MM-dd") @Past
+	private LocalDate hire_date;	
+	@NotNull
+	private String profile;	
 	
 	public Member toMember(MemberUpdate memberUpdate) {
 		Member member = new Member();
@@ -37,6 +41,8 @@ public class MemberUpdate {
 		member.setMember_name(memberUpdate.getMember_name());
 		member.setPhone(memberUpdate.getPhone());
 		member.setBirthday(memberUpdate.getBirthday());
+		member.setHire_date(memberUpdate.getHire_date());
+		member.setProfile(memberUpdate.getProfile());
 		return member;
 }
 }

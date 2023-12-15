@@ -1,5 +1,6 @@
 package com.example.mub.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -126,9 +127,26 @@ public class MemberController {
 	
 
 	// 내정보 수정 페이지 이동
+
 	@GetMapping("update")
-	public String update(Model model) {
-		model.addAttribute("update", new MemberUpdate());
+	public String update(@SessionAttribute(value = "loginMember", required = false) Member loginMember,						 
+            			 Model model) {
+		
+		log.info("loginMember:{}",loginMember);
+		
+      if (loginMember == null) {
+      return "redirect:/member/login";
+  }
+      
+
+		
+		Member member = memberService.findMember(loginMember.getMember_id());
+		
+		log.info("member :{}",member);
+		
+		model.addAttribute("member", member);
+		
+	
 		return "member/update";
 	}
 	
@@ -139,16 +157,16 @@ public class MemberController {
 								HttpServletRequest request,
 								@RequestParam(defaultValue = "/") String redirectURL) {
 		
-		if(result.hasErrors()) {
-			return "member/update";
-		}
+	    if (result.hasErrors()) {
+	        return "redirect:/";
+	    }
+				
 		Member member = memberupdate.toMember(memberupdate);
+		
 		memberService.updateMember(member);
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("update", member);
-		
 	
+		log.info("member : {} ", member);
+		
 		return "redirect:/";
 
 	}
