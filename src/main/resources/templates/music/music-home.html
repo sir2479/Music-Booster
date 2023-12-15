@@ -277,7 +277,7 @@
                 
                 
                 <div>
-					<table class="table" th:object="${music}">
+					<table class="table">
                     <thead>
                       <tr>
                         <th>곡 명</th>
@@ -288,12 +288,12 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0"> 
-                      <tr>
+                      <tr th:if="${musics != null}" th:each="music : ${musics}">
                         <td>
                           <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> 
-                          <strong th:text="*{music_name}"></strong>
+                          <strong th:text="${music.music_name}"></strong>
                         </td>
-                        <td th:text="*{music_genre}"></td>
+                        <td th:text="${music.music_genre}"></td>
                         <td>
                           <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                             <li
