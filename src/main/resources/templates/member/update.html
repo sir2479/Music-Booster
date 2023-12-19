@@ -99,9 +99,9 @@
                             <input
                               type="text"
                               class="form-control"
-                             
+                             disabled
             
-                             th:field="*{member_id}"
+                             th:field="${member.member_id}"
                             />
                             
                           </div>
@@ -185,7 +185,7 @@
                             <label for="member_hire_date" class="form-label">가입일</label>
                             <input
                               type="date"
-                              
+                              disabled
                               class="form-control"
              				  name="hire_date"
                               th:value="*{hire_date}"

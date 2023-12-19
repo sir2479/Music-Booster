@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mub.repository.FileMapper">
+ 
+   <insert id="MusicFileUpload">
+  	<selectKey keyProperty="file_id" resultType="Long" order="BEFORE">
+  		select music_file_seq.nextval from dual
+  	</selectKey>
+  		insert into music_file(
+  			file_id,
+  			file_original_name,
+  			file_saved_name,
+  			file_size,
+  			file_music_id
+  		) values (
+  			#{file_id},
+  			#{file_original_name},
+  			#{file_saved_name},
+  			#{file_size},
+  			#{file_music_id}
+  		)
+  </insert>
+  
+  <select id="findMusicFileByMusicId" resultType="musicfile">
+  	select * from music_file where file_music_id = #{file_music_id}
+  </select>
+
+
+ 
+ 
+</mapper>

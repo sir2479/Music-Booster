@@ -36,23 +36,24 @@
                 <div data-i18n="Layouts">유저</div>
               </a>
               <ul class="menu-sub">
-				<li class="menu-item" th:if="${session.loginMember}">
+				<li class="menu-item" th:if="${session.loginMember}"
+					th:classappend="${#httpServletRequest.requestURI == '/member/update' ? 'active' : ''}">
                   <a href="/member/update" class="menu-link">
                     <div data-i18n="Without menu">내 정보</div>
                   </a>
                 </li>
                 <li class="menu-item" th:unless="${session.loginMember}">
-                  <a href="member/signup" class="menu-link">
+                  <a href="/member/signup" class="menu-link">
                     <div data-i18n="Without menu">회원가입</div>
                   </a>
                 </li>
                 <li class="menu-item" th:unless="${session.loginMember}">
-                  <a href="member/login" class="menu-link">
+                  <a href="/member/login" class="menu-link">
                     <div data-i18n="Without navbar">로그인</div>
                   </a>
                 </li>
                 <li class="menu-item" th:if="${session.loginMember}">
-                  <a href="member/logout" class="menu-link">
+                  <a href="/member/logout" class="menu-link">
                     <div data-i18n="Container">로그아웃</div>
                   </a>
                 </li>         
@@ -75,7 +76,7 @@
             </li>            
             <!-- 새소식 -->
             <li class="menu-item">
-              <a href="tables-basic" class="menu-link">
+              <a href="/board/list" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">새소식</div>
               </a>
@@ -88,17 +89,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="/board/list" class="menu-link">
                     <div data-i18n="Account">장르1</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                  <a href="/board/list" class="menu-link">
                     <div data-i18n="Notifications">장르2</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-connections.html" class="menu-link">
+                  <a href="/board/list" class="menu-link">
                     <div data-i18n="Connections">장르3</div>
                   </a>
                 </li>
@@ -110,7 +111,8 @@
             <!-- 아티스트 -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">아티스트</span></li>
             <!-- 아티스트 -->
-            <li class="menu-item">
+            <li class="menu-item"
+            	th:classappend="${#httpServletRequest.requestURI == '/artist/artist-home' ? 'active' : ''}">
               <a href="tables-basic" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
                 <div data-i18n="Boxicons">아티스트</div>
@@ -127,8 +129,9 @@
                 <div data-i18n="Boxicons">음악랭킹</div>
               </a>
             </li>
-            <li class="menu-item">
-              <a href="/music/music" class="menu-link">
+            <li class="menu-item"
+            	th:classappend="${#httpServletRequest.requestURI == '/music/music-home' ? 'active' : ''}">
+              <a href="/music/music-home" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">음악</div>
               </a>
@@ -150,7 +153,7 @@
             </li>
             
             <li class="menu-item">
-              <a href="blank-page" class="menu-link">
+              <a href="/blank-page" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Boxicons">blank-page</div>
               </a>

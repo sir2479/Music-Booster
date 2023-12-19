@@ -23,9 +23,25 @@
   <head th:replace="~{head :: #head}"></head>
   <head>
     <title>Board list</title>
-    <link rel="stylesheet" href="/default.css">
 
-  </head>
+  <style>
+    .right {
+        text-align: right;
+    }
+        .center {
+        text-align: center;
+    }
+</style>
+  
+  <script>
+
+	  function search(){
+		  let searchText = document.getElementById("searchText").value;
+		  location.href="/board/list?searchText=" + searchText;
+		
+	  }
+  </script>
+    </head>
 
   <body>
     <!-- Layout wrapper -->
@@ -53,35 +69,91 @@
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <h5 class="card-header">공지사항</h5>
+				  <p>
+				<!--<div th:if="${asd != null}">
+					<h3>에러요</h3>
+				</div>-->
+				        
                 <div class="table-responsive text-nowrap">
+				   <p class="right">
+					  <label for"searchText">검색</label>
+						  	<input type="search" id="searchText" name="searchText" th:value="${searchText}">
+						 	 <input type="button" onclick="search()" value="검색">
+<!--					 	 <span th:if="${searchText} != ${board.board_title}">
+							  <th>검색 결과가 없습니다.</th> 
+							  <a href="history.back();"></a>
+					 	 </span> -->
+				  </p>
                   <table class="table">
                     <thead>
-                      <tr>
+                      <tr class="center">
                         <th>NO</th>
-                        <th>카테고리</th>
                         <th>제목</th>
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
                       </tr>
+                      <div class="center" th:if="${boards.size() == 0}">
+            <h4>검색 결과가 없습니다.</h4>
+        </div>
+        <!--              <div th:if="${board.board_title} == ${board.searchText}">-->
                       <tr th:each="board, boardStat: ${boards}">
 					      <td th:text="${boardStat.count}" class="center"></td>
-					      <td th:text="${board.board_category}" class="center"></td>
 					      <td class="center">
 							  	<a th:text="${board.board_title}" th:href="@{/board/read(board_id=${board.board_id})}"></a>
 							  </td>
 					      <td th:text="${board.board_member}" class="center"></td>
 					      <td th:text="${board.board_hit}" class="center"></td>
 					      <td th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}" class="center"></td>
+					      
 					  </tr>
+               <!--       </div>-->
 					</thead>
                   </table>
                   
                     <p>
-  <div class="center">                  
+							  <div id="navigator" class="center">
+		  		  
+								 <a th:href="@{/board/list(page=${navi.totalPageCount / navi.totalPageCount})}"><<</a>&nbsp;
+								   </th:block>		  	
+		  
+								  <th:block th:if="${navi.currentPage - navi.pagePerGroup > 0}">			  
+								 <a th:href="@{/board/list(page=${navi.endPageGroup - navi.pagePerGroup})}"><</a>&nbsp;
+								   </th:block>
+								    
+<!--								  <th:block th:if="${navi.currentPage - 1 > 0}">			  
+								  	<a th:href="@{/board/list(page=${navi.currentPage - 1}, searchText=${searchText})}"><</a>&nbsp;&nbsp;
+								  </th:block>-->
+								  	
+<th:block th:if="${navi.endPageGroup ne 0}">
+    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+        <span th:if="${counter == navi.currentPage}">
+            <span th:text="${counter}"></span>&nbsp;
+        </span>
+        <span th:unless="${counter == navi.currentPage}">
+            <a th:href="@{/board/list(page=${counter})}" th:text="${counter}"></a>&nbsp;
+        </span>
+    </th:block>
+</th:block>
+									  
+<!--								  <th:block th:if="${navi.currentPage < navi.totalPageCount}">
+								  &nbsp;<a th:href="@{/board/list(page=${navi.currentPage + 1}, searchText=${searchText})}">></a>&nbsp;
+								  </th:block>-->
+								  
+								  <th:block th:if="${navi.currentPage + navi.pagePerGroup < navi.totalPageCount +1}">
+								  &nbsp;<a th:href="@{/board/list(page=${navi.startPageGroup + navi.pagePerGroup})}">></a>
+								  </th:block>
+								  
+								  &nbsp;<a th:href="@{/board/list(page=${navi.totalPageCount})}">>></a>
+		  
+	 						 </div>
+						
+
+  <p class="right">                  
     <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
     <input type="button" onclick="location.href='/board/write'" class="btn btn-sm btn-outline-primary" value="글쓰기">
-  </div>
+  </p>
+  
   
                 </div>
               </div>
