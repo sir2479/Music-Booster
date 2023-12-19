@@ -22,7 +22,7 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>Board</title>
+    <title>음악</title>
   </head>
 
   <body>
@@ -45,20 +45,20 @@
 			  
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
-
-              <!-- Basic Bootstrap Table -->
+			  <!-- Order Statistics -->		  			  
+              <div class="card h-100">
+				  
+				                <!-- Basic Bootstrap Table -->
               <div class="card">
                 <h5 class="card-header">Table Basic</h5>
                 <div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Project</th>
-                        <th>Client</th>
+                        <th>곡 명</th>
+                        <th>아티스트</th>
                         <th>Users</th>
-                        <th>Status</th>
+                        <th>듣기</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -218,7 +218,8 @@
                       </tr>
                       <tr>
                         <td>
-                          <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Bootstrap Project</strong>
+                          <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> 
+                          <strong>Bootstrap Project</strong>
                         </td>
                         <td>Jerry Milton</td>
                         <td>
@@ -232,27 +233,13 @@
                             >
                               <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
                             </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson"
-                            >
-                              <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker"
-                            >
-                              <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
                           </ul>
                         </td>
-                        <td><span class="badge bg-label-warning me-1">Pending</span></td>
+                        <td>
+							<audio id="voice" style="height: 20px;" controls="">
+            					<source src="">
+        		  			</audio>
+						</td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -269,15 +256,44 @@
                           </div>
                         </td>
                       </tr>
-                      
-                      
-                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--/ Basic Bootstrap Table -->
+				  
+				  
+				  
+                <div class="card-header d-flex align-items-center">
+                  <div class="card-title mb-0">
+                    <h4 class="m-0 me-2">Blank Page</h4>
+                  </div>
+         
+                  <audio id="voice" controls="">
+            		<source src="">
+        		  </audio>       
+                </div>
+                <div class="card-body"></div>
+                
+                
+                <div>
+					<table class="table">
+                    <thead>
                       <tr>
+                        <th>곡 명</th>
+                        <th>장르</th>
+                        <th>Users</th>
+                        <th>듣기</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0"> 
+                      <tr th:if="${musics != null}" th:each="music : ${musics}">
                         <td>
                           <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> 
-                          <strong>test1</strong>
+                          <strong th:text="${music.music_name}"></strong>
                         </td>
-                        <td>test2</td>
+                        <td th:text="${music.music_genre}"></td>
                         <td>
                           <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                             <li
@@ -289,27 +305,12 @@
                             >
                               <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
                             </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson"
-                            >
-                              <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker"
-                            >
-                              <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
                           </ul>
                         </td>
-                        <td><span class="badge bg-label-warning me-1">test3</span></td>
+                        <td>				
+							<audio controls disableRemotePlayback src="../download/20231214.mp3">     					
+        		  			</audio>
+						</td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -326,12 +327,23 @@
                           </div>
                         </td>
                       </tr>
-
                     </tbody>
                   </table>
-                </div>
+				</div>
+				
+				<p>
+                <div>
+					<input type="button" 
+						onclick="location.href='/music/upload'" 
+						class="btn btn-sm btn-outline-primary" value="음악 업로드">
+				</div>
+               
+				
+                
+                
+                
               </div>
-              <!--/ Basic Bootstrap Table -->
+                <!--/ Order Statistics -->            
             </div>
             <!-- / Content -->
 

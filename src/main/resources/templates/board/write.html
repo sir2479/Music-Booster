@@ -13,16 +13,14 @@
  -->
 <!-- beautify ignore:start -->
 <html
-  lang="en"
-  class="light-style layout-menu-fixed"
+  lang="ko"
   dir="ltr"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
-  <head th:replace="~{head :: #head}"></head>
-  <head>
-    <title>Blank Page</title>
+  <head th:replace="~{head :: #head}">
+    <title>글쓰기</title>
   </head>
 
   <body>
@@ -45,19 +43,42 @@
 			  
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-			  <!-- Order Statistics -->
-              <div class="card h-100">
-                <div class="card-header d-flex align-items-center">
-                  <div class="card-title mb-0">
-                    <h4 class="m-0 me-2">Blank Page</h4>
-                  </div>               
-                  <div class="avatar">
-                    <h4 class="m-0 me-2">테스트</h4>
-                  </div>      
+              <h4 class="fw-bold py-3 mb-4">
+			    <span class="text-muted fw-light">게시판 /</span> 게시판 공지사항</h4>
+
+              <!-- Basic Bootstrap Table -->
+              <div>
+                <h5 class="card-header">글쓰기</h5>
+                <p>
+				<form action="write" method="post" th:object="${writeForm}">
+                <div class="table-responsive text-nowrap">
+                  <table>
+               
+                      <tr>
+                        <th>제목</th>
+                            <td>
+					          <input type="text" th:field="*{board_title}">   
+					          <div class="error" th:errors="*{board_title}"></div>
+					        </td>
+					  </tr>
+					  <tr>
+                        <th>내용</th>
+                                <td>
+						          <textarea rows="30" cols="90" th:field="*{board_content}"></textarea>
+       							  <div th:errorClass="error" th:errors="*{board_content}"></div>
+						        </td>
+                      </tr>
+                  </table>
+                  
+                    <p>
+  <div class="center">  
+      <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
+      <input type="submit" value="등록하기" class="btn btn-sm btn-outline-primary">
+  </div>
+  
                 </div>
-                <div class="card-body"></div>
               </div>
-                <!--/ Order Statistics -->            
+              <!--/ Basic Bootstrap Table -->
             </div>
             <!-- / Content -->
 

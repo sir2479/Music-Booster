@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mub.repository.ArtistMapper">
+ 
+ <select id="findAllArtists" resultType="artist">
+   select * from artist
+ </select>
+ 
+ <select id="findArtistByName" resultType="artist">
+   select * from artist where 
+   <if test="artist_name != null">
+   artist_name = like '%' || #{artist_name} || '%'
+   </if>
+   
+ </select>
+ 
+ <select id="findArtist" resultType="artist">
+   select * from Artist where artist_id = #{artist_id}
+ </select>
+ 
+ <insert id="saveArtist">
+ 	<selectKey keyProperty="artist_id" resultType="long" order="BEFORE">
+ 		select seq_artist.nextval from dual
+ 	</selectKey>
+ 	
+ 	insert into artist(
+ 		artist_id,
+ 		artist_member_id,
+ 		artist_name,
+ 		artist_profile
+ 		)
+ 		values (
+ 		#{artist_id},
+ 		#{artist_member_id},
+ 		#{artist_name},
+ 		#{artist_profile}
+ 	)
+ 
+ </insert>
+ 
+   <update id="updateArtist">
+    update board
+    <set>
+        <if test="artist_name != null">artist_name = #{artist_name},</if>
+        <if test="artist_profile != null">artist_profile = #{artist_profile},</if>
+    </set>
+    where artist_id = #{artist_id}
+  </update>
+ 
+ <delete id="removeArtist">
+    delete from artist where artist_id = #{artist_id}
+  </delete>
+ 
+ <!--
+  <select id="getTotal" resultType="int">
+  	select count(*) from artist
+  	<if test="_parameter != null">
+    	where title like '%' || #{search} || '%'
+    </if>
+  </select>
+  -->
+ 
+ 
+</mapper>

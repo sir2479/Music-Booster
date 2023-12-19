@@ -102,7 +102,8 @@
                               id="member_id"
                               name="member_id"
                               disabled
-                              th:value="#{member_id}"
+                              th:value="${session.loginMember.member_id}"
+                              
                             />
                             
                           </div>
@@ -127,6 +128,7 @@
                               id="member_nickname"
                               name="member_nickname"
                               th:value="#{member_nickname}"
+                              placeholder="사용할 멤버ID를 입력하세요"
                             />
                           </div>                   
 						  <div class="mb-3 col-md-6">
@@ -173,7 +175,13 @@
                           
                           <div class="mb-3 col-md-6">
                             <label for="member_birthday" class="form-label">생년월일</label>
-                            <input type="date" class="form-control" id="member_birthday" name="member_birthday" th:value="#{member_birthday}" disabled />
+                            <input type="date" 
+                              class="form-control" 
+                              id="member_birthday" 
+                              name="member_birthday" 
+                              th:value="${session.loginMember.birthday}" 
+                              disabled 
+                            />
                           </div>
                           
                           <div class="mb-3 col-md-6">
@@ -183,7 +191,7 @@
                               class="form-control"
                               id=""
                               name="member_edit_date"
-                              th:value="#{member_edit_date}"
+                              th:value="${session.loginMember.hire_date}"
                               disabled
                             />
                           </div>	                          

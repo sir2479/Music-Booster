@@ -9,5 +9,6 @@
         <typeAlias type="com.example.mub.model.comments.Comments" alias="comments"/>
         <typeAlias type="com.example.mub.model.artist.Artist" alias="artist"/>
         <typeAlias type="com.example.mub.model.music.Music" alias="music"/>
+        <typeAlias type="com.example.mub.model.file.MusicFile" alias="musicfile"/>
     </typeAliases>
 </configuration>

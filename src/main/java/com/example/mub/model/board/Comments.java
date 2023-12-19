@@ -1,0 +1,15 @@
+package com.example.mub.model.board;
+
+import java.time.LocalDateTime;
+
+import lombok.Data;
+
+@Data
+public class Comments {
+	private Long comment_id;	//리플 아이디(일련번호)
+	private Long comment_board;	//게시글 아이디
+	private String comment_user;	//작성자 아이디
+	private String comment_content;	//리플 내용
+	private LocalDateTime comment_create_time;	//등록시간
+	private LocalDateTime comment_edit_time;	//수정시간
+}

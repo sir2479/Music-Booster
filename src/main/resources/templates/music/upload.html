@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<!-- =========================================================
+* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
+==============================================================
+
+* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+ -->
+<!-- beautify ignore:start -->
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head th:replace="~{head :: #head}"></head>
+  <head>
+    <title>Music Booster - 음악 업로드</title>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+		  
+		<!-- 사이드 메뉴바 --> 
+        <aside th:replace="~{menu :: #layout-menu}"></aside>
+
+        <!-- Layout container -->
+        <div class="layout-page">
+ 
+ 		  <!-- 헤더 유저바 -->
+          <nav th:replace="~{navbar :: #layout-navbar}"></nav>
+
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+			  
+            <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Upload /</span> Music</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+					
+                  <div class="card mb-4">
+                    <h5 class="card-header">Music File</h5>
+                    <!-- Account -->
+                    <div class="card-body">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+
+                        <div class="button-wrapper">
+                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                            <span class="d-none d-sm-block">Upload New File</span>
+                            <i class="bx bx-upload d-block d-sm-none"></i>
+                            <input
+                              type="file"
+                              id="file"
+                              name="file"
+                              class="account-file-input"
+                              hidden
+                              accept="image/png, image/jpeg"
+                            />
+                          </label>
+                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                            <i class="bx bx-reset d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Reset</span>
+                          </button>
+
+                          <p class="text-muted mb-0">Allowed MP3, wma or wav. Max size of 100mb</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                      <form action="upload" method="post" th:object="${uploadForm}" enctype="multipart/form-data">
+                        <div>
+                          <div class="mb-3 col-md-6">
+                            <label for="music_name" class="form-label">음악 명</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              th:field="*{music_name}"
+                              autofocus
+                            />
+                          </div>
+                          
+                          <div class="mb-3 col-md-6">
+                            <label for="music_artist_id" class="form-label">아티스트 명</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              th:field="*{music_artist_id}"
+                              placeholder=""
+                            />
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label for="genre" class="form-label">장르</label>
+                            <select class="select2 form-select" th:field="*{music_genre}">
+                              <option value="">Select genre</option>
+                              <option value="Ballad">발라드</option>
+                              <option value="dance">댄스</option>
+                              <option value="rap/hip-hop">랩/힙합</option>
+                              <option value="other">기타</option>
+                            </select>
+                          </div>
+                          
+                          <div class="mb-3 col-md-6">
+                            <label for="music_lyrics" class="form-label">가사</label>
+                            <textarea 
+                            	rows="10" 
+                            	class="form-control" 
+                            	id="music_lyrics"
+                              	name="music_lyrics"
+                              	value="music_lyrics"
+                            	>					
+							</textarea>
+                          </div>
+                          
+                          <div class="mb-3 col-md-6">
+                            <label for="file" class="form-label">파일</label>
+                            <input class="form-control" type="file" name="file">
+                          </div>
+
+                        </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">곡 저장</button>
+                          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- /Account -->
+                  </div>
+                  <div class="card">
+                    <h5 class="card-header">Delete Account</h5>
+                    <div class="card-body">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Content -->
+            <footer th:replace="~{footer :: #footer}"></footer>
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+  </body>
+  <body th:replace="~{scr :: #scr}"></body>
+</html>
