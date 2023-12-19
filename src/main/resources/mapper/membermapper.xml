@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mub.repository.MemberMapper">
   <insert id="saveMember">
     insert into member(
@@ -31,15 +31,17 @@
   
   <update id="updateMember">
     update member
-    <set>
-      merber_email = #{member_email}
-      nickname = #{nickname}
-      password = #{password}
-      merber_name = #{member_name}
-      phone = #{phone}
-      birthday = #{birthday}
-      profile = #{profile}
-    </set>
+    set 
+    	member_email = #{member_email},  <!-- 수정이 필요한 부분 -->
+        nickname = #{nickname},
+        password = #{password},
+        member_name = #{member_name},
+        phone = #{phone},
+        birthday = #{birthday},
+        profile = #{profile}
+    <!-- <set>
+	      <if test="profile != null">profile= #{profile}</if> 
+    </set> -->
       where member_id = #{member_id}
   </update>
   

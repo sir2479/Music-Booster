@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -90,7 +90,7 @@
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false" th:object="${member}">
+                      <form th:action="@{/member/update(member_id=${member_id})}" method="POST" th:object="${member}" >
                         <div class="row">
 					
 
@@ -99,8 +99,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              disabled
-                             th:field="${member.member_id}"
+                             
+            
+                             th:field="*{member_id}"
                             />
                             
                           </div>
@@ -155,8 +156,8 @@
                             <div class="input-group input-group-merge">
                               <input
                                 type="text"
-                                id="member_phone"
-                                name="member_phone"
+                                id="phone"
+                                name="phone"
                                 class="form-control"
                                 th:value="${member.phone}"
                               />
@@ -164,8 +165,8 @@
                           </div>
                           
                           <div class="mb-3 col-md-6">
-                  			<label for="member_position" class="form-label">포지션</label><br>
-                  			<select name="member_position">
+                  			<label for="position" class="form-label">포지션</label><br>
+                  			<select name="position">
 								<option th:value="${'member'}">일반사용자</option>	  
 								<option th:value="${'artist'}">아티스트</option>
 							</select>
@@ -175,20 +176,20 @@
                             <label for="member_birthday" class="form-label">생년월일</label>
                             <input type="date" 
                             class="form-control" 
-                            id="member_birthday" 
-                            name="member_birthday" 
+                            id="birthday" 
+                            name="birthday" 
                             th:value="${#temporals.format(member.birthday, 'yyyy-MM-dd')}" />
                           </div>
                           
                           <div class="mb-3 col-md-6">
-                            <label for="member_edit_date" class="form-label">가입일</label>
+                            <label for="member_hire_date" class="form-label">가입일</label>
                             <input
                               type="date"
+                              
                               class="form-control"
-                              id="member_hire_date"
-                              name="member_hire_date"             
-                              th:value="${#temporals.format(member.hire_date, 'yyyy-MM-dd')}"
-                              disabled
+             				  name="hire_date"
+                              th:value="*{hire_date}"
+                              
                               
                             />
                           </div>	                          
@@ -198,8 +199,8 @@
                             <input
                               type="text"
                               class="form-control"
-                              id="member_profile"
-                              name="member_profile"
+                              id="profile"
+                              name="profile"
                               th:value="${member.profile}"
                             />
                           </div>	                          

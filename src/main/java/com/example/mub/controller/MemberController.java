@@ -142,31 +142,41 @@ public class MemberController {
 		
 		Member member = memberService.findMember(loginMember.getMember_id());
 		
-		log.info("member :{}",member);
 		
 		model.addAttribute("member", member);
-		
+		log.info("memberID:{}", member.getMember_id());
 	
 		return "member/update";
 	}
 	
 	// 회원 정보 수정
 	@PostMapping("update")
-	public String update_action(@Validated @ModelAttribute("update") MemberUpdate memberupdate,
+	public String update_action(@Validated @ModelAttribute("member") MemberUpdate memberupdate,
 								BindingResult result,
 								HttpServletRequest request,
-								@RequestParam(defaultValue = "/") String redirectURL) {
+								@RequestParam(defaultValue = "/") String redirectURL
+								) {
 		
 	    if (result.hasErrors()) {
+	    	log.info("에러발생");
 	        return "redirect:/";
 	    }
-				
+	    log.info("updateID : {}",memberupdate.getMember_id());
+		log.info("Memberupdate : {}",memberupdate);
+		
 		Member member = memberupdate.toMember(memberupdate);
+		
+		log.info("member : {}", member);
+
+		member.setMember_id(member.getMember_id().replace(",", ""));
+		
+		log.info("콤마 삭제후 member: {}", member);
+		
 		
 		memberService.updateMember(member);
 	
-		log.info("member : {} ", member);
 		
+				
 		return "redirect:/";
 
 	}

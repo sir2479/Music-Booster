@@ -11,25 +11,26 @@ import org.springframework.format.annotation.DateTimeFormat;
 import lombok.Data;
 
 @Data
-
 public class MemberUpdate {
-	@NotNull
+	
 	private String member_id;
-	@NotNull
+	
 	private String member_email;	
-	@NotNull
+	
 	private String nickname;	
-	@NotNull
+	
 	private String password;	
-	@NotNull
+	
 	private String member_name;	
-	@NotNull
+	
 	private String phone;	
-	@NotNull @DateTimeFormat(pattern="yyyy-MM-dd") @Past
+	@DateTimeFormat(pattern="yyyy-MM-dd") @Past
 	private LocalDate birthday;	
-	@NotNull @DateTimeFormat(pattern="yyyy-MM-dd") @Past
+	
+	private String position;
+	@DateTimeFormat(pattern="yyyy-MM-dd") @Past
 	private LocalDate hire_date;	
-	@NotNull
+
 	private String profile;	
 	
 	public Member toMember(MemberUpdate memberUpdate) {
@@ -40,6 +41,7 @@ public class MemberUpdate {
 		member.setPassword(memberUpdate.getPassword());
 		member.setMember_name(memberUpdate.getMember_name());
 		member.setPhone(memberUpdate.getPhone());
+		member.setPosition(memberUpdate.getPosition());
 		member.setBirthday(memberUpdate.getBirthday());
 		member.setHire_date(memberUpdate.getHire_date());
 		member.setProfile(memberUpdate.getProfile());
