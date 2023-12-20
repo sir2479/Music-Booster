@@ -29,16 +29,25 @@
     select * from member where member_id = #{member_id}
   </select>
   
+   <select id="findMemberByEmail" resultType="member">
+    SELECT * FROM member WHERE member_email = #{member_email}
+  </select>
+  
+   <select id="findMemberByNickname" resultType="member">
+    SELECT * FROM member WHERE nickname = #{nickname}
+  </select>
+  
   <update id="updateMember">
     update member
-    set 
+    <set>
     	member_email = #{member_email},  <!-- 수정이 필요한 부분 -->
         nickname = #{nickname},
-        password = #{password},
+        <if test="password != null"> password = #{password},</if>
         member_name = #{member_name},
         phone = #{phone},
         birthday = #{birthday},
         profile = #{profile}
+    </set>
     <!-- <set>
 	      <if test="profile != null">profile= #{profile}</if> 
     </set> -->

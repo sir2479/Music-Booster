@@ -127,7 +127,6 @@ public class MemberController {
 	
 
 	// 내정보 수정 페이지 이동
-
 	@GetMapping("update")
 	public String update(@SessionAttribute(value = "loginMember", required = false) Member loginMember,						 
             			 Model model) {
@@ -144,35 +143,68 @@ public class MemberController {
 		
 		
 		model.addAttribute("member", member);
-		log.info("memberID:{}", member.getMember_id());
+		
+		log.info("memberID : {}", member.getMember_id());
 	
 		return "member/update";
+		
 	}
 	
 	// 회원 정보 수정
 	@PostMapping("update")
-	public String update_action(@Validated @ModelAttribute("member") MemberUpdate memberupdate,
+	public String update_action(@Validated @ModelAttribute("member") MemberUpdate memberUpdate,
 								BindingResult result,
 								HttpServletRequest request,
-								@RequestParam(defaultValue = "/") String redirectURL
+								@RequestParam(defaultValue = "/") String redirectURL,
+								@SessionAttribute(value = "loginMember", required = false) Member loginMember
 								) {
+		
 		
 	    if (result.hasErrors()) {
 	    	log.info("에러발생");
 	        return "redirect:/";
 	    }
-	    log.info("updateID : {}",memberupdate.getMember_id());
-		log.info("Memberupdate : {}",memberupdate);
-		
-		Member member = memberupdate.toMember(memberupdate);
+
+		Member member = memberUpdate.toMember(memberUpdate);
+        
+        // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
+        if (!memberUpdate.getMember_email().contains("@")) {
+            // BindingResult 객체에 GlobalError 를 추가한다.
+            result.reject("emailError", "이메일 형식이 잘못되었습니다.");
+            // member/joinForm.html 페이지를 리턴한다.
+            return "member/update";
+        }
+        
+        // 이메일 중복 확인을 위해 데이터베이스에서 기존 회원 정보 가져오기
+        Member existingMember = memberService.findMemberByEmail(memberUpdate.getMember_email());
+        
+        // 로그인한 멤버와 가져온 멤버가 다른 경우에만 중복 여부를 검사합니다.
+        if (existingMember != null && !existingMember.getMember_id().equals(loginMember.getMember_id())) {
+            // 이메일이 이미 존재하는 경우, 사용자에게 경고 메시지를 전달합니다.
+            result.reject("emailError", "이미 사용 중인 이메일입니다.");
+            return "member/update";
+        }
+        
+        // 이메일 중복 확인을 위해 데이터베이스에서 기존 회원 정보 가져오기
+        Member existingMembernick = memberService.findMemberByNickname(memberUpdate.getNickname());
+        
+        // 로그인한 멤버와 가져온 멤버가 다른 경우에만 중복 여부를 검사합니다.
+        if (existingMembernick != null && !existingMembernick.getMember_id().equals(loginMember.getMember_id())) {
+            // 이메일이 이미 존재하는 경우, 사용자에게 경고 메시지를 전달합니다.
+            result.reject("nicknameError", "이미 사용 중인 닉네임입니다.");
+            return "member/update";
+        }
+           
+        
 		
 		log.info("member : {}", member);
+		
 
 		member.setMember_id(member.getMember_id().replace(",", ""));
 		
 		log.info("콤마 삭제후 member: {}", member);
 		
-		
+			
 		memberService.updateMember(member);
 	
 		

@@ -20,6 +20,15 @@ public class MemberService {
 	public Member findMember(String member_id) {
 	return memberMapper.findMember(member_id);
 	}
+	
+	public Member findMemberByEmail(String member_email) {
+		return memberMapper.findMemberByEmail(member_email);
+	}
+	
+	public Member findMemberByNickname(String member_nickname) {
+		return memberMapper.findMemberByNickname(member_nickname);
+	}
+
 
 	@Transactional
 	public void saveMember(Member member) {
