@@ -62,7 +62,6 @@ public class ArtistController {
 							Model model) {
 		
 		model.addAttribute("artistWriteForm", new ArtistWriteForm());
-		model.addAttribute("artistImageFile", new ImageFile());
 		
 		
 		return "artist/artist-write";
@@ -75,6 +74,7 @@ public class ArtistController {
             			,BindingResult result) {
 		
 		log.info("글쓰기");
+		log.info("file: {}", file);
 		
 		if (result.hasErrors()) {
 			return "artist/artist-write";
@@ -107,6 +107,8 @@ public class ArtistController {
 			log.info("게시글 없음");
 			return "redirect:/artist";
 		}
+		
+		ImageFile imageFile = 
 		
 		model.addAttribute("artist", artist);
 	
