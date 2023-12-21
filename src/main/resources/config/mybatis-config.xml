@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+ 	<!--  <settings>
+		<setting name="callSettersOnNulls" value="true"/>
+	</settings>
+-->
     <typeAliases>
         <typeAlias type="com.example.mub.model.member.Member" alias="member"/>
         <typeAlias type="com.example.mub.model.board.Board" alias="board"/>
@@ -10,5 +15,9 @@
         <typeAlias type="com.example.mub.model.artist.Artist" alias="artist"/>
         <typeAlias type="com.example.mub.model.music.Music" alias="music"/>
         <typeAlias type="com.example.mub.model.file.MusicFile" alias="musicfile"/>
+        <typeAlias type="com.example.mub.model.file.ImageFile" alias="imagefile"/>
     </typeAliases>
+    
+   
+    
 </configuration>

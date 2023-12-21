@@ -14,8 +14,8 @@ public class ArtistWriteForm {
 	
 	public static Artist toArtist(ArtistWriteForm artistWriteForm) {
 		Artist artist = new Artist();
-		artistWriteForm.setArtist_name(artistWriteForm.getArtist_name());
-		artistWriteForm.setArtist_profile(artistWriteForm.getArtist_profile());
+		artist.setArtist_name(artistWriteForm.getArtist_name());
+		artist.setArtist_profile(artistWriteForm.getArtist_profile());
 		return artist;
 	}
 

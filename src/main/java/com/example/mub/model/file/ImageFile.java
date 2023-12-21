@@ -23,11 +23,16 @@ public class ImageFile {
 	 * 뮤직아이디
 	 */
 	
-	public ImageFile(String file_original_name, String file_saved_name, Long file_size) {
+	public ImageFile(AttachedFile attachedFile, Long file_member_id, Long file_board_id, Long file_artist_id, Long file_music_id) {
 		//super();
-		this.file_original_name = file_original_name;
-		this.file_saved_name = file_saved_name;
-		this.file_size = file_size;
+		this.file_original_name = attachedFile.getFile_original_name();
+		this.file_saved_name = attachedFile.getFile_saved_name();
+		this.file_size = attachedFile.getFile_size();
+		this.file_member_id = file_member_id;
+		this.file_board_id = file_board_id;
+		this.file_artist_id = file_artist_id;
+		this.file_music_id = file_music_id;
+		
 	}
 	
 }

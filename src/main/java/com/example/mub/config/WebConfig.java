@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer{
 	
 	private String[] loginCheckAddPaths = {"/member/update"};
 	
-	private String[] artistCheckAddPaths = {};
+	private String[] artistCheckAddPaths = {"/artist/artist-write"};
 	
 	private String[] adminCheckAddPaths = {};
 	
@@ -23,7 +23,9 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginCheckInterceptor())
 				.order(1)
-				.addPathPatterns(loginCheckAddPaths);
+				.addPathPatterns(loginCheckAddPaths)
+				.addPathPatterns(artistCheckAddPaths);
+	
 				
 	}
 }

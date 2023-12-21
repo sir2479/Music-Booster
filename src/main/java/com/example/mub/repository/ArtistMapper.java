@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.mub.model.artist.Artist;
+import com.example.mub.model.file.ImageFile;
 
 @Mapper
 public interface ArtistMapper {

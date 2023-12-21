@@ -56,13 +56,15 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span> 아티스트</h4>
               
-  <div class="right">
+  <!--
+	<div class="right">
 	  <label for"searchText">검색</label>
 	  <input type="search" id="search" name="search" th:value="${search}">
 	  <input type="button" onclick="search()" value="검색">
-  </div>
+    </div> 
+  -->
               <!-- Examples -->
-              <div class="row mb-5">
+              <!--<div class="row mb-5">
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card h-100">
                     <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
@@ -74,7 +76,22 @@
                       <a href="javascript:void(0)" class="btn btn-outline-primary">Go somewhere</a>
                     </div>
                   </div>
-                </div>
+                </div>-->
+                
+                <table>
+    <tr>
+      
+      <th>제목</th>
+      <th>작성자</th>
+      
+      
+    </tr>
+    <tr th:each="artist, artistStat: ${artists}">
+      <td class="center"><a th:text="${artist.artist_name}" th:href="@{/artist/artist-read(artist_id=${artist.artist_id})}"></a></td>
+      <td th:text="${artist.artist_member_id}" class="center"></td>
+     
+    </tr>
+  </table>
                 
               <!-- Examples -->
               

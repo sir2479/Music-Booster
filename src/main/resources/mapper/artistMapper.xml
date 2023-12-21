@@ -23,7 +23,7 @@
  
  <insert id="saveArtist">
  	<selectKey keyProperty="artist_id" resultType="long" order="BEFORE">
- 		select seq_artist.nextval from dual
+ 		select artist_seq.nextval from dual
  	</selectKey>
  	
  	insert into artist(

@@ -22,6 +22,7 @@ public class ArtistService {
 	@Transactional
 	public void saveArtist(Artist artist) {
 		artistMapper.saveArtist(artist);
+		log.info("saveArtist맵퍼통과");
 	}
 	
 	public List<Artist> findAllArtists(String search) {
@@ -54,5 +55,7 @@ public class ArtistService {
 			artistMapper.updateArtist(updateArtist);
 		}
 	}
+	
+	
 
 }
