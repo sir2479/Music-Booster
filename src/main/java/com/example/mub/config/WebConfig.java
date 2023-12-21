@@ -5,19 +5,27 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
+import com.example.mub.interceptor.LoginCheckInterceptor;
 import com.example.mub.repository.MemberMapper;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
-	private String[] excludePaths = {"/","/member/join","/member/login","/member/logout",
-			"/*.css", "/*.js", "/*.ico", "/error"};
+	private String[] excludePaths = {"/","/member/join","/member/login","/member/logout","/member/update",
+			"/**.css", "/**.js", "/**.ico", "/**error", "/**.scss"};
 	
-	/*@Override
+	private String[] loginCheckAddPaths = {"/member/update"};
+	
+	private String[] artistCheckAddPaths = {"/artist/artist-write"};
+	
+	private String[] adminCheckAddPaths = {};
+	
+	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new LoginCheckInterceptor())
 				.order(1)
-				.addPathPatterns("/**")
-				.excludePathPatterns(excludePaths);
-	}*/
+				.addPathPatterns(loginCheckAddPaths)
+				.addPathPatterns(artistCheckAddPaths);
+	
+				
+	}
 }
