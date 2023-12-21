@@ -6,9 +6,11 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.mub.model.board.Board;
+import com.example.mub.model.board.BoardCategory;
 import com.example.mub.repository.BoardMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class BoardService {
 	@Transactional
 	public void saveBoard(Board board) {
         // 데이터베이스에 저장한다.
+		log.info("세이브메퍼: {}",board);
         boardMapper.saveBoard(board);
         //첨부파일 저장
 //        if(file != null && file.getSize() > 0) {
@@ -48,13 +51,18 @@ public class BoardService {
 //		return attachedFile;
 //	}
 
-	public int getTotal(String searchText) {
-		return boardMapper.getTotal(searchText);
+	public int getTotal(BoardCategory board_category, String searchText) {
+		return boardMapper.getTotal(board_category, searchText);
 	}
 
-	public List<Board> findAllBoards(String searchText, int startRecord, int countPerPage) {
+	public List<Board> findAllBoards(BoardCategory board_category, String searchText, int startRecord, int countPerPage) {
 		RowBounds rowBounds = new RowBounds(startRecord, countPerPage);
-		return boardMapper.findAllBoards(searchText ,rowBounds);
+		log.info("rowBounds: {}",rowBounds);
+		log.info("카테고리: {}",board_category);		
+		List<Board> findAllBoards = boardMapper.findAllBoards(board_category, searchText ,rowBounds);
+		log.info("서치: {}",searchText);			
+		log.info("findAllBoards: {}",findAllBoards);		
+		return boardMapper.findAllBoards(board_category, searchText, rowBounds);
 	}
 
 	public Board findBoard(Long board_id) {		
@@ -71,32 +79,32 @@ public class BoardService {
 		
 	}
 
-//	@Transactional
-//	public void updateBoard(Board updateBoard, boolean isFileRemoved, MultipartFile file) {
-//		Board board = boardMapper.findBoard(updateBoard.getBoard_id());
-//		
-//		
-//		if(board != null) {
-//			boardMapper.updateBoard(updateBoard);
-//			// 첨부파일 정보를 가져온다.
+	@Transactional
+	public void updateBoard(Board updateBoard /*, boolean isFileRemoved, MultipartFile file*/) {
+		Board board = boardMapper.findBoard(updateBoard.getBoard_id());
+		
+		
+		if(board != null) {
+			boardMapper.updateBoard(updateBoard);
+			// 첨부파일 정보를 가져온다.
 //			AttachedFile attachedFile = boardMapper.findFileByBoardId(updateBoard.getBoard_id());
-//			
+			
 //			if(attachedFile != null && (isFileRemoved || (file != null && file.getSize() > 0))) {
 //				// 파일 삭제를 요청했거나 새로운 파일이 업로드 됐다면 기존 파일을 삭제한다.	
 //				removeAttachedFile(attachedFile.getAttachedFile_id());
 //			}
 //		}
-//		
-//		// 새로 저장할 파일이 있으면 저장한다.
+		
+		// 새로 저장할 파일이 있으면 저장한다.
 //		if(file != null && file.getSize() > 0) {
-//			// 첨부파일을 서버에 저장한다.
+			// 첨부파일을 서버에 저장한다.
 //			AttachedFile savedFile = fileService.saveFile(file);
-//			// 데이터베이스 저장될 board_id를 세팅
+			// 데이터베이스 저장될 board_id를 세팅
 //			savedFile.setBoard_id(updateBoard.getBoard_id());
-//			// 첨부파일 내용을 데이터베이스에 저장
+			// 첨부파일 내용을 데이터베이스에 저장
 //			boardMapper.saveFile(savedFile);
-//		}
-//	}
+		}
+	}
 	
 //	@Transactional
 //	public void removeAttachedFile(Long attachedFile_id) {

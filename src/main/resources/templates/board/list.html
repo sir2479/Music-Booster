@@ -37,8 +37,8 @@
 
 	  function search(){
 		  let searchText = document.getElementById("searchText").value;
-		  location.href="/board/list?searchText=" + searchText;
-		
+		  let board_category = document.getElementById("board_category").value;
+		  location.href="/board/list?board_category=" + board_category + "&searchText=" + searchText;			
 	  }
   </script>
     </head>
@@ -47,7 +47,7 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-		  
+			 				
 		<!-- 사이드 메뉴바 --> 
         <aside th:replace="~{menu :: #layout-menu}"></aside>
 
@@ -61,14 +61,17 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
 			  
+			  					
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">공지사항 /</span> 커뮤니티 - 공지사항</h4>
-
+			    <span class="text-muted fw-light">/</span> </h4>
+					<th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
+						<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
+			 		</th:block>
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">공지사항</h5>
+                <h5 class="card-header"></h5>
 				  <p>
 				<!--<div th:if="${asd != null}">
 					<h3>에러요</h3>
@@ -78,6 +81,8 @@
 				   <p class="right">
 					  <label for"searchText">검색</label>
 						  	<input type="search" id="searchText" name="searchText" th:value="${searchText}">
+						  	<input type="hidden" id="board_category" name="board_category"
+												th:value="${board_category}">
 						 	 <input type="button" onclick="search()" value="검색">
 <!--					 	 <span th:if="${searchText} != ${board.board_title}">
 							  <th>검색 결과가 없습니다.</th> 
@@ -94,64 +99,60 @@
                         <th>작성일</th>
                       </tr>
                       <div class="center" th:if="${boards.size() == 0}">
-            <h4>검색 결과가 없습니다.</h4>
-        </div>
-        <!--              <div th:if="${board.board_title} == ${board.searchText}">-->
+			            <h4>검색 결과가 없습니다.</h4>
+			        </div>
                       <tr th:each="board, boardStat: ${boards}">
 					      <td th:text="${boardStat.count}" class="center"></td>
 					      <td class="center">
-							  	<a th:text="${board.board_title}" th:href="@{/board/read(board_id=${board.board_id})}"></a>
+							  	<a th:text="${board.board_title}" th:href="@{/board/read(board_id=${board.board_id},board_category=${param.board_category})}"></a>
 							  </td>
 					      <td th:text="${board.board_member}" class="center"></td>
 					      <td th:text="${board.board_hit}" class="center"></td>
 					      <td th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}" class="center"></td>
-					      
 					  </tr>
-               <!--       </div>-->
 					</thead>
                   </table>
                   
                     <p>
 							  <div id="navigator" class="center">
-		  		  
-								 <a th:href="@{/board/list(page=${navi.totalPageCount / navi.totalPageCount})}"><<</a>&nbsp;
+								 <a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount / navi.totalPageCount})}"><<</a>&nbsp;
 								   </th:block>		  	
 		  
 								  <th:block th:if="${navi.currentPage - navi.pagePerGroup > 0}">			  
-								 <a th:href="@{/board/list(page=${navi.endPageGroup - navi.pagePerGroup})}"><</a>&nbsp;
+								 <a th:href="@{/board/list(board_category=${board_category},page=${navi.endPageGroup - navi.pagePerGroup})}"><</a>&nbsp;
 								   </th:block>
 								    
 <!--								  <th:block th:if="${navi.currentPage - 1 > 0}">			  
 								  	<a th:href="@{/board/list(page=${navi.currentPage - 1}, searchText=${searchText})}"><</a>&nbsp;&nbsp;
 								  </th:block>-->
 								  	
-<th:block th:if="${navi.endPageGroup ne 0}">
-    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-        <span th:if="${counter == navi.currentPage}">
-            <span th:text="${counter}"></span>&nbsp;
-        </span>
-        <span th:unless="${counter == navi.currentPage}">
-            <a th:href="@{/board/list(page=${counter})}" th:text="${counter}"></a>&nbsp;
-        </span>
-    </th:block>
-</th:block>
+									<th:block th:if="${navi.endPageGroup ne 0}">
+									    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+									        <span th:if="${counter == navi.currentPage}">
+									            <span th:text="${counter}"></span>&nbsp;
+									        </span>
+									        <span th:unless="${counter == navi.currentPage}">
+									            <a th:href="@{/board/list(board_category=${board_category},page=${counter})}" th:text="${counter}"></a>&nbsp;
+									        </span>
+									    </th:block>
+									</th:block>
 									  
 <!--								  <th:block th:if="${navi.currentPage < navi.totalPageCount}">
 								  &nbsp;<a th:href="@{/board/list(page=${navi.currentPage + 1}, searchText=${searchText})}">></a>&nbsp;
 								  </th:block>-->
 								  
 								  <th:block th:if="${navi.currentPage + navi.pagePerGroup < navi.totalPageCount +1}">
-								  &nbsp;<a th:href="@{/board/list(page=${navi.startPageGroup + navi.pagePerGroup})}">></a>
+								  &nbsp;<a th:href="@{/board/list(board_category=${board_category},page=${navi.startPageGroup + navi.pagePerGroup})}">></a>
 								  </th:block>
 								  
-								  &nbsp;<a th:href="@{/board/list(page=${navi.totalPageCount})}">>></a>
-		  
-	 						 </div>
+								  &nbsp;<a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount})}">>></a>
+<!--		  						</div>
+-->	 						 </div>
 						
 
   <p class="right">                  
     <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
-    <input type="button" onclick="location.href='/board/write'" class="btn btn-sm btn-outline-primary" value="글쓰기">
+    <input type="button" th:onclick="|location.href='@{/board/write(board_category=${board_category})}'|" class="btn btn-sm btn-outline-primary" value="글쓰기">
   </p>
   
   
