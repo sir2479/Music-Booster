@@ -66,41 +66,47 @@
               <span class="menu-header-text">게시판</span>
             </li>
             
-            <!-- 공지사항 -->
-            <li class="menu-item" 
-            	th:classappend="${#httpServletRequest.requestURI == '/board/list' ? 'active' : ''}">
-              <a href="/board/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">공지사항</div>
-              </a>
-            </li>            
-            <!-- 새소식 -->
-            <li class="menu-item">
-              <a href="/board/list" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">새소식</div>
-              </a>
-            </li>
-            <!-- 장르 커뮤니티 -->
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">장르 커뮤니티</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="/board/list" class="menu-link">
-                    <div data-i18n="Account">장르1</div>
+			<!-- 공지사항 -->
+			<li class="menu-item" 
+				th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'NOTICE' ? 'active' : ''}">
+			  <a href="/board/list?board_category=NOTICE" class="menu-link">
+			    <i class="menu-icon tf-icons bx bx-table"></i>
+			    <div data-i18n="Tables">공지사항</div>
+			  </a>
+			</li>
+			<!-- 새소식 -->
+			<li class="menu-item" 
+				th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'NEWS' ? 'active' : ''}">
+			  <a href="/board/list?board_category=NEWS" class="menu-link">
+			    <i class="menu-icon tf-icons bx bx-table"></i>
+			    <div data-i18n="Tables">새소식</div>
+			  </a>
+			</li>
+			<!-- 장르 커뮤니티 -->
+			<li class="menu-item" 
+				th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'BALLAD' ? 'active' : ''}">
+			  <a href="javascript:void(0);" class="menu-link menu-toggle">
+			    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+			    <div data-i18n="Account Settings">장르 커뮤니티</div>
+			  </a>
+			  <ul class="menu-sub">
+			    <!-- 발라드 -->
+			    <li class="menu-item" 
+			    	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'BALLAD' ? 'active' : ''}">
+			      <a href="/board/list?board_category=BALLAD" class="menu-link">
+			        <div data-i18n="Account">발라드</div>
+			      </a>
+			    </li>
+                <li class="menu-item" 
+                	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'DANCE' ? 'active' : ''}">
+                  <a href="/board/list?board_category=DANCE" class="menu-link">
+                    <div data-i18n="Notifications">댄스</div>
                   </a>
                 </li>
-                <li class="menu-item">
-                  <a href="/board/list" class="menu-link">
-                    <div data-i18n="Notifications">장르2</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="/board/list" class="menu-link">
-                    <div data-i18n="Connections">장르3</div>
+                <li class="menu-item" 
+                	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'RAP_HIPHOP' ? 'active' : ''}">
+                  <a href="/board/list?board_category=RAP_HIPHOP" class="menu-link">
+                    <div data-i18n="Connections">랩/힙합</div>
                   </a>
                 </li>
               </ul>

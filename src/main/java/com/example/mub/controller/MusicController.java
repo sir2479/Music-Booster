@@ -1,5 +1,7 @@
 package com.example.mub.controller;
 
+import java.util.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +27,27 @@ public class MusicController {
 	@GetMapping("music-home")
     public String music(Model model) {
 		
+		List<Music> musics = musicService.findAllMusic();
 		
+		List<MusicFile> musicFiles = new ArrayList<>();
+		
+		for(int i = 0 ; i < musics.size() ; i++ ) {
+			musicFiles.add(musicService.findMusicFileByMusicId(musics.get(i).getMusic_id()));
+		}
+		
+		
+//		Music music = musicService.findMusicByMusicId(5L);
+//		log.info("music: {}", music);
+//		
+//		MusicFile musicFile = musicService.findMusicFileByMusicId(music.getMusic_id());
+//		log.info("musicFile: {}", musicFile);
+		
+		log.info("musics: {}", musics);
+		log.info("musicFiles: {}", musicFiles);
+		
+		model.addAttribute("musics", musics);
+		model.addAttribute("musicFiles", musicFiles);
+
 
         return "music/music-home";
     }

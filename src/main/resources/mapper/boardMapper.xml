@@ -26,21 +26,23 @@
   
   <select id="findAllBoards" resultType="board">
     select * from board
-        <if test="_parameter != null">
-    	where board_title like '%' || #{searchText} || '%'
- 	   </if>
+    	where board_category = #{board_category} and
+         <if test="_parameter != null">
+    	board_title like '%' || #{searchText} || '%'
+ 	   </if> 
     order by board_create_time desc
   </select>
   
     <select id="getTotal" resultType="int">
   	select count(*) from board
   	<if test="_parameter != null">
-    	where board_title like '%' || #{searchText} || '%'
+    	where board_category = #{board_category} and board_title like '%' || #{searchText} || '%'
     </if>
   </select>
   
   <select id="findBoard" resultType="board">
-    select * from board where board_id = #{board_id}
+    select * from board 
+    	where board_id = #{board_id}
   </select>
   
     <update id="addHit">
