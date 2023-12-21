@@ -194,6 +194,12 @@ public class MemberController {
             result.reject("nicknameError", "이미 사용 중인 닉네임입니다.");
             return "member/update";
         }
+        
+        // 비밀번호란에 입력한 내용과 비밀번호 확인란에 입력한 내용이 서로 같은지 다른지 확인하기
+        if (memberUpdate.getPassword() != memberUpdate.getPasswordCheck()) {
+        	result.reject("passwordError","비밀번호 오류");
+        	return "member/update";
+        }
            
         
 		

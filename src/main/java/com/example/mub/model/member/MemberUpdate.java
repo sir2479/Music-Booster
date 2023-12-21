@@ -24,7 +24,7 @@ public class MemberUpdate {
 	@Size(min = 4, max = 20, message = "비밀번호는 4~20사이로 입력해주세요.")
 	private String password;	
 	
-//	private String passwordCheck;
+	private String passwordCheck;
 	
 	private String member_name;	
 	
@@ -44,7 +44,7 @@ public class MemberUpdate {
 		member.setMember_email(memberUpdate.getMember_email());
 		member.setNickname(memberUpdate.getNickname());
 		member.setPassword(memberUpdate.getPassword());
-//		member.setPasswordCheck(memberUpdate.getPasswordCheck());
+		member.setPasswordCheck(memberUpdate.getPasswordCheck());
 		member.setMember_name(memberUpdate.getMember_name());
 		member.setPhone(memberUpdate.getPhone());
 		member.setPosition(memberUpdate.getPosition());
