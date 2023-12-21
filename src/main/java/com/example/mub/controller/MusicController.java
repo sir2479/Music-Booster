@@ -2,6 +2,7 @@ package com.example.mub.controller;
 
 import java.util.*;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -31,22 +32,25 @@ public class MusicController {
 		
 		List<MusicFile> musicFiles = new ArrayList<>();
 		
-		for(int i = 0 ; i < musics.size() ; i++ ) {
-			musicFiles.add(musicService.findMusicFileByMusicId(musics.get(i).getMusic_id()));
+		// 장르 음악
+		List<Music> genreMusics = musicService.findMusicByGenre("Ballad");
+		
+		if(genreMusics.size() > 5) {
+			genreMusics = genreMusics.subList(0, 5);
 		}
 		
+		for(int i = 0 ; i < musics.size() ; i++ ) {
+			musicFiles.add(musicService.findMusicFileByMusicId(musics.get(i).getMusic_id()));
+			musics.get(i).setFile_saved_name(musicFiles.get(i).getFile_saved_name());
+		}
 		
-//		Music music = musicService.findMusicByMusicId(5L);
-//		log.info("music: {}", music);
-//		
-//		MusicFile musicFile = musicService.findMusicFileByMusicId(music.getMusic_id());
-//		log.info("musicFile: {}", musicFile);
-		
-		log.info("musics: {}", musics);
-		log.info("musicFiles: {}", musicFiles);
+//		log.info("musics: {}", musics);
+//		log.info("musicFiles: {}", musicFiles);
+//		log.info("genreMusics: {}", genreMusics);
 		
 		model.addAttribute("musics", musics);
-		model.addAttribute("musicFiles", musicFiles);
+		model.addAttribute("musicFile", musicFiles);
+		model.addAttribute("genreMusics", genreMusics);
 
         return "music/music-home";
     }
@@ -74,4 +78,24 @@ public class MusicController {
 
 		return "redirect:/music/music-home";
     }
+	
+	@PostMapping("{music_genre}")
+	public ResponseEntity<List<Music>> genreChange(@PathVariable String music_genre,
+												Model model){
+		
+		log.info("genreChange 들어옴");
+		log.info("music_genre: {}", music_genre);
+		
+		List<Music> genreMusics = musicService.findMusicByGenre(music_genre);
+		
+		if(genreMusics.size() > 5) {
+			genreMusics = genreMusics.subList(0, 5);
+		}		
+		//log.info("genreMusics: {}", genreMusics);
+		
+		//model.addAttribute("genreMusics", genreMusics);
+		
+		return ResponseEntity.ok(genreMusics);
+	}
+	
 }

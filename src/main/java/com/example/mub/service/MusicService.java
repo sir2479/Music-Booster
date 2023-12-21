@@ -58,10 +58,16 @@ public class MusicService {
 		return musicMapper.findMusicByMusicId(music_id);
 	}
 	
+	public List<Music> findMusicByGenre(String music_genre) {
+		
+		return musicMapper.findMusicByGenre(music_genre);
+	}
+	
 	public MusicFile findMusicFileByMusicId(Long file_music_id) {
 		
 		return filemapper.findMusicFileByMusicId(file_music_id);
 	}
+	
 	
 
 

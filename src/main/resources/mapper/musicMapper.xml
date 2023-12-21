@@ -29,6 +29,10 @@
 	  select * from music where music_id = #{music_id}
 	</select>
 	
+	<select id="findMusicByGenre" resultType="music">
+	  select * from music where music_genre = #{music_genre}
+	</select>
+	
 	<select id="searchMusic" resultType="music">
 	  select * from music where 
 	  <if test="music_id != null">
