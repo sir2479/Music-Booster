@@ -46,6 +46,15 @@ public class MemberService {
 		log.info("멥퍼후");
 	}
 	
+	public void deleteMember(String member_id) {
+		log.info("삭제맵퍼전");
+		log.info("member_id : {} ", member_id);
+		memberMapper.deleteMember(member_id);
+		log.info("삭제맵퍼후");
+		
+		
+	}
+	
 
 	
 }

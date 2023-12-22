@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.example.board.model.member.Member;
+import com.example.mub.model.member.Member;
 
 import lombok.Data;
 
@@ -44,7 +44,6 @@ public class MemberUpdate {
 		member.setMember_email(memberUpdate.getMember_email());
 		member.setNickname(memberUpdate.getNickname());
 		member.setPassword(memberUpdate.getPassword());
-		member.setPasswordCheck(memberUpdate.getPasswordCheck());
 		member.setMember_name(memberUpdate.getMember_name());
 		member.setPhone(memberUpdate.getPhone());
 		member.setPosition(memberUpdate.getPosition());
@@ -53,6 +52,10 @@ public class MemberUpdate {
 		member.setProfile(memberUpdate.getProfile());
 		return member;
 }
+	
+	public boolean isPasswordConfirmed() {
+	    return getPassword() != null;
+	}
 	
 	
 }

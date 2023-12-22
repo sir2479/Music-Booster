@@ -158,13 +158,14 @@
                           <div class="mb-3 col-md-6">
                             <label for="password" class="form-label">비밀번호</label>
                             <input class="form-control" type="password" id="password" name="password" th:value="${member.password}" />
+                            <div class="error" th:errors="*{password}"></div>
                           </div>
                           
-                          <div class="mb-3 col-md-6">
+						  <div class="mb-3 col-md-6">
   							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
   							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />
-  							<p class="error" id="passwordError" style="display:none; color:red;">비밀번호가 일치하지 않습니다.</p>
-						  </div>                  
+  							                          
+						  </div>         
                       
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>
@@ -238,7 +239,8 @@
                           <p class="mb-0">한번 계정을 지우면, 모든 정보가 사라지며 복구가 불가능합니다. 신중하게 행동해주세요.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
+                      <form id="formAccountDeactivation" th:action="@{/member/update(member_id=${member_id})}"
+                            onsubmit="return false" method="POST" th:object="${member}">
                         <div class="form-check mb-3">
                           <input
                             class="form-check-input"

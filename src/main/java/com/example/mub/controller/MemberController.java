@@ -78,7 +78,8 @@ public class MemberController {
 	// 로그인 페이지 이동
 	@GetMapping("login")
 	public String login(Model model) {
-		model.addAttribute("login", new MemberLogin());
+		model.addAttribute("login", new MemberLogin());		
+		
 		return "member/login";
 	}
 	
@@ -90,6 +91,9 @@ public class MemberController {
 							   HttpServletRequest request,
 							   @RequestParam(defaultValue = "/") String redirectURL) {
 		
+		
+		
+		
 		if (result.hasErrors()) {
 			return "member/login";
 		}
@@ -97,7 +101,8 @@ public class MemberController {
 		Member member = memberService.findMember(memberLogin.getMember_id());
 		
 		if (member == null || !member.getPassword().equals(memberLogin.getPassword())) {
-			result.reject("memberLoginError", "아이디가 없거나 패스워드가 다릅니다.");
+			result.reject("memberLoginError", "아이디가 없거나 패스워드가 다릅니다.");	
+			
 			return "member/login";
 		}
 		
@@ -149,24 +154,30 @@ public class MemberController {
 		return "member/update";
 		
 	}
+
 	
 	// 회원 정보 수정
 	@PostMapping("update")
-	public String update_action(@Validated @ModelAttribute("member") MemberUpdate memberUpdate,
+	public String update_action (@Validated @ModelAttribute("member") MemberUpdate memberUpdate,
 								BindingResult result,
 								HttpServletRequest request,
 								@RequestParam(defaultValue = "/") String redirectURL,
-								@SessionAttribute(value = "loginMember", required = false) Member loginMember
-								) {
+								@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
+		
+		log.info("아이디 가져오기 : {} ",memberUpdate.getMember_id());
 		
 		
 	    if (result.hasErrors()) {
 	    	log.info("에러발생");
-	        return "redirect:/";
+	        
 	    }
 
 		Member member = memberUpdate.toMember(memberUpdate);
         
+		log.info("if 통과 전 : {} ", member);
+		
+		member.setMember_id(member.getMember_id().replace(",", ""));
+		
         // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
         if (!memberUpdate.getMember_email().contains("@")) {
             // BindingResult 객체에 GlobalError 를 추가한다.
@@ -174,6 +185,8 @@ public class MemberController {
             // member/joinForm.html 페이지를 리턴한다.
             return "member/update";
         }
+        
+        
         
         // 이메일 중복 확인을 위해 데이터베이스에서 기존 회원 정보 가져오기
         Member existingMember = memberService.findMemberByEmail(memberUpdate.getMember_email());
@@ -194,21 +207,17 @@ public class MemberController {
             result.reject("nicknameError", "이미 사용 중인 닉네임입니다.");
             return "member/update";
         }
+               
         
-        // 비밀번호란에 입력한 내용과 비밀번호 확인란에 입력한 내용이 서로 같은지 다른지 확인하기
-        if (memberUpdate.getPassword() != memberUpdate.getPasswordCheck()) {
-        	result.reject("passwordError","비밀번호 오류");
-        	return "member/update";
+        
+        // 비밀번호와 비밀번호 확인이 일치하지 않을 경우 처리
+        if (!memberUpdate.isPasswordConfirmed()) {
+            log.info("member : {} ", member);
+            result.reject("passwordMismatch", "비밀번호를 입력하지 않았습니다.");
+            return "member/update";
         }
-           
-        
 		
-		log.info("member : {}", member);
-		
-
-		member.setMember_id(member.getMember_id().replace(",", ""));
-		
-		log.info("콤마 삭제후 member: {}", member);
+		log.info("if문 통과 후 member : {}", member);
 		
 			
 		memberService.updateMember(member);
@@ -217,8 +226,22 @@ public class MemberController {
 				
 		return "redirect:/";
 
+        }
+	
+	public String delete(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+											HttpServletRequest request) {
+		log.info("계정 삭제 단계");
+		
+		logout(request);
+		
+		// 로그인한 멤버의 ID를 이용해 계정을 삭제하는 서비스 메서드 호출
+	    memberService.deleteMember(loginMember.getMember_id());
+		
+		return "redirect:/";
 	}
 	
 	
+	}
 
-}
+
+
