@@ -14,4 +14,6 @@ public interface MusicMapper {
 	List<Music> findAllMusics();
 	
 	Music findMusicByMusicId(Long Music_id);
+	
+	List<Music> findMusicByGenre(String music_genre);
 }

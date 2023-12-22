@@ -119,6 +119,7 @@ public class ArtistController {
 		
 		
 		model.addAttribute("imageFile : {}",imageFile);
+
 		
 		model.addAttribute("artist", artist);
 	

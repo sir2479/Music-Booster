@@ -16,4 +16,5 @@ public interface FileMapper {
 	
 	ImageFile findImageFileByArtistId(Long file_artist_id);
 	
+	ImageFile findImageFileByMusicId(Long file_music_id);
 }

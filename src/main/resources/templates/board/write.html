@@ -44,58 +44,60 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">게시판 /</span> 게시판 공지사항</h4>
+			    <span class="text-muted fw-light"></span></h4>
+			    	<th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
+						<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
+			 		</th:block>
 
-              <!-- Basic Bootstrap Table -->
-              <div>
-                <h5 class="card-header">글쓰기</h5>
-                <p>
-				<form action="write" method="post" th:object="${writeForm}">
-                <div class="table-responsive text-nowrap">
-                  <table>
-               
-                      <tr>
-                        <th>제목</th>
-                            <td>
-					          <input type="text" th:field="*{board_title}">   
-					          <div class="error" th:errors="*{board_title}"></div>
-					        </td>
-					  </tr>
-					  <tr>
-                        <th>내용</th>
-                                <td>
-						          <textarea rows="30" cols="90" th:field="*{board_content}"></textarea>
-       							  <div th:errorClass="error" th:errors="*{board_content}"></div>
-						        </td>
-                      </tr>
-                  </table>
-                  
-                    <p>
-  <div class="center">  
-      <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
-      <input type="submit" value="등록하기" class="btn btn-sm btn-outline-primary">
-  </div>
-  
-                </div>
-              </div>
-              <!--/ Basic Bootstrap Table -->
-            </div>
-            <!-- / Content -->
-
-            <footer th:replace="~{footer :: #footer}"></footer>
-
-            <div class="content-backdrop fade"></div>
-          </div>
-          <!-- Content wrapper -->
-        </div>
-        <!-- / Layout page -->
-      </div>
-
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
-    <!-- / Layout wrapper -->
-
-  </body>
-  <body th:replace="~{scr :: #scr}"></body>
+	<!-- Basic Bootstrap Table -->
+	<div>
+	  <h5 class="card-header">글쓰기</h5>
+	  <p>
+	    <form action="write" method="post" th:object="${writeForm}">
+	      <div class="table-responsive text-nowrap">
+	        <table>
+	          <tr>
+	            <th>제목</th>
+	            <td>
+	              <input type="text" th:field="*{board_title}">
+	              <div class="error" th:errors="*{board_title}"></div>
+	            </td>
+	          </tr>
+	          <tr>
+	            <th>내용</th>
+	            <td>
+	              <textarea rows="30" cols="90" th:field="*{board_content}"></textarea>
+	              <div th:errorClass="error" th:errors="*{board_content}"></div>
+	            </td>
+	          </tr>
+	        </table>
+	        <input type="hidden" th:field="*{board_category}">
+	        <p>
+	          <div class="text-center">
+	            <input type="button" th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" value="목록으로" class="btn btn-sm btn-outline-primary">
+	            <input type="submit" value="등록하기" class="btn btn-sm btn-outline-primary">
+	          </div>
+	        </p>
+	      </div>
+	    </form>
+	  </div>
+	  <!--/ Basic Bootstrap Table -->
+	</div>
+	<!-- / Content -->
+	
+	<footer th:replace="~{footer :: #footer}"></footer>
+	
+	<div class="content-backdrop fade"></div>
+	</div>
+	<!-- Content wrapper -->
+	</div>
+	<!-- / Layout page -->
+	</div>
+	
+	<!-- Overlay -->
+	<div class="layout-overlay layout-menu-toggle"></div>
+	</div>
+	<!-- / Layout wrapper -->
+	
+	</body>
 </html>

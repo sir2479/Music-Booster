@@ -22,7 +22,7 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>공지사항 수정</title>
+    <title>글 수정</title>
   </head>
 
   <body>
@@ -46,14 +46,17 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">공지사항 /</span>공지사항 수정</h4>
-
+			    <span class="text-muted fw-light"></span></h4>
+					<th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
+						<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
+			 		</th:block>
               <!-- Basic Bootstrap Table -->
               <div class="card">
-                <h5 class="card-header">공지사항 / 수정</h5>
+				  			 <form th:action="@{/board/update(board_id=${board.board_id},board_category=${param.board_category})}" th:object="${board}" method="post">
+                <h5 class="card-header"></h5>
+                
                 <div class="table-responsive text-nowrap">
-                   <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post" enctype="multipart/form-data">
-            	      <table class="table">
+           	      <table class="table">
              	      <thead>
      					 <tr>
 				        <th>제목</th>
@@ -82,20 +85,21 @@
 				        <td th:text="*{board_member}"></td>
 				      </tr>
                     </thead>
-                    <form th:action="@{/board/update(board_id=${board.board_id})}" th:object="${board}" method="post">
                   </table>
                   
     <input type="hidden" th:field="*{board_hit}">
     <input type="hidden" th:field="*{board_create_time}">
-    <input type="hidden" th:field="*{board_member}">                  
+    <input type="hidden" th:field="*{board_member}"> 
+    <input type="hidden" th:field="*{board_category}">                 
                   
                     <p>
-  <div class="center">                  
-      <input type="button" onclick="location.href='/board/list'" value="목록으로" class="btn btn-sm btn-outline-primary">
-      <input type="submit" value="수정하기" class="btn btn-sm btn-outline-primary">
-		  </div>
+			 		 <div class="text-center">                  
+				       <input type="button" th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" value="목록으로" class="btn btn-sm btn-outline-primary">
+				       <input type="submit" value="수정하기" class="btn btn-sm btn-outline-primary">
+					 </div>
   
                 </div>
+                </form>
               </div>
               <!--/ Basic Bootstrap Table -->
             </div>
