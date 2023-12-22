@@ -13,6 +13,7 @@ import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.file.MusicFile;
 import com.example.mub.model.music.Music;
 import com.example.mub.model.music.MusicUploadForm;
+import com.example.mub.repository.FileMapper;
 import com.example.mub.service.MusicService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,11 +26,18 @@ import lombok.extern.slf4j.Slf4j;
 public class MusicController {
 	
 	private final MusicService musicService;
+	private final FileMapper fileMapper;
 
 	@GetMapping("music-home")
     public String music(Model model) {
 		
 		List<Music> musics = musicService.findAllMusic();
+		
+		// 추천 음악
+		Music recommendMusic = musicService.findMusicByMusicId(45L);
+		ImageFile reMusicImage = fileMapper.findImageFileByMusicId(recommendMusic.getMusic_id());
+		recommendMusic.setImage_file_saved_name(reMusicImage.getFile_saved_name());
+		
 		
 		List<MusicFile> musicFiles = new ArrayList<>();
 		List<ImageFile> imageFiles = new ArrayList<>();
@@ -41,23 +49,26 @@ public class MusicController {
 			genreMusics = genreMusics.subList(0, 5);
 		}
 		
+		// music 객체에 파일 id값 넣어줌
 		for(int i = 0 ; i < musics.size() ; i++ ) {
 			musicFiles.add(musicService.findMusicFileByMusicId(musics.get(i).getMusic_id()));
-			log.info("musicFiles: {}", musicFiles);
 			musics.get(i).setMusic_file_saved_name(musicFiles.get(i).getFile_saved_name());
 			
 			imageFiles.add(musicService.findImageFileByMusicId(musics.get(i).getMusic_id()));
-			log.info("imageFiles: {}", imageFiles);
 			musics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
 		
-		log.info("musics: {}", musics);
+		
+		
+		
+//		log.info("musics: {}", musics);
 //		log.info("musicFiles: {}", musicFiles);
 //		log.info("genreMusics: {}", genreMusics);
 		
 		model.addAttribute("musics", musics);
 		model.addAttribute("musicFile", musicFiles);
 		model.addAttribute("genreMusics", genreMusics);
+		model.addAttribute("recommendMusic", recommendMusic);
 
 
         return "music/music-home";
@@ -108,7 +119,7 @@ public class MusicController {
 			genreMusics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
 		
-		log.info("스크립트 genreMusics: {}", genreMusics);
+		//log.info("스크립트 genreMusics: {}", genreMusics);
 		
 		//log.info("genreMusics: {}", genreMusics);
 		

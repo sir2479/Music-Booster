@@ -27,7 +27,12 @@ public class ImageFile {
 		//super();
 		this.file_original_name = attachedFile.getFile_original_name();
 		this.file_saved_name = attachedFile.getFile_saved_name();
-		this.file_size = attachedFile.getFile_size();		
+		this.file_size = attachedFile.getFile_size();
 	}
+	
+	
+	
+	
+	
 	
 }

@@ -63,34 +63,25 @@
 	  <input type="button" onclick="search()" value="검색">
     </div> 
   -->
-              <!-- Examples -->
-              <!--<div class="row mb-5">
-                <div class="col-md-6 col-lg-4 mb-3">
+              <!-- 아티스트 홈 -->
+              <div class="row mb-5">
+                <div class="col-md-6 col-lg-4 mb-3"  th:each="artist, artistStat: ${artists}">
                   <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
+                    <img class="card-img-top" width="400px" height="400px" th:src="'/../download//' + ${artist.imagefile_saved_name}" alt="ArtistImageFile" />
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                      </p>
-                      <a href="javascript:void(0)" class="btn btn-outline-primary">Go somewhere</a>
+                      <h5 class="card-title">[[${artist.artist_name}]]</h5>
+                      <p class="card-text">[[${artist.artist_member_id}]] </p>
+                      <a th:href="@{/artist/artist-read(artist_id=${artist.artist_id})}" class="btn btn-outline-primary">아티스트 상세정보</a>
                     </div>
                   </div>
-                </div>-->
+                </div>
                 
-                <table>
-    			<tr>  
-			      <th>제목</th>
-			      <th>작성자</th>
-			    </tr>
-			    <tr th:each="artist, artistStat: ${artists}">
-			      <td class="center"><a th:text="${artist.artist_name}" th:href="@{/artist/artist-read(artist_id=${artist.artist_id})}"></a></td>
-			      <td th:text="${artist.artist_member_id}" class="center"></td> 
-			    </tr>
-			  </table>
+
+  
                 
-              <!-- Examples -->
+              <!-- 아티스트 홈 -->
               
+
 			  <p class="right" >
 				<th:block th:if="${session.loginMember != null and session.loginMember.position == 'artist'}">
 					<input type="button"}
@@ -99,6 +90,7 @@
 				</th:block>           
 			    
 			  </p>
+
 
             <footer th:replace="~{footer :: #footer}"></footer>
 

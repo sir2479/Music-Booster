@@ -22,7 +22,7 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>Blank Page</title>
+    <title>아티스트 상세페이지</title>
   </head>
     <style>
     .right {
@@ -56,48 +56,29 @@
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span> 아티스트</h4>
               
-  <!--
-	<div class="right">
-	  <label for"searchText">검색</label>
-	  <input type="search" id="search" name="search" th:value="${search}">
-	  <input type="button" onclick="search()" value="검색">
-    </div> 
-  -->
-              <!-- Examples -->
-              <!--<div class="row mb-5">
-                <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card h-100">
-                    <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap" />
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                      </p>
-                      <a href="javascript:void(0)" class="btn btn-outline-primary">Go somewhere</a>
-                    </div>
-                  </div>
-                </div>-->
-                
-                <table>
-    <tr>
-      
-      <th>제목</th>
-      <th>작성자</th>
-      
-      
-    </tr>
-    <tr th:each="artist, artistStat: ${artists}">
-      <td class="center"><a th:text="${artist.artist_name}" th:href="@{/artist/artist-read(artist_id=${artist.artist_id})}"></a></td>
-      <td th:text="${artist.artist_member_id}" class="center"></td>
-     
-    </tr>
-  </table>
+	<table th:object="${artist}">
+	<tr>
+	  <th></th>
+	  <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
+	</tr>
+      <tr>
+        <th>제목</th>
+        <td th:text="*{artist_name}"></td>
+      </tr>
+      <tr>
+        <th>내용</th>
+        <td th:text="*{artist_profile}"></td>
+      </tr>
+      <tr>
+        <th>작성자</th>
+        <td th:text="*{artist_member_id}"></td>
+      </tr>
+    
+	</table>
                 
               <!-- Examples -->
               
-  <p class="right" >           
-    <input type="button" th:if="${session.loginMember.position == 'artist'}" onclick="location.href='/artist/artist-write'" class="btn btn-sm btn-outline-primary" value="정보등록">
-  </p>
+
 
             <footer th:replace="~{footer :: #footer}"></footer>
 

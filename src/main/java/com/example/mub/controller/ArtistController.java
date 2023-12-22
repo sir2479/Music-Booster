@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.mub.model.artist.Artist;
 import com.example.mub.model.artist.ArtistUpdateForm;
 import com.example.mub.model.artist.ArtistWriteForm;
+import com.example.mub.model.file.AttachedFile;
 import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.member.Member;
 import com.example.mub.repository.ArtistMapper;
@@ -48,8 +49,18 @@ public class ArtistController {
 		//int total = artistService.getTotal(search);
 		
 		List<Artist> artists = artistMapper.findAllArtists(search);
-		
 		List<ImageFile> imageFile = new ArrayList<>();
+		
+		//log.info("imageFiles: {}", imageFile);
+		
+		for(int i = 0 ; i < artists.size() ; i++ ) {
+			imageFile.add(artistService.findImageFileByArtistId(artists.get(i).getArtist_id()));
+			log.info("imageFiles: {}", imageFile);
+			artists.get(i).setImagefile_saved_name(imageFile.get(i).getFile_saved_name());
+		}
+		
+		//log.info("imageFiles: {}", imageFile);
+		
 		
 		model.addAttribute("artists", artists);
 		model.addAttribute("imageFile",imageFile);
@@ -62,7 +73,7 @@ public class ArtistController {
 							Model model) {
 		
 		model.addAttribute("artistWriteForm", new ArtistWriteForm());
-		
+		model.addAttribute("imageFile", new ImageFile());
 		
 		return "artist/artist-write";
 	}
@@ -85,12 +96,14 @@ public class ArtistController {
 		
 		artist.setArtist_member_id(loginMember.getMember_id());
 		
+		artistService.saveArtist(artist, file);
 		
 		
 		log.info("artist: {}", artist);
 		log.info("artist: {}", artistWriteForm);
+		log.info("file: {}", file);
 		
-		artistService.saveArtist(artist);
+		
 		
 		
 		return "redirect:/artist/artist-home";
@@ -101,14 +114,22 @@ public class ArtistController {
 					   @RequestParam Long artist_id,
 					   Model model) {
 		
+		log.info("id: {}", artist_id);
+		
 		Artist artist = artistService.readArtist(artist_id);
+		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
 		
-		if (artist != null) {
+		log.info("imageFile: {}", imageFile);
+		
+		log.info("artist: {}", artist);
+		
+		if (artist == null) {
 			log.info("게시글 없음");
-			return "redirect:/artist";
+			return "redirect:/artist/artist-home";
 		}
-
 		
+		 
+		model.addAttribute("imageFile",imageFile);
 		model.addAttribute("artist", artist);
 	
 		return "artist/artist-read";
@@ -128,6 +149,10 @@ public class ArtistController {
 		}
 		
 		model.addAttribute("artist", Artist.toArtistUpdateForm(artist));
+		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
+		log.info("imageFile: {}", imageFile);
+		
+		model.addAttribute("imageFile",imageFile);
 		
 		return "artist/artist-update";
 	}
@@ -137,17 +162,29 @@ public class ArtistController {
 	public String update(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
             @RequestParam Long artist_id,
             @Validated @ModelAttribute("artist") ArtistUpdateForm updateArtist,
+            @RequestParam(required = false) MultipartFile file,
             BindingResult result) {
 	
 	
-	Artist artist = artistService.findArtist(artist_id);
+		log.info("artist: {}", updateArtist);
 	
+		if (result.hasErrors()) {
+			return "artist/artist-update";
+		}
+		
+		Artist artist = artistService.findArtist(artist_id);
 	
+		if (artist == null || !artist.getArtist_member_id().equals(loginMember.getMember_id())) {
+			log.info("권한 없음");
+			return "redirect:/artist/artist-update";
+		}
 	
-	artist.setArtist_name(updateArtist.getArtist_name());
-	artist.setArtist_profile(updateArtist.getArtist_profile());
+		artist.setArtist_name(updateArtist.getArtist_name());
+		artist.setArtist_profile(updateArtist.getArtist_profile());
+		
+		artistService.updateArtist(artist, file);
 	
-	return "artist/artist-update";
+		return "artist/artist-update";
 	}
 	
 	@GetMapping("artist-remove")
