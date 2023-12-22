@@ -139,6 +139,12 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@PostMapping("delete")
+	public String delte() {
+		
+		log.info("delete도달");
+		return "redirect:/";
+	}
 	
 	
 }

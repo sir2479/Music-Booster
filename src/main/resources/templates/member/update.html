@@ -20,7 +20,6 @@
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
@@ -225,7 +224,7 @@
                           <p class="mb-0">한번 계정을 지우면, 모든 정보가 사라지며 복구가 불가능합니다. 신중하게 행동해주세요.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
+                      <form action="delete" method="post">
                         <div class="form-check mb-3">
                           <input
                             class="form-check-input"
@@ -237,7 +236,7 @@
                             >계정을 삭제하는데 동의합니다.</label
                           >
                         </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">계정 삭제</button>
+                        <input type="submit" value="계정삭제" class="btn btn-danger deactivate-account">
                       </form>
                     </div>
                   </div>

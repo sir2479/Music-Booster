@@ -76,7 +76,7 @@ public class MusicController {
     			@Validated @ModelAttribute("uploadForm") MusicUploadForm musicUploadForm,
     			@RequestParam MultipartFile musicFile,
     			@RequestParam(required = false) MultipartFile imageFile) {
-		
+		 
 		log.info("musicUploadForm: {}", musicUploadForm);
 		log.info("musicFile: {}", musicFile);
 		log.info("imageFile: {}", imageFile);

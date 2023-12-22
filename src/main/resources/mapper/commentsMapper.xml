@@ -3,37 +3,55 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mub.repository.CommentsMapper">
- <insert id="saveComments">
-    <selectKey keyProperty="comments_id" resultType="long" order="BEFORE">
-      select comments_seq.nextval from dual
-    </selectKey>
-    insert into comments(
-      comments_id,
-      comments_board_id,
-      comments_member,
-      comments_content,
-      comments_create_time,
-      comments_edit_time
-    ) values (
-      #{comments_id},
-      #{comments_board_id},
-      #{comments_member},
-      #{comments_content},
-      #{comments_create_time},
-      #{comments_edit_time}
-    )
-  </insert>
-  
-  <update id="updateComments">
-    update comments
-    <set>
-        <if test="comments_content != null">comments_content = #{comments_content}</if>
-    </set>
-    where comments_id = #{comments_id}
-  </update>
-  
-  <delete id="deleteComments">
-    delete from comments where comments_id = #{comments_id}
-  </delete>
-  
+	<insert id="saveComments">
+		<selectKey keyProperty="comments_id" resultType="long"
+			order="BEFORE">
+			select comments_seq.nextval from dual
+		</selectKey>
+		insert into comments(
+		comments_id,
+		comments_board,
+		comments_member,
+		comments_content
+		) values (
+		#{comments_id},
+		#{comments_board},
+		#{comments_member},
+		#{comments_content}
+		)
+	</insert>
+
+	<select id="findAllComments" resultType="comments">
+		select 
+			c.comments_id,
+			b.board_id,
+			c.comments_member,
+			c.comments_content,
+			c.comments_create_time,
+			c.comments_edit_time
+		from
+			comments c left outer join board b
+			on (c.comments_board = b.board_id)
+		where b.board_id = #{board_id}
+		order by
+		comments_create_time desc
+	</select>
+
+	<select id="findComments" resultType="comments">
+		select * from comments where comment_id = #{comment_id}
+	</select>
+
+	<update id="updateComments">
+		update comments
+		<set>
+			<if test="comments_content != null">comments_content = #{comments_content}</if>
+			comments_edit_time = sysdate
+		</set>
+		where comments_id = #{comments_id}
+	</update>
+
+	<delete id="deleteComments">
+		delete from comments where comments_id = #{comments_id}
+	</delete>
+
 </mapper>
