@@ -10,6 +10,7 @@ public class Artist {
 	private String artist_member_id;
 	private String artist_name;
 	private String artist_profile;
+	private String imagefile_saved_name;
 	
 	
 	public static ArtistUpdateForm toArtistUpdateForm(Artist artist) {
@@ -20,4 +21,7 @@ public class Artist {
 		artistUpdateForm.setArtist_profile(artist.getArtist_profile());
 		return artistUpdateForm;
 	}
+	
+	
+	
 }

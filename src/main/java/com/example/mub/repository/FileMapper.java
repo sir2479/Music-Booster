@@ -8,12 +8,12 @@ import com.example.mub.model.file.MusicFile;
 @Mapper
 public interface FileMapper {
 
-	void MusicFileUpload(MusicFile file);
+	void musicFileUpload(MusicFile file);
 	
 	MusicFile findMusicFileByMusicId(Long file_music_id);
 	
-	void ImageFileUpload(ImageFile file);
+	void imageFileUpload(ImageFile file);
 	
-	ImageFile findArtistFileByArtistId(Long file_artist_id);
+	ImageFile findImageFileByArtistId(Long file_artist_id);
 	
 }

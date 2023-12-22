@@ -42,7 +42,7 @@
  </insert>
  
    <update id="updateArtist">
-    update board
+    update artist
     <set>
         <if test="artist_name != null">artist_name = #{artist_name},</if>
         <if test="artist_profile != null">artist_profile = #{artist_profile},</if>

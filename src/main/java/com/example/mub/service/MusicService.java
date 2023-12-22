@@ -42,7 +42,7 @@ public class MusicService {
 			log.info("musicFile: {}", musicFile);
 			
 			//첨부파일 내용을 데이터베이스에 저장
-			filemapper.MusicFileUpload(musicFile);
+			filemapper.musicFileUpload(musicFile);
 		}
 		
 		

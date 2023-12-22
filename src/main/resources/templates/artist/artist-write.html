@@ -52,7 +52,7 @@
               <div>
                 <h5 class="card-header">아티스트 소개글</h5>
                 
-				<form action="artist-write" method="post" th:object="${artistWriteForm}">
+				<form action="artist-write" method="post" th:object="${artistWriteForm}" enctype="multipart/form-data">
                 <div class="table-responsive text-nowrap">
                   <table>
 
@@ -74,6 +74,15 @@
                             	>					
 							</textarea>
                           </div>
+                          <div class="mb-3 col-md-6">
+    					  	 <label for="artist_file" class="form-label">아티스트 이미지 파일</label>
+    					  	 <input
+                              class="form-control"
+                              type="file"
+                              name="file"
+                              autofocus
+                            />
+						  </div>
                   </table>
                 </div>
 				

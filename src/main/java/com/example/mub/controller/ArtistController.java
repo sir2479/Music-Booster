@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.mub.model.artist.Artist;
 import com.example.mub.model.artist.ArtistUpdateForm;
 import com.example.mub.model.artist.ArtistWriteForm;
+import com.example.mub.model.file.AttachedFile;
 import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.member.Member;
 import com.example.mub.repository.ArtistMapper;
@@ -62,7 +63,7 @@ public class ArtistController {
 							Model model) {
 		
 		model.addAttribute("artistWriteForm", new ArtistWriteForm());
-		
+		model.addAttribute("imageFile", new ImageFile());
 		
 		return "artist/artist-write";
 	}
@@ -85,12 +86,14 @@ public class ArtistController {
 		
 		artist.setArtist_member_id(loginMember.getMember_id());
 		
+		artistService.saveArtist(artist, file);
 		
 		
 		log.info("artist: {}", artist);
 		log.info("artist: {}", artistWriteForm);
+		log.info("file: {}", file);
 		
-		artistService.saveArtist(artist);
+		
 		
 		
 		return "redirect:/artist/artist-home";
@@ -101,14 +104,21 @@ public class ArtistController {
 					   @RequestParam Long artist_id,
 					   Model model) {
 		
+		log.info("id: {}", artist_id);
+		
 		Artist artist = artistService.readArtist(artist_id);
 		
 		if (artist != null) {
 			log.info("게시글 없음");
-			return "redirect:/artist";
+			return "redirect:/artist/artist-home";
 		}
 		
-		ImageFile imageFile = 
+		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id); 
+		
+		
+		
+		
+		model.addAttribute("imageFile : {}",imageFile);
 		
 		model.addAttribute("artist", artist);
 	
