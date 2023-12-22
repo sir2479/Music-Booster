@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.file.MusicFile;
 import com.example.mub.model.music.Music;
 import com.example.mub.model.music.MusicUploadForm;
@@ -31,6 +32,7 @@ public class MusicController {
 		List<Music> musics = musicService.findAllMusic();
 		
 		List<MusicFile> musicFiles = new ArrayList<>();
+		List<ImageFile> imageFiles = new ArrayList<>();
 		
 		// 장르 음악
 		List<Music> genreMusics = musicService.findMusicByGenre("Ballad");
@@ -41,10 +43,15 @@ public class MusicController {
 		
 		for(int i = 0 ; i < musics.size() ; i++ ) {
 			musicFiles.add(musicService.findMusicFileByMusicId(musics.get(i).getMusic_id()));
-			musics.get(i).setFile_saved_name(musicFiles.get(i).getFile_saved_name());
+			log.info("musicFiles: {}", musicFiles);
+			musics.get(i).setMusic_file_saved_name(musicFiles.get(i).getFile_saved_name());
+			
+			imageFiles.add(musicService.findImageFileByMusicId(musics.get(i).getMusic_id()));
+			log.info("imageFiles: {}", imageFiles);
+			musics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
 		
-//		log.info("musics: {}", musics);
+		log.info("musics: {}", musics);
 //		log.info("musicFiles: {}", musicFiles);
 //		log.info("genreMusics: {}", genreMusics);
 		
@@ -67,14 +74,16 @@ public class MusicController {
 	@PostMapping("upload")
     public String upload(
     			@Validated @ModelAttribute("uploadForm") MusicUploadForm musicUploadForm,
-    			@RequestParam MultipartFile file) {
+    			@RequestParam MultipartFile musicFile,
+    			@RequestParam(required = false) MultipartFile imageFile) {
 		
 		log.info("musicUploadForm: {}", musicUploadForm);
-		log.info("file: {}", file);
+		log.info("musicFile: {}", musicFile);
+		log.info("imageFile: {}", imageFile);
 		
 		Music music = musicUploadForm.toMusic(musicUploadForm);
 		
-		musicService.uploadMusic(music, file);
+		musicService.uploadMusic(music, musicFile, imageFile);
 		
 
 		return "redirect:/music/music-home";
@@ -88,10 +97,19 @@ public class MusicController {
 		log.info("music_genre: {}", music_genre);
 		
 		List<Music> genreMusics = musicService.findMusicByGenre(music_genre);
+		List<ImageFile> imageFiles = new ArrayList<>();
 		
 		if(genreMusics.size() > 5) {
 			genreMusics = genreMusics.subList(0, 5);
 		}		
+		
+		for(int i = 0 ; i < genreMusics.size() ; i++ ) {
+			imageFiles.add(musicService.findImageFileByMusicId(genreMusics.get(i).getMusic_id()));
+			genreMusics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
+		}
+		
+		log.info("스크립트 genreMusics: {}", genreMusics);
+		
 		//log.info("genreMusics: {}", genreMusics);
 		
 		//model.addAttribute("genreMusics", genreMusics);

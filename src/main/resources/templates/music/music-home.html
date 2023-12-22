@@ -67,9 +67,12 @@
 					str += "<li class='d-flex mb-4 pb-1'>";
 					str += "<div class='d-flex w-100 flex-wrap align-items-center justify-content-between gap-2'>";
 					str += "<div class='me-2'>";
+					str += "<img  width='40px' height='40px' src='../download/" + obj.image_file_saved_name + "'/>";
+					str += "</div>";
+					str += "<div class='me-2'>";
 					str += "<h6 class='mb-0'>"+ obj.music_name +"</h6>";
 					str += "</div>";
-					str += "<div class='user-progress'>";
+					str += "<div class='user-progress' style='width: 150px; text-align: right;'>";
 					str += "<small class='fw-semibold'>" + obj.music_genre + "</small>"
 					str += "</div>";
 					str += "</div>";
@@ -305,11 +308,20 @@
 				  
 			  <!-- 음악 리스트 테이블 -->
               <div class="card">
-                <h5 class="card-header">Table Basic</h5>
+				<div class="card-header">
+                <h5>Table Basic</h5>
+                <div>
+					<input type="button" 
+						onclick="location.href='/music/upload'" 
+						class="btn btn-sm btn-outline-primary" value="음악 업로드">
+				</div>
+				</div>
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table" style="border-collapse: separate; border-spacing: 0 1rem;">
                     <thead>
                       <tr>
+						<th>NO</th>
+						<th>  </th>
                         <th>곡 명</th>
                         <th>아티스트</th>
                         <th>장르</th>
@@ -319,8 +331,12 @@
                     </thead>
                     <tbody class="table-border-bottom-0"> 
                       <tr th:if="${musics != null}" th:each="music : ${musics}">
+						<td th:text="${musicStat.count}" class="center"></td>
+						<td>
+							<img  width="50px" height="50px"
+								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
+						</td>
                         <td>
-                          <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> 
                           <strong th:text="${music.music_name}"></strong>
                         </td>
                         <td>
@@ -339,7 +355,7 @@
                         <td th:text="${music.music_genre}"></td>
                         <td>				
         		  			<audio controls disableRemotePlayback>
-    						   <source th:src="@{'/../download//' + ${music.file_saved_name}}">
+    						   <source th:src="@{'/../download//' + ${music.music_file_saved_name}}">
 							</audio>
 						</td>
                         <td>
