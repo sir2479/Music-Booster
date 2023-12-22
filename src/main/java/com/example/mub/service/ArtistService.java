@@ -65,11 +65,18 @@ public class ArtistService {
 	}
 	
 	@Transactional
-	public void updateArtist(Artist updateArtist) {
+	public void updateArtist(Artist updateArtist, MultipartFile file) {
 		Artist artist = artistMapper.findArtist(updateArtist.getArtist_id());
 		
 		if(artist != null) {
 			artistMapper.updateArtist(updateArtist);
+			ImageFile imageFile = fileMapper.findImageFileByArtistId(updateArtist.getArtist_id());
+			
+		}
+		
+		if(file != null && file.getSize() > 0) {
+			AttachedFile attachedFile  = fileService.saveFile(file);
+			
 		}
 	}
 	

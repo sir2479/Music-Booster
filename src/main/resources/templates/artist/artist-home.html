@@ -67,7 +67,7 @@
               <div class="row mb-5">
                 <div class="col-md-6 col-lg-4 mb-3"  th:each="artist, artistStat: ${artists}">
                   <div class="card h-100">
-                    <img class="card-img-top" th:src="@{/images/(artist.imagefile_saved_name)}" alt="ArtistImageFile" />
+                    <img class="card-img-top" width="400px" height="400px" th:src="'/../download//' + ${artist.imagefile_saved_name}" alt="ArtistImageFile" />
                     <div class="card-body">
                       <h5 class="card-title">[[${artist.artist_name}]]</h5>
                       <p class="card-text">[[${artist.artist_member_id}]] </p>
