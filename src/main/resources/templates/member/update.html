@@ -19,9 +19,8 @@
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
-  xmlns:th="http://www.thymeleaf.org"
- 
->
+  xmlns:th="http://www.thymeleaf.org">
+</html>
   <head th:replace="~{head :: #head}"></head>
   <head>
     <title>Blank Page</title>
@@ -136,13 +135,11 @@
                             <input
                               type="text"
                               class="form-control"
-
                               th:field="${member.nickname}"                             
                             /> 
                              <div class="error" th:errors="*{nickname}"></div>                        
                           </div>       
                               
-                                 
 						  <div class="mb-3 col-md-6">
                             <label for="member_name" class="form-label">이름</label>
                             <input
@@ -159,14 +156,11 @@
                             <label for="password" class="form-label">비밀번호</label>
                             <input class="form-control" type="password" id="password" name="password" th:value="${member.password}" />
                             <div class="error" th:errors="*{password}"></div>
-                          </div>
-                          
+                          </div>                          
 						  <div class="mb-3 col-md-6">
   							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
-  							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />
-  							                          
+  							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />  							                          
 						  </div>         
-                      
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>
                             <div class="input-group input-group-merge">
@@ -205,8 +199,6 @@
                               class="form-control"
              				  name="hire_date"
                               th:value="*{hire_date}"
-                              
-                              
                             />
                           </div>	                          
                           
@@ -250,7 +242,6 @@
                           />
                           <label class="form-check-label" for="accountActivation"
                             >계정을 삭제하는데 동의합니다.</label>
-                            
                         </div>
                         <button type="submit" class="btn btn-danger deactivate-account">계정 삭제</button>
                       </form>
