@@ -231,8 +231,7 @@
                           <p class="mb-0">한번 계정을 지우면, 모든 정보가 사라지며 복구가 불가능합니다. 신중하게 행동해주세요.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" th:action="@{/member/update(member_id=${member_id})}"
-                            onsubmit="return false" method="POST" th:object="${member}">
+                      <form action="delete" method="post" >
                         <div class="form-check mb-3">
                           <input
                             class="form-check-input"
@@ -240,10 +239,11 @@
                             name="accountActivation"
                             id="accountActivation"
                           />
-                          <label class="form-check-label" for="accountActivation"
-                            >계정을 삭제하는데 동의합니다.</label>
+                          <label class="form-check-label" for="accountActivation">
+                            계정을 삭제하는데 동의합니다.
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">계정 삭제</button>
+                        <input value="계정삭제" type="submit" class="btn btn-danger deactivate-account">
                       </form>
                     </div>
                   </div>

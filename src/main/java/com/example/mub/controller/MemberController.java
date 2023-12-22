@@ -228,11 +228,14 @@ public class MemberController {
 
         }
 	
+	
+	@PostMapping("delete")
 	public String delete(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
 											HttpServletRequest request) {
 		log.info("계정 삭제 단계");
 		
-		logout(request);
+		logout(request);		
+		
 		
 		// 로그인한 멤버의 ID를 이용해 계정을 삭제하는 서비스 메서드 호출
 	    memberService.deleteMember(loginMember.getMember_id());
