@@ -78,14 +78,13 @@
 	
 	<p class="right" >
 		<input type="button" onclick="location.href='/artist/artist-home'" value="목록으로" class="btn btn-sm btn-outline-primary">
-		<th:block th:if="${session.loginMember.position == 'artist'}">
+		<th:block th:if="${session.loginMember.member_id == artist.artist_member_id}">
 			<input type="button"
 				th:onclick="|location.href='/artist/artist-update?artist_id=${artist.artist_id}'|"
 				class="btn btn-sm btn-outline-primary" value="수정하기">	
 			<input type="button"
 				th:onclick="|location.href='/artist/artist-remove?artist_id=${artist.artist_id}'|"
 				class="btn btn-sm btn-outline-primary" value="삭제하기">	
-							
 		</th:block>              
 	</p>
                 
