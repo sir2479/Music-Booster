@@ -11,11 +11,13 @@
 	   insert into music(
 	     music_id,
 	     music_name,
+	     music_artist_id,
 	     music_genre,
 	     music_lyrics
 	     ) values (
 	       #{music_id},
 	       #{music_name},
+	       #{music_artist_id},
 	       #{music_genre},
 	       #{music_lyrics}
 	     )

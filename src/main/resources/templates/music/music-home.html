@@ -82,19 +82,11 @@
 			} else {
 				str += "<div class='text-center'>등록된 음악이 없습니다.</div>";
 			}
-			$("#genreMusic").append(str);
-			
+			$("#genreMusic").append(str);			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		$(function(){
-			genreChange('Ballad');
+			genreChange('ballad');
 		});
 		
 	</script>
@@ -119,14 +111,14 @@
 			  
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-				
+				<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span>&nbsp;음악</h4>
 			<div class="row">
                 <!-- Order Statistics -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
                   <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">이런 음악은 어떤가요?</h5>
+                        <h5 class="m-0 me-2 fw-bold">이런 음악은 어떤가요?</h5>
                       </div>
                       <div class="dropdown">
                         <button
@@ -146,13 +138,14 @@
                         </div>
                       </div>
                     </div>
-                    <div class="card-body">
-	                    <img class="card-img-top" width="400px" height="400px" src="" alt="ArtistImageFile" />
-	                    <div class="card-body">
-	                      <h5 class="card-title"></h5>
+                    <div class="card-body" th:object="${recommendMusic}" th:if="${recommendMusic}">
+	                 <!--   <img class="card-img-top" width="400px" height="400px" alt="ArtistImageFile"
+	                    	th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>-->
+	                	<div class="card-body">
+	                      <h4 class="card-title" th:text="${recommendMusic.music_name}"></h4>
 	                      <p class="card-text"> </p>
 	                      <a href="" class="btn btn-outline-primary">음악 상세정보</a>
-	                </div>
+	                	</div>
                     </div>
                   </div>
                 </div>
@@ -162,6 +155,9 @@
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header">
+					  <div class="card-title d-flex align-items-center justify-content-between">
+					    <h5 class="m-0 me-2 fw-bold">장르별 음악</h5>
+					  </div>
                       <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
                           <button
@@ -172,17 +168,19 @@
                             data-bs-target="#navs-tabs-line-card-income"
                             aria-controls="navs-tabs-line-card-income"
                             aria-selected="true"
-                            onclick="genreChange('Ballad')"
+                            onclick="genreChange('ballad')"
                           >
-                            Ballad
+                            ballad
                           </button>
                         </li>
-                        <li class="nav-item">
-						  
+                        <li class="nav-item">  
                           <button type="button" onclick="genreChange('dance')" class="nav-link genreButton" role="tab">dance</button>
                         </li>
                         <li class="nav-item">
-                          <button type="button" onclick="genreChange('RAP_HIPHOP')" class="nav-link genreButton" role="tab">rap/hip-hop</button>
+                          <button type="button" onclick="genreChange('rap_hiphop')" class="nav-link genreButton" role="tab">rap/hip-hop</button>
+                        </li>
+                        <li class="nav-item">
+                          <button type="button" onclick="genreChange('etc')" class="nav-link genreButton" role="tab">&nbsp;&nbsp;etc&nbsp;&nbsp;</button>
                         </li>
                       </ul>
                     </div>
@@ -197,7 +195,7 @@
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2">음악 랭킹</h5>
+                      <h5 class="card-title m-0 me-2 fw-bold">음악 랭킹</h5>
                       <div class="dropdown">
                         <button
                           class="btn p-0"
@@ -251,7 +249,7 @@
               <div class="card">
 				<div class="card-header">
                 <h5>Table Basic</h5>
-                <div>
+                <div th:if="${session.loginMember != null and session.loginMember.position == 'artist'}">
 					<input type="button" 
 						onclick="location.href='/music/upload'" 
 						class="btn btn-sm btn-outline-primary" value="음악 업로드">
@@ -278,7 +276,7 @@
 								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
 						</td>
                         <td>
-                          <strong th:text="${music.music_name}"></strong>
+                          <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
                         </td>
                         <td>
                           <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">

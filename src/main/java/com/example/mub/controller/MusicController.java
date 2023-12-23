@@ -29,21 +29,29 @@ public class MusicController {
 	private final FileMapper fileMapper;
 
 	@GetMapping("music-home")
-    public String music(Model model) {
+    public String musicHome(Model model) {
 		
 		List<Music> musics = musicService.findAllMusic();
+	
 		
 		// 추천 음악
-		Music recommendMusic = musicService.findMusicByMusicId(45L);
-		ImageFile reMusicImage = fileMapper.findImageFileByMusicId(recommendMusic.getMusic_id());
-		recommendMusic.setImage_file_saved_name(reMusicImage.getFile_saved_name());
-		
+		// 랜덤 숫자 생성
+		Random random = new Random();
+		if(musics.size() != 0) {
+			int randomNumber = random.nextInt(musics.size());
+			
+			// 랜덤 음악 추천
+			Music recommendMusic = musicService.findMusicByMusicId(musics.get(randomNumber).getMusic_id());
+			ImageFile reMusicImage = fileMapper.findImageFileByMusicId(recommendMusic.getMusic_id());
+			recommendMusic.setImage_file_saved_name(reMusicImage.getFile_saved_name());
+			model.addAttribute("recommendMusic", recommendMusic);
+		}		
 		
 		List<MusicFile> musicFiles = new ArrayList<>();
 		List<ImageFile> imageFiles = new ArrayList<>();
 		
 		// 장르 음악
-		List<Music> genreMusics = musicService.findMusicByGenre("Ballad");
+		List<Music> genreMusics = musicService.findMusicByGenre("ballad");
 		
 		if(genreMusics.size() > 5) {
 			genreMusics = genreMusics.subList(0, 5);
@@ -57,10 +65,7 @@ public class MusicController {
 			imageFiles.add(musicService.findImageFileByMusicId(musics.get(i).getMusic_id()));
 			musics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
-		
-		
-		
-		
+
 //		log.info("musics: {}", musics);
 //		log.info("musicFiles: {}", musicFiles);
 //		log.info("genreMusics: {}", genreMusics);
@@ -68,7 +73,6 @@ public class MusicController {
 		model.addAttribute("musics", musics);
 		model.addAttribute("musicFile", musicFiles);
 		model.addAttribute("genreMusics", genreMusics);
-		model.addAttribute("recommendMusic", recommendMusic);
 
 
         return "music/music-home";
@@ -100,9 +104,15 @@ public class MusicController {
 		return "redirect:/music/music-home";
     }
 	
+	@GetMapping("music-read")
+    public String musicRead(Model model) {
+		
+
+        return "music/music-read";
+    }
+
 	@PostMapping("{music_genre}")
-	public ResponseEntity<List<Music>> genreChange(@PathVariable String music_genre,
-												Model model){
+	public ResponseEntity<List<Music>> genreChange(@PathVariable String music_genre){
 		
 		log.info("genreChange 들어옴");
 		log.info("music_genre: {}", music_genre);
