@@ -11,4 +11,6 @@ public class ArtistUpdateForm {
 	@NotNull
 	private String artist_name;
 	private String artist_profile;
+	public boolean isFileRemoved; {
+	}
 }

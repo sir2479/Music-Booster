@@ -13,7 +13,7 @@
  -->
 <!-- beautify ignore:start -->
 <html
-  lang="en"
+  lang="ko"
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
@@ -22,16 +22,8 @@
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
-    <title>아티스트 상세페이지</title>
+    <title>아티스트 정보 수정</title>
   </head>
-    <style>
-    .right {
-        text-align: right;
-    }
-        .center {
-        text-align: center;
-    }
-</style>
 
   <body>
     <!-- Layout wrapper -->
@@ -51,34 +43,63 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
 			  
+            <!-- Content -->
+           <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4">
+			    <span class="text-muted fw-light">Music Booster /</span>아티스트 수정</h4>
 
-			  
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span> 아티스트</h4>
-              
-	<table th:object="${artist}">
-	<tr>
-	  <th></th>
-	  <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
-	</tr>
-      <tr>
-        <th>제목</th>
-        <td th:text="*{artist_name}"></td>
-      </tr>
-      <tr>
-        <th>내용</th>
-        <td th:text="*{artist_profile}"></td>
-      </tr>
-      <tr>
-        <th>작성자</th>
-        <td th:text="*{artist_member_id}"></td>
-      </tr>
-    
-	</table>
+              <!-- Basic Bootstrap Table -->
+              <div>
+                <h5 class="card-header">아티스트 수정</h5>
                 
-              <!-- Examples -->
-              
+				<form th:action="@{/artist/artist-update(artist_id=${artist.artist_id})}" th:object="${artist}" method="post">
+                <div class="table-responsive text-nowrap">
+                  <table>
 
+                      <div class="mb-3 col-md-6">
+                            <label for="artist_name" class="form-label">아티스트 이름</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              th:field="*{artist_name}"
+                              autofocus
+                            />
+                          </div>
+                       <div class="mb-3 col-md-6">
+                            <label for="artist_profile" class="form-label">아티스트 소개글</label>
+                            <textarea 
+                            	rows="10" 
+                            	class="form-control" 
+                              	th:field="*{artist_profile}"
+                            	>					
+							</textarea>
+                          </div>
+                          <div class="mb-3 col-md-6">
+    					  	 <label for="artist_file" class="form-label">아티스트 이미지 파일</label>
+    					  	 <input
+                              class="form-control"
+                              type="file"
+                              name="file"
+                              autofocus
+                            />
+						  </div>
+                  </table>
+                </div>
+				
+                  
+                    
+  <div class="center">  
+      <input type="button" onclick="location.href='/artist/artist-home'" value="목록으로" class="btn btn-sm btn-outline-primary">
+      <input type="submit" value="수정하기" class="btn btn-sm btn-outline-primary">
+  </div>
+  
+  </form>
+                </div>
+              </div>
+              
+              <!--/ Basic Bootstrap Table -->
+            </div>
+            <!-- / Content -->
 
             <footer th:replace="~{footer :: #footer}"></footer>
 
@@ -92,7 +113,9 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    
     <!-- / Layout wrapper -->
+
 
   </body>
   <body th:replace="~{scr :: #scr}"></body>
