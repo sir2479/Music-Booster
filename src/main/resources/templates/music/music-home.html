@@ -139,8 +139,8 @@
                       </div>
                     </div>
                     <div class="card-body" th:object="${recommendMusic}" th:if="${recommendMusic}">
-	                 <!--   <img class="card-img-top" width="400px" height="400px" alt="ArtistImageFile"
-	                    	th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>-->
+	                 <img class="card-img-top" width="400px" height="400px" alt="ArtistImageFile"
+	                    th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>
 	                	<div class="card-body">
 	                      <h4 class="card-title" th:text="${recommendMusic.music_name}"></h4>
 	                      <p class="card-text"> </p>
@@ -278,18 +278,7 @@
                         <td>
                           <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
                         </td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
-                            >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
+                        <td th:text="${music.artist_name}">
                         </td>
                         <td th:text="${music.music_genre}"></td>
                         <td>				

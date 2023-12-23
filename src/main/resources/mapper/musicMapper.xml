@@ -24,7 +24,20 @@
   	</insert>
 	
 	<select id="findAllMusics" resultType="music">
-	  select * from music
+	  select 
+	     m.music_id,
+	     m.music_name,
+	     m.music_artist_id,
+	     a.artist_name,
+	     m.music_genre,
+	     m.music_lyrics,
+	     m.music_playcount,
+	     m.music_like
+	  from
+	  	music m join artist a
+	  	on (m.music_artist_id = a.artist_id)
+	  order by
+	  	music_id desc
 	</select>
 	
 	<select id="findMusicByMusicId" resultType="music">

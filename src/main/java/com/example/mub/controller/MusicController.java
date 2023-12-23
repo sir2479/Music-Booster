@@ -9,11 +9,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.mub.model.artist.Artist;
 import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.file.MusicFile;
 import com.example.mub.model.music.Music;
 import com.example.mub.model.music.MusicUploadForm;
 import com.example.mub.repository.FileMapper;
+import com.example.mub.service.ArtistService;
 import com.example.mub.service.MusicService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MusicController {
 	
 	private final MusicService musicService;
+	private final ArtistService artistService;
 	private final FileMapper fileMapper;
 
 	@GetMapping("music-home")
@@ -66,7 +69,7 @@ public class MusicController {
 			musics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
 
-//		log.info("musics: {}", musics);
+		log.info("musics: {}", musics);
 //		log.info("musicFiles: {}", musicFiles);
 //		log.info("genreMusics: {}", genreMusics);
 		
@@ -79,9 +82,16 @@ public class MusicController {
     }
 	
 	@GetMapping("upload")
-    public String uploadForm(Model model) {
+    public String uploadForm(@RequestParam Long artist_id,
+    						Model model) {
 		
-		model.addAttribute("uploadForm", new MusicUploadForm());
+		Artist artist = artistService.findArtist(artist_id);
+		MusicUploadForm musicUploadForm = new MusicUploadForm();
+		musicUploadForm.setMusic_artist_id(artist.getArtist_id());
+		musicUploadForm.setArtist_name(artist.getArtist_name());
+		
+		log.info("musicUploadForm: {}", musicUploadForm);
+		model.addAttribute("uploadForm", musicUploadForm);
 
         return "music/upload";
     }

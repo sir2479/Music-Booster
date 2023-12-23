@@ -100,7 +100,7 @@
                             <input
                               class="form-control"
                               type="text"
-                              th:field="*{music_artist_id}"
+                              th:field="*{artist_name}"
                               placeholder=""
                             />
                           </div>
@@ -140,6 +140,7 @@
                           <button type="submit" class="btn btn-primary me-2">곡 저장</button>
                           <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                         </div>
+                        <input type="hidden" name="music_artist_id" id="music_artist_id" th:value="*{music_artist_id}">
                       </form>
                     </div>
                     <!-- /Account -->

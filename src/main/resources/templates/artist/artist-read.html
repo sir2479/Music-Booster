@@ -85,7 +85,9 @@
 			<input type="button"
 				th:onclick="|location.href='/artist/artist-remove?artist_id=${artist.artist_id}'|"
 				class="btn btn-sm btn-outline-primary" value="삭제하기">	
-							
+			<input type="button"
+				th:onclick="|location.href='/music/upload?artist_id=${artist.artist_id}'|"
+				class="btn btn-sm btn-outline-primary" value="곡 업로드">					
 		</th:block>              
 	</p>
                 
