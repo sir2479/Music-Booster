@@ -60,6 +60,11 @@
   	select * from image_file where file_music_id = #{file_music_id}
   </select>
   
+  <delete id="removeImageFileByArtistId">
+  	delete image_file where file_artist_id = #{file_artist_id}
+  </delete>
+  
+  
 
 
 

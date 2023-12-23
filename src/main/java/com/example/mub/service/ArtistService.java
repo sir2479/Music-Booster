@@ -2,6 +2,7 @@ package com.example.mub.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,9 @@ public class ArtistService {
 	private final ArtistMapper artistMapper;
 	private final FileService fileService;
 	private final FileMapper fileMapper;
+	
+	@Value("${file.upload.path}")
+	private String uploadPath;
 	
 	@Transactional
 	public void saveArtist(Artist artist, MultipartFile file) {
@@ -65,24 +69,40 @@ public class ArtistService {
 	}
 	
 	@Transactional
-	public void updateArtist(Artist updateArtist, MultipartFile file) {
+	public void updateArtist(Artist updateArtist, boolean isFileRemoved, MultipartFile file) {
 		Artist artist = artistMapper.findArtist(updateArtist.getArtist_id());
 		
 		if(artist != null) {
 			artistMapper.updateArtist(updateArtist);
 			ImageFile imageFile = fileMapper.findImageFileByArtistId(updateArtist.getArtist_id());
+			if(imageFile != null && (isFileRemoved || (file != null && file.getSize() > 0))) {
+				fileMapper.removeImageFileByArtistId(imageFile.getFile_artist_id());
+			}
 			
 		}
 		
 		if(file != null && file.getSize() > 0) {
 			AttachedFile attachedFile  = fileService.saveFile(file);
-			
-		}
+			ImageFile imageSavedFile = new ImageFile(attachedFile);
+			imageSavedFile.setFile_artist_id(updateArtist.getArtist_id());
+			fileMapper.imageFileUpload(imageSavedFile);
+		} 
 	}
 	
 	public ImageFile findImageFileByArtistId(Long artist_id) {
 		return fileMapper.findImageFileByArtistId(artist_id);
 	}
+	
+	@Transactional
+	public void removeImageFile(Long artist_id) {
+		ImageFile imageFile = fileMapper.findImageFileByArtistId(artist_id);
+		if(imageFile != null) {
+			String fullPath = uploadPath + "/" + imageFile.getFile_saved_name();
+			fileService.deleteFile(fullPath);
+			fileMapper.removeImageFileByArtistId(imageFile.getFile_artist_id());
+		}
+	}
+	
 	
 
 }

@@ -23,6 +23,7 @@ import com.example.mub.model.file.AttachedFile;
 import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.member.Member;
 import com.example.mub.repository.ArtistMapper;
+import com.example.mub.repository.FileMapper;
 import com.example.mub.service.ArtistService;
 import com.example.mub.util.FileService;
 
@@ -38,6 +39,7 @@ public class ArtistController {
 	private final ArtistService artistService;
 	private final ArtistMapper artistMapper;
 	private final FileService fileService;
+	private final FileMapper fileMapper;
 	@Value("${file.upload.path}")
     private String uploadPath;
 	
@@ -143,7 +145,7 @@ public class ArtistController {
 		log.info("id: {}", artist_id);
 		
 		Artist artist = artistService.findArtist(artist_id);
-		if (artist == null || !artist.getArtist_id().equals(loginMember.getMember_id())) {
+		if (artist == null || !artist.getArtist_member_id().equals(loginMember.getMember_id())) {
 			log.info("수정 권한 없음");
 			return "redirect:/artist/artist-home";
 		}
@@ -153,6 +155,8 @@ public class ArtistController {
 		log.info("imageFile: {}", imageFile);
 		
 		model.addAttribute("imageFile",imageFile);
+		
+		log.info("update Get 통과: {}", artist_id);
 		
 		return "artist/artist-update";
 	}
@@ -178,13 +182,17 @@ public class ArtistController {
 			log.info("권한 없음");
 			return "redirect:/artist/artist-update";
 		}
+		
+		log.info("update : {}", updateArtist);
 	
 		artist.setArtist_name(updateArtist.getArtist_name());
 		artist.setArtist_profile(updateArtist.getArtist_profile());
 		
-		artistService.updateArtist(artist);
+		log.info("update post 통과: {}", artist_id);
+		
+		artistService.updateArtist(artist, updateArtist.isFileRemoved() , file);
 	
-		return "artist/artist-update";
+		return "redirect:/artist/artist-home";
 	}
 	
 	@GetMapping("artist-remove")
@@ -197,6 +205,13 @@ public class ArtistController {
             log.info("삭제 권한 없음");
             return "redirect:/artist/artist-home";
         }
+		
+		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
+		
+		if (imageFile != null) {
+			artistService.removeImageFile(imageFile.getFile_artist_id());
+		}
+		
 		
 		artistMapper.removeArtist(artist_id);
 		
