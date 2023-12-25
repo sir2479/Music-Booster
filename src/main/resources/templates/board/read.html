@@ -21,7 +21,7 @@
 		function deleteBoard(board_id) {
 			console.log("deleteBoard 실행");
 			console.log(board_id);
-        	if (confirm('삭제하시겠습니까?')) {
+        	if (confirm('삭제한 게시글은 복구할 수 없습니다. 정말로삭제하시겠습니까?')) {
 				alert('삭제되었습니다');
             	location.replace('/board/delete?board_id=' + board_id);
 			}
@@ -49,7 +49,7 @@
                 }
             });
         }
-
+		// 댓글 데이터 가져옴
         function getFindAllComments() {
             let comments_board = /*[[${board.board_id}]]*/ '';
             $.ajax({
@@ -90,7 +90,57 @@
             }
             str += "</table>";
             $("#findAllComments").append(str);
+            feather.replace();
         }
+        		//댓글 삭제
+		function removeComments(comments_id){
+			if(confirm("삭제하시겠습니까?")){
+				$.ajax({
+					url: "/comments/" + comments_id,
+					type: "delete",
+					success: function(data){
+						console.log(data);
+						getFindAllComments();
+					},
+					error: function(status){
+						console.log(status);
+						alert("삭제할 수 없습니다.");
+					}
+				});
+			}
+		}
+		
+		//댓글 수정 창
+		function getUpdateComments(comments_id, comments_content){
+			let str = "";
+			str += "<a onclick='updateComments(" + comments_id + ")'><i class='float-end feather-sm' data-feather='save' style='margin-bottom: 10px;'></i></a>";
+			str += "<textarea rows='2' class='form-control' id='updateComments'>" + comments_content + "</textarea>";
+			$("#" + comments_id).empty();
+			$("#"+comments_id).append(str);	
+			feather.replace();		
+		}
+		
+		//댓글 수정
+		function updateComments(comments_id){
+			let content = $("#updateComments").val();
+			if(confirm("수정하시겠습니까?")){
+				$.ajax({
+					url: "/comments/" + comments_id,
+					type: "put",
+					data: {
+						"comments_content": content
+					},
+					success: function(data){
+						console.log(data);
+						getFindAllComments();
+					},
+					error: function(status){
+						console.log(status);
+						alert("수정할 수 없습니다.");
+					}
+				});
+			}
+		}
 
         //페이지가 로딩되면 getReplies() 함수를 자동으로 호출한다.
         $(document).ready(function () {
@@ -133,31 +183,49 @@
                             <span class="text-muted fw-light"></span>
                         </h4>
 
-                        <!-- Basic Bootstrap Table -->
-                        <div class="card">
-                            <h5 class="card-header"></h5>
-
-                            <div class="table-responsive text-nowrap">
-                                <table class="table" th:object="${board}">
-                                    <thead>
+<!-- Basic Bootstrap Table -->
+<div class="card">
+    <h5 class="card-header"></h5>
+    
+    <div class="table-responsive text-nowrap">
+        <table class="table" th:object="${board}">
+            <tbody>
                                         <tr>
-                                            <th>제목</th>
+                                            <th class="mb-0">제목</th>
                                             <td th:text="*{board_title}"></td>
+											<td class="align-middle"><small class="text-light fw-semibold"></small></td>
+											<td class="py-3">
+                                            <th>작성일</th>
+                                            <td><span th:text="${#temporals.format(board.board_create_time, 'yy-MM-dd hh:mm')}"></span></td>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <th>작성자</th>
+                                            <th class="mb-0">작성자</th>
                                             <td th:text="*{board_member}"></td>
+											<td class="align-middle"><small class="text-light fw-semibold"></small></td>
+											<td class="py-3">
                                         </tr>
                                         <tr>
-                                            <th>내용</th>
+                                            <th class="mb-0">내용</th>
+											<td class="align-middle"><small class="text-light fw-semibold"></small></td>
+											<td class="py-3">
                                         </tr>
-                                        <div class="card-body">
-                                            <td style="height: 500px; width:500px;" th:text="*{board_content}"></td>
+                                        
+                                        <div class="row">
+                                       <div class="col-md-6 col-sm-12">
+					                 	<div class="card overflow-hidden mb-4" style="height: 500px">
+					                    <div class="card-body" id="vertical-example">
+					                    <td th:text="*{board_content}"></td>
+                                            
                                         </div>
-                                        <tr>
+                                        </div>    
+                                        </div>
+                                        </div>
+                                        
+<!--                                        <tr>
                                             <th>작성일</th>
                                             <td><span th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd hh:mm')}"></span></td>
-                                        </tr>
+                                        </tr>-->
                                         <tr th:if="${board.board_edit_time} != null">
                                             <th>수정일</th>
                                             <td><span th:text="${#temporals.format(board.board_edit_time, 'yyyy-MM-dd HH:mm')}"></span></td>
@@ -167,13 +235,14 @@
                                             <td th:text="*{board_hit}"></td>
                                         </tr>
                                     </thead>
+                                    </tbody>
                                 </table>
                                 <p>
                                     <span style="right: auto;">
                                         <input type="button" th:onclick="|location.href='@{/board/list(board_category=${board_category})}'|" value="목록으로" class="btn btn-sm btn-outline-primary">
                                         <th:block th:if="${session.loginMember != null}">
                                             <input type="button" th:if="${session.loginMember.member_id == board.board_member}" th:onclick="|location.href='@{/board/update(board_id=${board.board_id},board_category=${board_category})}'|" value="수정하기" class="btn btn-sm btn-outline-primary">
-                                            <input type="button" th:if="${session.loginMember.member_id == board.board_member}" th:onclick="|location.href='@{/board/delete(board_id=${board.board_id},board_category=${board_category})}'|" value="삭제하기" class="btn btn-sm btn-outline-primary">
+                                            <input type="button" th:if="${session.loginMember.member_id == board.board_member}" th:onclick="'javascript:deleteBoard(\''+ ${board.board_id} +'\');'" value="삭제하기" class="btn btn-sm btn-outline-primary">
                                         </th:block>
                                     </span>
                                     <br>

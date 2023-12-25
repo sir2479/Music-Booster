@@ -51,7 +51,25 @@
                                             <div class="error" th:errors="*{board_title}"></div>
                                         </td>
                                     </tr>
-                                    <!-- (이하 생략) -->
+                                    <tr>
+                                        <th>내용</th>
+                                        <td>
+                                            <textarea rows="10" cols="30" th:field="*{board_content}"></textarea>
+                                            <div class="error" th:errors="*{board_content}"></div>
+                                        </td>
+                                    </tr>
+                                     <tr>
+								        <th>조회수</th>
+								        <td th:text="*{board_hit}"></td>
+								      </tr>
+								      <tr>
+								        <th>작성일</th>
+								        <td><span th:text="*{#temporals.format(board_create_time, 'yy-MM-dd HH:mm')}"></span></td>
+								      </tr>
+								      <tr>
+								        <th>작성자</th>
+								        <td th:text="*{board_member}"></td>
+								      </tr>
                                 </thead>
                             </table>
                             <input type="hidden" th:field="*{board_hit}">
