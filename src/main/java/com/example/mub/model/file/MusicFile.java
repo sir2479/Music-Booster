@@ -10,7 +10,8 @@ public class MusicFile {
 	private String file_original_name;
 	private String file_saved_name;
 	private Long file_size;
-	private Long file_music_id; 
+	private Long file_music_id;
+	private String file_path;
 	
 	public MusicFile(AttachedFile attachedFile, Long file_music_id) {
 		this.file_original_name = attachedFile.getFile_original_name();

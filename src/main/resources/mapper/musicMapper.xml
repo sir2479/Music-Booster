@@ -11,22 +11,41 @@
 	   insert into music(
 	     music_id,
 	     music_name,
+	     music_artist_id,
 	     music_genre,
 	     music_lyrics
 	     ) values (
 	       #{music_id},
 	       #{music_name},
+	       #{music_artist_id},
 	       #{music_genre},
 	       #{music_lyrics}
 	     )
   	</insert>
 	
 	<select id="findAllMusics" resultType="music">
-	  select * from music
+	  select 
+	     m.music_id,
+	     m.music_name,
+	     m.music_artist_id,
+	     a.artist_name,
+	     m.music_genre,
+	     m.music_lyrics,
+	     m.music_playcount,
+	     m.music_like
+	  from
+	  	music m join artist a
+	  	on (m.music_artist_id = a.artist_id)
+	  order by
+	  	music_id desc
 	</select>
 	
 	<select id="findMusicByMusicId" resultType="music">
 	  select * from music where music_id = #{music_id}
+	</select>
+	
+	<select id="findMusicByGenre" resultType="music">
+	  select * from music where music_genre = #{music_genre}
 	</select>
 	
 	<select id="searchMusic" resultType="music">

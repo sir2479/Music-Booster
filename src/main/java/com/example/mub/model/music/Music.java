@@ -14,5 +14,8 @@ public class Music {
 	private String music_lyrics;
 	private Long music_playcount;
 	private Long music_like;
+	private String music_file_saved_name;
+	private String image_file_saved_name;
+	private String artist_name;
 
 }

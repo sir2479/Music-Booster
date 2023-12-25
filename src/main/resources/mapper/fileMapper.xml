@@ -4,7 +4,7 @@
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mub.repository.FileMapper">
  
-   <insert id="MusicFileUpload">
+   <insert id="musicFileUpload">
   	<selectKey keyProperty="file_id" resultType="Long" order="BEFORE">
   		select music_file_seq.nextval from dual
   	</selectKey>
@@ -23,9 +23,49 @@
   		)
   </insert>
   
+  <insert id="imageFileUpload">
+   <selectKey keyProperty="file_id" resultType="Long" order="BEFORE">
+   		select image_file_seq.nextval from dual
+   </selectKey>
+   		insert into image_file(
+   			file_id,
+   			file_original_name,
+   			file_saved_name,
+  			file_size
+  			<if test="file_member_id != null">,file_member_id</if>
+   			<if test="file_board_id != null">,file_board_id</if>
+   			<if test="file_artist_id != null">,file_artist_id</if>
+   			<if test="file_music_id != null">,file_music_id</if>
+   		) values (
+   			#{file_id},
+   			#{file_original_name},
+   			#{file_saved_name},
+   			#{file_size}
+   			<if test="file_member_id != null">,#{file_member_id}</if>
+   			<if test="file_board_id != null">,#{file_board_id}</if>
+   			<if test="file_artist_id != null">,#{file_artist_id}</if>
+   			<if test="file_music_id != null">,#{file_music_id}</if>
+   			)
+  </insert>
+  
   <select id="findMusicFileByMusicId" resultType="musicfile">
   	select * from music_file where file_music_id = #{file_music_id}
   </select>
+  
+  <select id="findImageFileByArtistId" resultType="imagefile">
+  	select * from image_file where file_artist_id = #{file_artist_id}
+  </select>
+  
+  <select id="findImageFileByMusicId" resultType="imagefile">
+  	select * from image_file where file_music_id = #{file_music_id}
+  </select>
+  
+  <delete id="removeImageFileByArtistId">
+  	delete image_file where file_artist_id = #{file_artist_id}
+  </delete>
+  
+  
+
 
 
  

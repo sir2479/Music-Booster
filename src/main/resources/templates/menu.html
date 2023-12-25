@@ -116,10 +116,9 @@
             
             <!-- 아티스트 -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">아티스트</span></li>
-            <!-- 아티스트 -->
             <li class="menu-item"
             	th:classappend="${#httpServletRequest.requestURI == '/artist/artist-home' ? 'active' : ''}">
-              <a href="tables-basic" class="menu-link">
+				<a href="/artist/artist-home" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
                 <div data-i18n="Boxicons">아티스트</div>
               </a>
