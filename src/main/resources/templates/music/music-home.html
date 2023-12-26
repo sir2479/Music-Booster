@@ -82,19 +82,11 @@
 			} else {
 				str += "<div class='text-center'>등록된 음악이 없습니다.</div>";
 			}
-			$("#genreMusic").append(str);
-			
+			$("#genreMusic").append(str);			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		$(function(){
-			genreChange('Ballad');
+			genreChange('ballad');
 		});
 		
 	</script>
@@ -119,15 +111,14 @@
 			  
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-				
+				<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span>&nbsp;음악</h4>
 			<div class="row">
                 <!-- Order Statistics -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
                   <div class="card h-100">
-                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                    <div class="card-header d-flex align-items-center justify-content-between">
                       <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Order Statistics</h5>
-                        <small class="text-muted">42.82k Total Sales</small>
+                        <h5 class="m-0 me-2 fw-bold">이런 음악은 어떤가요?</h5>
                       </div>
                       <div class="dropdown">
                         <button
@@ -147,75 +138,14 @@
                         </div>
                       </div>
                     </div>
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex flex-column align-items-center gap-1">
-                          <h2 class="mb-2">8,258</h2>
-                          <span>Total Orders</span>
-                        </div>
-                        <div id="orderStatisticsChart"></div>
-                      </div>
-                      <ul class="p-0 m-0">
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-primary"
-                              ><i class="bx bx-mobile-alt"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Electronic</h6>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">82.5k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Fashion</h6>
-                              <small class="text-muted">T-shirt, Jeans, Shoes</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">23.8k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-1">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-info"><i class="bx bx-home-alt"></i></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Decor</h6>
-                              <small class="text-muted">Fine Art, Dining</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">849k</small>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="d-flex">
-                          <div class="avatar flex-shrink-0 me-3">
-                            <span class="avatar-initial rounded bg-label-secondary"
-                              ><i class="bx bx-football"></i
-                            ></span>
-                          </div>
-                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                            <div class="me-2">
-                              <h6 class="mb-0">Sports</h6>
-                              <small class="text-muted">Football, Cricket Kit</small>
-                            </div>
-                            <div class="user-progress">
-                              <small class="fw-semibold">99</small>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                    <div class="card-body" th:object="${recommendMusic}" th:if="${recommendMusic}">
+	                 <img class="card-img-top" width="400px" height="400px" alt="ArtistImageFile"
+	                    th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>
+	                	<div class="card-body">
+	                      <h4 class="card-title" th:text="${recommendMusic.music_name}"></h4>
+	                      <p class="card-text"> </p>
+	                      <a href="" class="btn btn-outline-primary">음악 상세정보</a>
+	                	</div>
                     </div>
                   </div>
                 </div>
@@ -225,6 +155,9 @@
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header">
+					  <div class="card-title d-flex align-items-center justify-content-between">
+					    <h5 class="m-0 me-2 fw-bold">장르별 음악</h5>
+					  </div>
                       <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item">
                           <button
@@ -235,17 +168,19 @@
                             data-bs-target="#navs-tabs-line-card-income"
                             aria-controls="navs-tabs-line-card-income"
                             aria-selected="true"
-                            onclick="genreChange('Ballad')"
+                            onclick="genreChange('ballad')"
                           >
-                            Ballad
+                            ballad
                           </button>
                         </li>
-                        <li class="nav-item">
-						  
+                        <li class="nav-item">  
                           <button type="button" onclick="genreChange('dance')" class="nav-link genreButton" role="tab">dance</button>
                         </li>
                         <li class="nav-item">
-                          <button type="button" onclick="genreChange('RAP_HIPHOP')" class="nav-link genreButton" role="tab">rap/hip-hop</button>
+                          <button type="button" onclick="genreChange('rap_hiphop')" class="nav-link genreButton" role="tab">rap/hip-hop</button>
+                        </li>
+                        <li class="nav-item">
+                          <button type="button" onclick="genreChange('etc')" class="nav-link genreButton" role="tab">&nbsp;&nbsp;etc&nbsp;&nbsp;</button>
                         </li>
                       </ul>
                     </div>
@@ -260,7 +195,7 @@
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <h5 class="card-title m-0 me-2">Transactions</h5>
+                      <h5 class="card-title m-0 me-2 fw-bold">음악 랭킹</h5>
                       <div class="dropdown">
                         <button
                           class="btn p-0"
@@ -280,17 +215,21 @@
                       </div>
                     </div>
                     <div class="card-body">
-                      <ul class="p-0 m-0" th:each="genreMusic : ${genreMusics}">
+                      <ul class="p-0 m-0" th:each="music : ${musics}">
                         <li class="d-flex mb-4 pb-1">
+						  <div class="user-progress d-flex align-items-center gap-1">
+							 <div th:text="${musicStat.count}" style="width: 50px;"></div> 
+						  </div>
 						  <div class="avatar flex-shrink-0 me-3">
-                            <img src="../assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
+                            <img  width="40px" height="40px"
+								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
                           </div>	
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0" th:text="${genreMusic.music_name}"></h6>
+                              <h6 class="mb-0" th:text="${music.music_name}"></h6>
                             </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0" th:text="${genreMusic.music_genre}"></h6>
+                              <h6 class="mb-0" th:text="${music.music_genre}"></h6>
                             </div>
                           </div>
                         </li>
@@ -310,7 +249,7 @@
               <div class="card">
 				<div class="card-header">
                 <h5>Table Basic</h5>
-                <div>
+                <div th:if="${session.loginMember != null and session.loginMember.position == 'artist'}">
 					<input type="button" 
 						onclick="location.href='/music/upload'" 
 						class="btn btn-sm btn-outline-primary" value="음악 업로드">
@@ -337,20 +276,9 @@
 								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
 						</td>
                         <td>
-                          <strong th:text="${music.music_name}"></strong>
+                          <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
                         </td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
-                            >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
+                        <td th:text="${music.artist_name}">
                         </td>
                         <td th:text="${music.music_genre}"></td>
                         <td>				

@@ -100,7 +100,7 @@
                             <input
                               class="form-control"
                               type="text"
-                              th:field="*{music_artist_id}"
+                              th:field="*{artist_name}"
                               placeholder=""
                             />
                           </div>
@@ -109,10 +109,10 @@
                             <label for="genre" class="form-label">장르</label>
                             <select class="select2 form-select" th:field="*{music_genre}">
                               <option value="">Select genre</option>
-                              <option value="Ballad">발라드</option>
+                              <option value="ballad">발라드</option>
                               <option value="dance">댄스</option>
-                              <option value="RAP_HIPHOP">랩/힙합</option>
-                              <option value="other">기타</option>
+                              <option value="rap_hiphop">랩/힙합</option>
+                              <option value="etc">기타</option>
                             </select>
                           </div>
                           
@@ -140,6 +140,7 @@
                           <button type="submit" class="btn btn-primary me-2">곡 저장</button>
                           <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                         </div>
+                        <input type="hidden" name="music_artist_id" id="music_artist_id" th:value="*{music_artist_id}">
                       </form>
                     </div>
                     <!-- /Account -->

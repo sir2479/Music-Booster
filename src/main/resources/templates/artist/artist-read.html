@@ -38,6 +38,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
 		  
+		  
 		<!-- 사이드 메뉴바 --> 
         <aside th:replace="~{menu :: #layout-menu}"></aside>
 
@@ -46,6 +47,8 @@
  
  		  <!-- 헤더 유저바 -->
           <nav th:replace="~{navbar :: #layout-navbar}"></nav>
+          
+         
 
 
           <!-- Content wrapper -->
@@ -57,6 +60,7 @@
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span> 아티스트</h4>
               
 	<table th:object="${artist}">
+	
 	<tr>
 	  <th></th>
 	  <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
@@ -73,19 +77,111 @@
         <th>작성자</th>
         <td th:text="*{artist_member_id}"></td>
       </tr>
-    
-	</table>
+	
+	
+	<div class="container-xxl flex-grow-1 container-p-y">
+
+              <!-- Tabs -->
+              <!--<h5 class="py-3 my-4"></h5>-->
+
+              <div class="row">
+                <div class="col-xl-6">
+                 <!-- <h6 class="text-muted"></h6>-->
+                  <div class="nav-align-top mb-4">
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link active"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-top-home"
+                          aria-controls="navs-top-home"
+                          aria-selected="true"
+                        >
+                          Artist_Profile
+                        </button>
+                      </li>
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-top-profile"
+                          aria-controls="navs-top-profile"
+                          aria-selected="false"
+                        >
+                          Music
+                        </button>
+                      </li>
+                      <li class="nav-item">
+                        <button
+                          type="button"
+                          class="nav-link"
+                          role="tab"
+                          data-bs-toggle="tab"
+                          data-bs-target="#navs-top-messages"
+                          aria-controls="navs-top-messages"
+                          aria-selected="false"
+                        >
+                          User_Comment
+                        </button>
+                      </li>
+                    </ul>
+                    <div class="tab-content" th:object="${music}">
+                      <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                        <p>
+                          [[${artist.artist_profile}]]
+                        </p>
+                        <p class="mb-0">
+                         공백
+                        </p>
+                      </div>
+                      <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
+                        <p>
+                          [[${artist.artist_profile}]]
+                          <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
+                          
+                        </p>
+                        <p class="mb-0">
+                          공백
+                        </p>
+                      </div>
+                      <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
+                        <p>
+                          Messages1
+                        </p>
+                        <p class="mb-0">
+                          공백
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               </div>
+               </table>
+              </div>
+              
 	
 	<p class="right" >
 		<input type="button" onclick="location.href='/artist/artist-home'" value="목록으로" class="btn btn-sm btn-outline-primary">
-		<th:block th:if="${session.loginMember.member_id == artist.artist_member_id}">
+	  
+		<th:block th:if="${session.loginMember != null}">
 			<input type="button"
+				th:if="${session.loginMember.member_id == artist.artist_member_id}"
 				th:onclick="|location.href='/artist/artist-update?artist_id=${artist.artist_id}'|"
 				class="btn btn-sm btn-outline-primary" value="수정하기">	
 			<input type="button"
+				th:if="${session.loginMember.member_id == artist.artist_member_id}"
 				th:onclick="|location.href='/artist/artist-remove?artist_id=${artist.artist_id}'|"
 				class="btn btn-sm btn-outline-primary" value="삭제하기">	
-		</th:block>              
+			<input type="button"
+				th:if="${session.loginMember.member_id == artist.artist_member_id}"
+				th:onclick="|location.href='/music/upload?artist_id=${artist.artist_id}'|"
+				class="btn btn-sm btn-outline-primary" value="곡 업로드">					
+		</th:block>    
+	          
 	</p>
                 
               <!-- Examples -->

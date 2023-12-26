@@ -83,8 +83,10 @@ public class MusicService {
 		return filemapper.findImageFileByMusicId(file_music_id);
 	}
 	
-	
-	
+	public Music findMusicByArtistId(Long artist_id) {
+		
+		return musicMapper.findMusicByArtistId(artist_id);
+	}
 
 
 }

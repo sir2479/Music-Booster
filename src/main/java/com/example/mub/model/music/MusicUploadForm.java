@@ -11,6 +11,7 @@ public class MusicUploadForm {
 	private Long music_artist_id;
 	private String music_genre;
 	private String music_lyrics;
+	private String artist_name;
 	
 	public Music toMusic(MusicUploadForm musicUploadForm) {
 		Music music = new Music();
@@ -18,6 +19,7 @@ public class MusicUploadForm {
 		music.setMusic_artist_id(musicUploadForm.getMusic_artist_id());
 		music.setMusic_genre(musicUploadForm.getMusic_genre());
 		music.setMusic_lyrics(musicUploadForm.getMusic_lyrics());	
+		music.setArtist_name(musicUploadForm.getArtist_name());
 		return music;
 	}
 
