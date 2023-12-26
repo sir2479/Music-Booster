@@ -74,7 +74,7 @@ public class MusicService {
 		
 		return filemapper.findImageFileByMusicId(file_music_id);
 	}
-	
+
 	public List<Music> findMusicsDescLike(){
 		
 		return musicMapper.findMusicsDescLike();
@@ -104,7 +104,11 @@ public class MusicService {
 		}		
 		return wishlistMusics;		
 	}
-	
+
+	public List<Music> findMusicByArtistId(Long artist_id) {
+		
+		return musicMapper.findMusicByArtistId(artist_id);
+	}
 
 
 }

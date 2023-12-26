@@ -69,6 +69,10 @@
 	  	m.music_id = #{music_id}
 	</select>
 	
+	<select id="findMusicByArtistId" resultType="music">
+	  select * from music where music_artist_id = #{music_artist_id}
+	</select>
+	
 	<select id="findMusicByGenre" resultType="music">
 	  select
 	  	m.music_id,
