@@ -86,7 +86,7 @@
                    <!-- 검색기능 -->
                            	 <p>
                                 <div class="search-container">
-                                    <form class="d-flex">
+                                    <form class="d-flex" style="margin-right:5%">
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="tf-icons bx bx-search" type="button" onclick="search()"></i>
@@ -175,9 +175,11 @@
 
 						
 
-  <p class="center">                  
-    <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
-    <input type="button" th:onclick="|location.href='@{/board/write(board_category=${board_category})}'|" class="btn btn-sm btn-outline-primary" value="글쓰기">
+  <p class="center">   
+	<button onclick="location.href='/'"  
+    class="btn btn-primary">메인으로</button>
+    <button th:onclick="|location.href='@{/board/write(board_category=${board_category})}'|" 
+    class="btn btn-primary">글쓰기</button>	                 
   </p>
   
   

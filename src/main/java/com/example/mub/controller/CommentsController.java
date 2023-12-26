@@ -34,6 +34,10 @@ public class CommentsController {
 		public ResponseEntity<String> writeComments(@ModelAttribute Comments comments,
 												@SessionAttribute("loginMember")Member loginMember,
 												@PathVariable("comments_board") Long comments_board){
+//	        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
+//	        if (loginMember == null) {
+//	            return "redirect:/member/login";
+//	        }
 			log.info("comments:{}", comments);
 			
 			comments.setComments_member(loginMember.getMember_id());
