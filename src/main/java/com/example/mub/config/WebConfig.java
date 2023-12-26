@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer{
 	private String[] excludePaths = {"/","/member/join","/member/login","/member/logout","/member/update",
 			"/**.css", "/**.js", "/**.ico", "/**error", "/**.scss"};
 	
-	private String[] loginCheckAddPaths = {"/member/update"};
+	private String[] loginCheckAddPaths = {"/member/update", "/music/my-music"};
 	
 	private String[] artistCheckAddPaths = {"/artist/artist-write"};
 	

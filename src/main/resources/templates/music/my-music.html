@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<!-- =========================================================
+* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
+==============================================================
+
+* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+ -->
+<!-- beautify ignore:start -->
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head th:replace="~{head :: #head}"></head>
+  <head>
+    <title>Blank Page</title>
+  </head>
+
+  <body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script th:inline="javascript"></script>
+	<script>	
+		// 찜하기 하트 비우기
+		function emptyHeart(musicId){
+			let music_id = musicId;
+			console.log(music_id);
+			
+			if (confirm('찜 삭제 하시겠습니까?')) {
+				$.ajax({
+					url: "/music/emptyHeart/" + music_id,
+					success: function(data){
+						console.log(data);
+					}
+				})
+				alert('삭제되었습니다');
+            	location.replace('/music/my-music');
+			}
+		}		
+	</script>
+	  
+	  
+	  
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+		  
+		<!-- 사이드 메뉴바 --> 
+        <aside th:replace="~{menu :: #layout-menu}"></aside>
+
+        <!-- Layout container -->
+        <div class="layout-page">
+ 
+ 		  <!-- 헤더 유저바 -->
+          <nav th:replace="~{navbar :: #layout-navbar}"></nav>
+
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+			  
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+				<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span>&nbsp;내 음악</h4>
+			  <!-- 음악 리스트 테이블 -->
+              <div class="card">
+				<div class="card-header">
+                <h5>Table Basic</h5>
+				</div>
+                <div class="table-responsive text-nowrap">
+                  <table class="table" style="border-collapse: separate; border-spacing: 0 1rem;">
+                    <thead>
+                      <tr>
+						<th>NO</th>
+						<th>  </th>
+                        <th>곡 명</th>
+                        <th>아티스트</th>
+                        <th>장르</th>
+                        <th>듣기</th>
+                        <th>찜하기</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0"> 
+                      <tr th:if="${musics != null}" th:each="music : ${musics}">
+						<td th:text="${musicStat.count}" class="center"></td>
+						<td>
+							<img  width="50px" height="50px"
+								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
+						</td>
+                        <td>
+                          <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
+                        </td>
+                        <td th:text="${music.artist_name}">
+                        </td>
+                        <td th:text="${music.music_genre}"></td>
+                        <td>				
+        		  			<audio controls disableRemotePlayback>
+    						   <source th:src="@{'/../download//' + ${music.music_file_saved_name}}">
+							</audio>
+						</td>
+						<td>
+						  <span th:if="${session.loginMember}">
+							<button th:if="!${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:fillHeart(\''+ ${music.music_id} +'\');'"  class="" value="">🤍️</button>
+						  	<button th:if="${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:emptyHeart(\''+ ${music.music_id} +'\');'"  class="" value="">❤️</button>
+						  </span>
+						</td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-edit-alt me-2"></i> Edit</a
+                              >
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-trash me-2"></i> Delete</a
+                              >
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+				</div>
+              </div>
+              <!-- 음악 리스트 테이블 -->            
+            </div>
+            <!-- / Content -->
+
+            <footer th:replace="~{footer :: #footer}"></footer>
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+  </body>
+  <body th:replace="~{scr :: #scr}"></body>
+</html>

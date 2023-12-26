@@ -16,6 +16,7 @@
         <typeAlias type="com.example.mub.model.music.Music" alias="music"/>
         <typeAlias type="com.example.mub.model.file.MusicFile" alias="musicfile"/>
         <typeAlias type="com.example.mub.model.file.ImageFile" alias="imagefile"/>
+        <typeAlias type="com.example.mub.model.wishlist.Wishlist" alias="wishlist"/>
     </typeAliases>
     
    

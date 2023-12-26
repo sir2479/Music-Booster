@@ -16,4 +16,10 @@ public interface MusicMapper {
 	Music findMusicByMusicId(Long Music_id);
 	
 	List<Music> findMusicByGenre(String music_genre);
+	
+	List<Music> findMusicsDescLike();
+	
+	void addLike(Long Music_id);
+	
+	void minusLike(Long Music_id);
 }

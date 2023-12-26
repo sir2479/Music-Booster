@@ -22,6 +22,18 @@
 	       #{music_lyrics}
 	     )
   	</insert>
+  	
+  	<update id="addLike">
+      update music set
+    	music_like = music_like+1
+    	  where music_id = #{music_id}
+    </update>
+    
+    <update id="minusLike">
+      update music set
+    	music_like = music_like-1
+    	  where music_id = #{music_id}
+    </update>
 	
 	<select id="findAllMusics" resultType="music">
 	  select 
@@ -41,11 +53,54 @@
 	</select>
 	
 	<select id="findMusicByMusicId" resultType="music">
-	  select * from music where music_id = #{music_id}
+	  select
+	  	 m.music_id,
+	     m.music_name,
+	     m.music_artist_id,
+	     a.artist_name,
+	     m.music_genre,
+	     m.music_lyrics,
+	     m.music_playcount,
+	     m.music_like 
+	  from 
+	  	music m join artist a
+	  	on (m.music_artist_id = a.artist_id)
+	  where 
+	  	m.music_id = #{music_id}
 	</select>
 	
 	<select id="findMusicByGenre" resultType="music">
-	  select * from music where music_genre = #{music_genre}
+	  select
+	  	m.music_id,
+	    m.music_name,
+	    m.music_artist_id,
+	    a.artist_name,
+	    m.music_genre,
+	    m.music_lyrics,
+	    m.music_playcount,
+	    m.music_like 
+	  from 
+	  	music m join artist a
+	  	on (m.music_artist_id = a.artist_id) 
+	  where
+	  	music_genre = #{music_genre}
+	</select>
+	
+	<select id="findMusicsDescLike" resultType="music">
+	  select 
+	     m.music_id,
+	     m.music_name,
+	     m.music_artist_id,
+	     a.artist_name,
+	     m.music_genre,
+	     m.music_lyrics,
+	     m.music_playcount,
+	     m.music_like
+	  from
+	  	music m join artist a
+	  	on (m.music_artist_id = a.artist_id)
+	  order by
+	  	music_like desc
 	</select>
 	
 	<select id="searchMusic" resultType="music">
