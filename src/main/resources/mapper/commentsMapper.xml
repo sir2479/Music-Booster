@@ -3,6 +3,7 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mub.repository.CommentsMapper">
+
 	<insert id="saveComments">
 		<selectKey keyProperty="comments_id" resultType="long"
 			order="BEFORE">
@@ -53,5 +54,5 @@
 	<delete id="deleteComments">
 		delete from comments where comments_id = #{comments_id}
 	</delete>
-
+	
 </mapper>
