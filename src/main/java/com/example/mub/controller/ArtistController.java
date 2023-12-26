@@ -2,6 +2,7 @@ package com.example.mub.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import com.example.mub.model.music.Music;
 import com.example.mub.repository.ArtistMapper;
 import com.example.mub.repository.FileMapper;
 import com.example.mub.service.ArtistService;
+import com.example.mub.service.MemberService;
 import com.example.mub.service.MusicService;
 import com.example.mub.util.FileService;
 
@@ -43,6 +45,7 @@ public class ArtistController {
 	private final FileService fileService;
 	private final FileMapper fileMapper;
 	private final MusicService musicService;
+	private final MemberService memberService;
 	@Value("${file.upload.path}")
     private String uploadPath;
 	
@@ -121,11 +124,22 @@ public class ArtistController {
 		
 		log.info("id: {}", artist_id);
 		
+		
 		Artist artist = artistService.readArtist(artist_id);
 		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
-		//Music music = musicService.findMusicByArtistId(artist_id);
+		List<Music> music = musicService.findMusicByArtistId(artist_id);
+		List<ImageFile> imageFiles = new ArrayList<>();
+		Member member = memberService.findMember(artist.getArtist_member_id());
+		
+		
+		for(int i = 0 ; i < music.size() ; i++) {		
+			imageFiles.add(musicService.findImageFileByMusicId(music.get(i).getMusic_id()));
+			music.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
+		}
 		
 		log.info("imageFile: {}", imageFile);
+		
+		log.info("musicFile: {}", music);
 		
 		log.info("artist: {}", artist);
 		
@@ -134,9 +148,10 @@ public class ArtistController {
 			return "redirect:/artist/artist-home";
 		}
 		
-		//model.addAttribute("music", music);
+		model.addAttribute("music", music);
 		model.addAttribute("imageFile",imageFile);
 		model.addAttribute("artist", artist);
+		model.addAttribute("member", member);
 	
 		return "artist/artist-read";
 	}
@@ -172,7 +187,6 @@ public class ArtistController {
             @Validated @ModelAttribute("artist") ArtistUpdateForm updateArtist,
             @RequestParam(required = false) MultipartFile file,
             BindingResult result) {
-	
 	
 		log.info("artist: {}", updateArtist);
 	
