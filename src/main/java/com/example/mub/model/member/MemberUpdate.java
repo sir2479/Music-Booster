@@ -53,11 +53,6 @@ public class MemberUpdate {
 		member.setHire_date(memberUpdate.getHire_date());
 		member.setProfile(memberUpdate.getProfile());
 		return member;
-}
-	
-	public boolean isPasswordConfirmed() {
-	    return getPassword() != null;
 	}
-	
-	
+
 }

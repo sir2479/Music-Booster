@@ -40,7 +40,6 @@ public class MemberController {
 	private final MemberService memberService;
 	private final FileMapper fileMapper;
 	
-
 	
 	// 회원가입 페이지 이동
 	@GetMapping("signup")
@@ -54,9 +53,7 @@ public class MemberController {
 	@PostMapping("signup")
 	public String signup_action(@Validated @ModelAttribute("signup") MemberSignup signup, 
 								BindingResult result) {
-		
-		
-		log.info("signup: {}", signup);
+
 		if (result.hasErrors()) {
 			return "member/signup";
 		}
@@ -72,12 +69,9 @@ public class MemberController {
 			result.reject("duplicate ID", "이미 가입된 ID 입니다.");
 			return "member/signup";
 		}
-		
-		
-		
+	
 		memberService.saveMember(MemberSignup.toMember(signup));
-		
-		
+			
 		return "redirect:/";
 	}
 	
@@ -97,10 +91,7 @@ public class MemberController {
 							   BindingResult result,
 							   HttpServletRequest request,
 							   @RequestParam(defaultValue = "/") String redirectURL) {
-		
-		
-		
-		
+
 		if (result.hasErrors()) {
 			return "member/login";
 		}
@@ -115,10 +106,6 @@ public class MemberController {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("loginMember", member);
-		
-		log.info("로그인 성공", member);
-		log.info("loginmember: {}", memberLogin);
-		
 		
 		return "redirect:/";
 	}
@@ -142,8 +129,6 @@ public class MemberController {
 	@GetMapping("update")
 	public String update(@SessionAttribute(value = "loginMember", required = false) Member loginMember,						 
             			 Model model) {
-		
-		log.info("loginMember:{}",loginMember);
 		
 		if (loginMember == null) {
 			return "redirect:/member/login";
@@ -169,23 +154,22 @@ public class MemberController {
 					@SessionAttribute(value = "loginMember", required = false) Member loginMember,
 					BindingResult result,
 					HttpServletRequest request) {
-
-		log.info("member_id: {} ", member_id);
+		
+		log.info("memberUpdate: {}", memberUpdate);
+		log.info("member_id: {}", member_id);
 
 	    if (result.hasErrors()) {
-	    	log.info("에러발생");	        
+	    	log.info("에러발생");
+	    	return "member/update";
 	    }
-
+	    
 		Member member = memberUpdate.toMember(memberUpdate);
         
-		log.info("if 통과 전 : {} ", member);
-		
-		member.setMember_id(member.getMember_id().replace(",", ""));
-		
-        log.info("이메일@ 통과 후 : {} ", member);
+		log.info("replace 전 : {} ", member);		
+		member.setMember_id(member.getMember_id().replace(",", ""));		
+        log.info("replace 후 : {} ", member);
         
         ImageFile previousFile = fileMapper.findImageFileByMemberId(member.getMember_id());
-        log.info("previousFile: {} ", previousFile);
 		
 //        // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
 //        if (!memberUpdate.getMember_email().contains("@")) {
@@ -216,10 +200,12 @@ public class MemberController {
 //        }
         
         // 비밀번호와 비밀번호 확인이 일치하지 않을 경우 처리
-        if (!memberUpdate.isPasswordConfirmed()) {
-            result.reject("passwordMismatch", "비밀번호를 입력하지 않았습니다.");
-            return "member/update";
-        }
+//        if (member.isPasswordConfirmed
+//        		(member.getPassword(), member.getPasswordCheck())
+//        		== false) {
+//            result.reject("passwordMismatch", "비밀번호와 비밀번호 확인 값이 다릅니다.");
+//            return "member/update";
+//        }
 		
 		memberService.updateMember(member, imageFile, previousFile);
 		
@@ -229,9 +215,7 @@ public class MemberController {
 	
 	@PostMapping("delete")
 	public String delete(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
-											HttpServletRequest request) {
-		log.info("계정 삭제 단계");
-		
+											HttpServletRequest request) {	
 		logout(request);			
 		
 		// 로그인한 멤버의 ID를 이용해 계정을 삭제하는 서비스 메서드 호출

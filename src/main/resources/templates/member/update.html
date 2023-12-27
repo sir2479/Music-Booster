@@ -52,7 +52,7 @@
 			console.log("deleteMember 실행");
         	if (confirm('정말 삭제하시겠습니까?')) {
 				alert('삭제되었습니다');
-            	location.replace('/');
+            	location.replace('/member/delete');
 			}
 		}
 	</script>
@@ -86,7 +86,7 @@
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <!-- Account -->
-                    <form th:action="@{/member/update(member_id=${member_id})}" 
+                    <form th:action="@{/member/update(member_id=${member.member_id})}" 
                     	method="POST" th:object="${member}" enctype="multipart/form-data">
                     <h5 class="card-header">사진 수정</h5>
                     <div class="card-body">
@@ -141,7 +141,7 @@
                               class="form-control"
                               id="member_id"
                               name="member_id"
-            				  readonly
+                              disabled
                               th:value="*{member_id}"
                             />
                             
@@ -187,7 +187,7 @@
                           </div>                          
 						  <div class="mb-3 col-md-6">
   							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
-  							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />  							                          
+  							<input class="form-control" type="password" id="passwordCheck" name="passwordCheck" th:value="${member.passwordCheck}" />  							                          
 						  </div>         
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>

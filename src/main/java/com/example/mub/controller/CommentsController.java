@@ -27,18 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommentsController {
 		
-		private final CommentsMapper commentsMapper;
+	private final CommentsMapper commentsMapper;
 		
 		//리플 등록
 		@PostMapping("{comments_board}") //	/reply/106
 		public ResponseEntity<String> writeComments(@ModelAttribute Comments comments,
 												@SessionAttribute("loginMember")Member loginMember,
 												@PathVariable("comments_board") Long comments_board){
-//	        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-//	        if (loginMember == null) {
-//	            return "redirect:/member/login";
-//	        }
-			log.info("comments:{}", comments);
 			
 			comments.setComments_member(loginMember.getMember_id());
 			comments.setComments_board(comments_board);

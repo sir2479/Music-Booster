@@ -72,7 +72,8 @@
 					str += "<img  width='40px' height='40px' src='../download/" + obj.image_file_saved_name + "'/>";
 					str += "</div>";
 					str += "<div class='me-2'>";
-					str += "<h6 class='mb-0'>"+ obj.music_name +"</h6>";
+					str += "<h6 class='mb-0'>"+ obj.music_name 
+					str += "</h6>";
 					str += "</div>";
 					str += "<div class='user-progress' style='width: 150px; text-align: right;'>";
 					str += "<small class='fw-semibold'>" + obj.artist_name + "</small>"
@@ -170,7 +171,7 @@
                       </div>
                     </div>
                     <div class="card-body" th:object="${recommendMusic}" th:if="${recommendMusic}">
-	                <img class="card-img-top" width="400px" height="350px" alt="ArtistImageFile"
+	                <img class="card-img-top" width="300px" height="350px" alt="ArtistImageFile"
 	                    th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>
 	                <p>
 	                <h5 class="card-title">
@@ -259,10 +260,14 @@
                           </div>	
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0" th:text="${rankMusic.music_name}"></h6>
+                              <h6 class="mb-0">
+								<a th:text="${rankMusic.music_name}" th:href="@{/music/music-read(music_id=${rankMusic.music_id})}"></a>
+							  </h6>
                             </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0" th:text="${rankMusic.artist_name}"></h6>
+                              <h6 class="mb-0">
+								<a class="blackLike" th:text="${rankMusic.artist_name}" th:href="@{/artist/artist-read(artist_id=${rankMusic.music_artist_id})}"></a>
+							  </h6>
                             </div>
                           </div>
                         </li>
@@ -316,7 +321,8 @@
                         <td>
                           <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
                         </td>
-                        <td th:text="${music.artist_name}">
+                        <td>
+                          <a class="blackLike" th:text="${music.artist_name}" th:href="@{/artist/artist-read(artist_id=${music.music_artist_id})}"></a>
                         </td>
                         <td th:text="${music.music_genre}"></td>
                         <td>				
