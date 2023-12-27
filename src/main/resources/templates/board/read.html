@@ -68,15 +68,6 @@
                     str += "	<td>" + obj.comments_member + "</td><p>";
                     str += "	<td>" + obj.comments_content + "</td><p>";
                     str += "	<td>" + obj.comments_create_time + "</td><p>";
-					if(session.member_id === obj.comments_member){
-						str += "	<td>" +"<a onclick=\"removeComments(" + obj.comments_id + ")\"><i class='btn btn-primary'  style='margin-left: 5px;'>삭제</i></a>"+ "</td><p>";
-						console.log('if진입함 1');
-					}
-					if(session.member_id === obj.comments_member){
-						str += "	<td>" +"<a onclick=\"getUpdateComments(" + obj.comments_id + ",'" + obj.comments_content + "')\"><i class='btn btn-primary'>수정</i></a>"+ "</td><p>";
-					}	
-						console.log('세션:'+session.member_id);
-						console.log('옵젝:'+obj.comments_member);
                     str += "</tr>";
                     
                 });
@@ -90,10 +81,10 @@
         }
         		//댓글 삭제
 		function removeComments(comments_id){
-			if(confirm("삭제하시겠습니까?")){
+			if(confirm("삭제하시겠습니까?")== true){
 				$.ajax({
-					url: "/comments/" + comments_id,
-					type: "removeComments",
+					url: "/comment/" + comments_id,
+					type: $("removeComments"),
 					success: function(data){
 						console.log(data);
 						getFindAllComments();
@@ -103,8 +94,11 @@
 						alert("삭제할 수 없습니다.");
 					}
 				});
+				}else{
+					return false;
+				}
 			}
-		}
+		
 		
 		//댓글 수정 창
 		function getUpdateComments(comments_id, comments_content){
@@ -209,7 +203,7 @@
 						<tr>
 							<th class="text-center">내용</th>
 							<td>
-								<span th:text="*{board_content}" class="form-control" id="basic-default-fullname" rows="10" style="height: 500px;"></span>
+								<span th:text="*{board_content}" class="form-control" id="basic-default-fullname" rows="10"  style="height: 500px;"></span>
 							</td>
 						</tr>
 						</tbody>
