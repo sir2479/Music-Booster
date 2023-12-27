@@ -22,9 +22,11 @@ import com.example.mub.model.artist.ArtistWriteForm;
 import com.example.mub.model.file.AttachedFile;
 import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.member.Member;
+import com.example.mub.model.music.Music;
 import com.example.mub.repository.ArtistMapper;
 import com.example.mub.repository.FileMapper;
 import com.example.mub.service.ArtistService;
+import com.example.mub.service.MusicService;
 import com.example.mub.util.FileService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,7 @@ public class ArtistController {
 	private final ArtistMapper artistMapper;
 	private final FileService fileService;
 	private final FileMapper fileMapper;
+	private final MusicService musicService;
 	@Value("${file.upload.path}")
     private String uploadPath;
 	
@@ -120,6 +123,7 @@ public class ArtistController {
 		
 		Artist artist = artistService.readArtist(artist_id);
 		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
+		//Music music = musicService.findMusicByArtistId(artist_id);
 		
 		log.info("imageFile: {}", imageFile);
 		
@@ -130,7 +134,7 @@ public class ArtistController {
 			return "redirect:/artist/artist-home";
 		}
 		
-		 
+		//model.addAttribute("music", music);
 		model.addAttribute("imageFile",imageFile);
 		model.addAttribute("artist", artist);
 	

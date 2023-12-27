@@ -29,6 +29,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script th:inline="javascript"></script>
 	<script>
+		
+		// 장르별 음악 장르 바꾸기
 		function genreChange(genre){
 			const items = document.querySelectorAll(".genreButton");
 			let music_genre = genre;
@@ -73,7 +75,7 @@
 					str += "<h6 class='mb-0'>"+ obj.music_name +"</h6>";
 					str += "</div>";
 					str += "<div class='user-progress' style='width: 150px; text-align: right;'>";
-					str += "<small class='fw-semibold'>" + obj.music_genre + "</small>"
+					str += "<small class='fw-semibold'>" + obj.artist_name + "</small>"
 					str += "</div>";
 					str += "</div>";
 					str += "</li>";
@@ -84,6 +86,46 @@
 			}
 			$("#genreMusic").append(str);			
 		}
+		
+		
+		// 찜하기 하트 채우기
+		function fillHeart(musicId){
+			let music_id = musicId;
+			console.log(music_id);
+			
+			if (confirm('찜 등록 하시겠습니까?')) {
+				
+				$.ajax({
+					url: "/music/fillHeart/" + music_id,
+					success: function(data){
+						console.log(data);
+
+					}
+				})			
+				alert('등록되었습니다');
+            	location.replace('/music/music-home');
+			}
+		}
+		
+		// 찜하기 하트 비우기
+		function emptyHeart(musicId){
+			let music_id = musicId;
+			console.log(music_id);
+			
+			if (confirm('찜 삭제 하시겠습니까?')) {
+				$.ajax({
+					url: "/music/emptyHeart/" + music_id,
+					success: function(data){
+						console.log(data);
+
+					}
+				})
+				alert('삭제되었습니다');
+            	location.replace('/music/music-home');
+			}
+		}
+		
+		
 		
 		$(function(){
 			genreChange('ballad');
@@ -113,45 +155,30 @@
             <div class="container-xxl flex-grow-1 container-p-y">
 				<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span>&nbsp;음악</h4>
 			<div class="row">
-                <!-- Order Statistics -->
+                 <!-- 음악 추천 -->
                 <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
                       <div class="card-title mb-0">
                         <h5 class="m-0 me-2 fw-bold">이런 음악은 어떤가요?</h5>
                       </div>
-                      <div class="dropdown">
-                        <button
-                          class="btn p-0"
-                          type="button"
-                          id="orederStatistics"
-                          data-bs-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                        </div>
-                      </div>
                     </div>
                     <div class="card-body" th:object="${recommendMusic}" th:if="${recommendMusic}">
-	                 <img class="card-img-top" width="400px" height="400px" alt="ArtistImageFile"
+	                <img class="card-img-top" width="400px" height="350px" alt="ArtistImageFile"
 	                    th:src="@{'/../download//' + ${recommendMusic.image_file_saved_name}}"/>
-	                	<div class="card-body">
-	                      <h4 class="card-title" th:text="${recommendMusic.music_name}"></h4>
-	                      <p class="card-text"> </p>
-	                      <a href="" class="btn btn-outline-primary">음악 상세정보</a>
-	                	</div>
+	                <p>
+	                <h5 class="card-title">
+					  <span class="fw-bold" th:text="${recommendMusic.music_name}"></span>
+					  &nbsp;&nbsp;&nbsp;
+					  <span class="text-muted fw-light" th:text="${recommendMusic.artist_name}"></span>
+					</h5>
+					<a th:href="@{/music/music-read(music_id=${recommendMusic.music_id})}" class="card-link">상세 정보</a>
                     </div>
                   </div>
                 </div>
-                <!--/ Order Statistics -->
+                <!--/ 음악 추천 -->
 
-                <!-- Expense Overview -->
+                <!-- 장르별 음악 -->
                 <div class="col-md-6 col-lg-4 order-1 mb-4">
                   <div class="card h-100">
                     <div class="card-header">
@@ -177,10 +204,10 @@
                           <button type="button" onclick="genreChange('dance')" class="nav-link genreButton" role="tab">dance</button>
                         </li>
                         <li class="nav-item">
-                          <button type="button" onclick="genreChange('rap_hiphop')" class="nav-link genreButton" role="tab">rap/hip-hop</button>
+                          <button type="button" onclick="genreChange('rap_hiphop')" class="nav-link genreButton" role="tab">hip-hop</button>
                         </li>
                         <li class="nav-item">
-                          <button type="button" onclick="genreChange('etc')" class="nav-link genreButton" role="tab">&nbsp;&nbsp;etc&nbsp;&nbsp;</button>
+                          <button type="button" onclick="genreChange('etc')" class="nav-link genreButton" role="tab">&nbsp;etc&nbsp;</button>
                         </li>
                       </ul>
                     </div>
@@ -189,9 +216,9 @@
                     </div>
                   </div>
                 </div>
-                <!--/ Expense Overview -->
+                <!--/ 장르별 음악 -->
 
-                <!-- Transactions -->
+                <!-- 음악 랭킹 -->
                 <div class="col-md-6 col-lg-4 order-2 mb-4">
                   <div class="card h-100">
                     <div class="card-header d-flex align-items-center justify-content-between">
@@ -215,21 +242,21 @@
                       </div>
                     </div>
                     <div class="card-body">
-                      <ul class="p-0 m-0" th:each="music : ${musics}">
+                      <ul class="p-0 m-0" th:each="rankMusic : ${rankMusics}">
                         <li class="d-flex mb-4 pb-1">
 						  <div class="user-progress d-flex align-items-center gap-1">
-							 <div th:text="${musicStat.count}" style="width: 50px;"></div> 
+							 <div th:text="${rankMusicStat.count}" style="width: 50px;"></div> 
 						  </div>
 						  <div class="avatar flex-shrink-0 me-3">
                             <img  width="40px" height="40px"
-								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
+								th:src="@{'/../download//' + ${rankMusic.image_file_saved_name}}"/>
                           </div>	
                           <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                             <div class="me-2">
-                              <h6 class="mb-0" th:text="${music.music_name}"></h6>
+                              <h6 class="mb-0" th:text="${rankMusic.music_name}"></h6>
                             </div>
                             <div class="user-progress d-flex align-items-center gap-1">
-                              <h6 class="mb-0" th:text="${music.music_genre}"></h6>
+                              <h6 class="mb-0" th:text="${rankMusic.artist_name}"></h6>
                             </div>
                           </div>
                         </li>
@@ -237,9 +264,8 @@
                     </div>
                   </div>
                 </div>
-                <!--/ Transactions -->
-              </div>
-                
+                <!--/ 음악 랭킹 -->
+              </div>               
                 
 				
 			  <!-- Order Statistics -->		  			  
@@ -265,6 +291,7 @@
                         <th>아티스트</th>
                         <th>장르</th>
                         <th>듣기</th>
+                        <th>찜하기</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -286,6 +313,16 @@
     						   <source th:src="@{'/../download//' + ${music.music_file_saved_name}}">
 							</audio>
 						</td>
+						<td>
+						  <span th:if="${session.loginMember}">
+							<button th:if="!${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:fillHeart(\''+ ${music.music_id} +'\');'"  class="" value="">🤍️</button>
+						  	<button th:if="${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:emptyHeart(\''+ ${music.music_id} +'\');'"  class="" value="">❤️</button>
+						  </span>
+						</td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -306,24 +343,20 @@
                   </table>
 				</div>
               </div>
-              	<p>
-                <div>
-					<input type="button" 
-						onclick="location.href='/music/upload'" 
-						class="btn btn-sm btn-outline-primary" value="음악 업로드">
-				</div>
-                <!--/ Order Statistics -->            
+              <!-- 음악 리스트 테이블 -->
+                  
             </div>
-            <!-- / Content -->
+            <!--/ Order Statistics --> 
 
             <footer th:replace="~{footer :: #footer}"></footer>
 
             <div class="content-backdrop fade"></div>
           </div>
-          <!-- Content wrapper -->
+          <!-- / Content -->          
         </div>
-        <!-- / Layout page -->
+        <!-- Content wrapper -->
       </div>
+       <!-- Layout container -->
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>

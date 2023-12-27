@@ -128,17 +128,18 @@
            
             <!-- Music -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">음악</span></li>
-            <li class="menu-item">
-              <a href="tables-basic" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
-                <div data-i18n="Boxicons">음악랭킹</div>
-              </a>
-            </li>
             <li class="menu-item"
             	th:classappend="${#httpServletRequest.requestURI == '/music/music-home' ? 'active' : ''}">
               <a href="/music/music-home" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Support">음악</div>
+              </a>
+            </li>
+            <li class="menu-item" th:if="${session.loginMember}"
+            	th:classappend="${#httpServletRequest.requestURI == '/music/my-music' ? 'active' : ''}">
+              <a href="/music/my-music" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-support"></i>
+                <div data-i18n="Support">내 찜 리스트</div>
               </a>
             </li>
             

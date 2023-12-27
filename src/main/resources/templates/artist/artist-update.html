@@ -52,7 +52,7 @@
               <div>
                 <h5 class="card-header">아티스트 수정</h5>
                 
-				<form th:action="@{/artist/artist-update(artist_id=${artist.artist_id})}" th:object="${artist}" method="post">
+				<form th:action="@{/artist/artist-update(artist_id=${artist.artist_id})}" th:object="${artist}" method="post" enctype="multipart/form-data">
                 <div class="table-responsive text-nowrap">
                   <table>
 

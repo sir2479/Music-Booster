@@ -50,7 +50,7 @@ public class ArtistService {
 		return artistMapper.findAllArtists(search);
 	}
 	
-	public Artist artistfind(Long artist_id) {		
+	public Artist findArtistByName(Long artist_id) {		
 		return artistMapper.findArtistByName(artist_id);
 	}
 	

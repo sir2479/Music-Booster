@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mub.repository.WishlistMapper">
+
+ <insert id="saveWishlist">
+ 	<selectKey keyProperty="wishlist_id" resultType="long" order="BEFORE">
+ 		select wishlist_seq.nextval from dual
+ 	</selectKey>	
+ 	insert into wishlist(
+ 		wishlist_id,
+ 		member_id,
+ 		music_id
+ 		)
+ 		values (
+ 		#{wishlist_id},
+ 		#{member_id},
+ 		#{music_id}
+ 	)
+ </insert>
+ 
+ <select id="findWishlistByMemberId" resultType="wishlist">
+   select * from wishlist where member_id = #{member_id}
+ </select>
+ 
+ <delete id="deleteWishlist">
+    delete from wishlist where member_id = #{member_id} and music_id = #{music_id}
+  </delete>
+
+</mapper>

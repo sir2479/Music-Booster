@@ -19,6 +19,7 @@
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
 >
   <head th:replace="~{head :: #head}"></head>
   <head>
@@ -26,6 +27,46 @@
   </head>
 
   <body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script th:inline="javascript"></script>
+	<script>
+		// 찜하기 하트 채우기
+		function fillHeart(musicId){
+			let music_id = musicId;
+			console.log(music_id);
+			
+			if (confirm('찜 등록 하시겠습니까?')) {
+				
+				$.ajax({
+					url: "/music/fillHeart/" + music_id,
+					success: function(data){
+						console.log(data);
+					}
+				})			
+				alert('등록되었습니다');
+            	location.replace('/music/music-read?music_id=' + music_id);
+			}
+		}
+		
+			
+		// 찜하기 하트 비우기
+		function emptyHeart(musicId){
+			let music_id = musicId;
+			console.log(music_id);
+			
+			if (confirm('찜 삭제 하시겠습니까?')) {
+				$.ajax({
+					url: "/music/emptyHeart/" + music_id,
+					success: function(data){
+						console.log(data);
+					}
+				})
+				alert('삭제되었습니다');
+            	location.replace('/music/music-read?music_id=' + music_id);
+			}
+		}		
+	</script>  
+	  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -43,24 +84,98 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
 			  
+            <!-- Content wrapper -->
+          <div class="content-wrapper">
             <!-- Content -->
+
             <div class="container-xxl flex-grow-1 container-p-y">
-			  <!-- Order Statistics -->
-              <div class="card h-100">
-                <div class="card-header d-flex align-items-center">
-                  <div class="card-title mb-0">
-                    <h4 class="m-0 me-2">Blank Page</h4>
-                  </div>               
-                  <div class="avatar">
-                    <h4 class="m-0 me-2">테스트</h4>
-                  </div>      
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster /</span>음악</h4>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card mb-4">
+                    <h4 class="card-header">음악 정보</h4>
+                    <div class="card-body" th:object="${music}">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img
+                          th:src="@{'/../download//' + ${music.image_file_saved_name}}"
+                          alt="user-avatar"
+                          class="d-block rounded"
+                          height="300"
+                          width="300"
+                        />
+                        <div class="button-wrapper col-md-3">
+						  <div class="py-3 mb-4">
+							  <h2 th:text="${music.music_name}"></h2>
+						  </div>
+                          <div>
+							  <h5 class="fw-bold mb-4">
+								  <span class="text-muted fw-light">가수&nbsp;&nbsp;&nbsp;</span>
+								  <span th:text="${music.artist_name}"></span>
+							 </h5>
+						  </div>
+						  <div>
+							  <h6 class="fw-bold mb-4">
+								  <span class="text-muted fw-light">장르&nbsp;&nbsp;&nbsp;</span>
+								  <span th:text="${music.music_genre}"></span>
+							 </h6>
+						  </div>
+						  <div>
+							  <h6 class="fw-bold mb-4">
+								  <span class="text-muted fw-light">재생수&nbsp;&nbsp;&nbsp;</span>
+								  <span th:text="${music.music_playcount}"></span>
+							 </h6>
+						  </div>
+						  <div>
+							<h6 class="fw-bold mb-4">
+							  <button th:unless="${session.loginMember}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="|location.href='@{/member/login}'|"  class="" value="">🤍️</button> 	  
+						  	  <button th:if="${session.loginMember} and !${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:fillHeart(\''+ ${music.music_id} +'\');'"  class="" value="">🤍️</button>
+						  	  <button th:if="${session.loginMember} and ${music.wishlist}"
+								style="color: red; font-size: 20px; border: none; background-color: white;" 
+						  		th:onclick="'javascript:emptyHeart(\''+ ${music.music_id} +'\');'"  class="" value="">❤️</button>
+							  <span th:text="${music.music_like}"></span>
+							</h6>
+						  </div>
+                        </div>
+                        <div>
+						  <h5 class="">재생</h5>
+						  <audio controls disableRemotePlayback>
+    						<source th:src="@{'/../download//' + ${music.music_file_saved_name}}">
+						  </audio>
+						</div>
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    
+                    <!-- 선 밑부분 -->
+                    <div class="card-body">
+                      <div class="mb-3 ">
+						<h5>가사</h5>   
+					    <textarea rows="15" class="form-control" th:text="${music.music_lyrics}" readonly></textarea>  
+                      </div>                                   
+                    </div>
+                  </div>
+                  
+                  <div class="card">
+                    <h5 class="card-header">임시 공간</h5>
+                    <div class="card-body">
+                      <div class="mb-3 col-12 mb-0">
+                        <div class="alert alert-warning">
+                          <h6 class="alert-heading fw-bold mb-1">임시 공간?</h6>
+                          <p class="mb-0">임시 공간</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
-                <div class="card-body"></div>
               </div>
-                <!--/ Order Statistics -->            
             </div>
             <!-- / Content -->
-
             <footer th:replace="~{footer :: #footer}"></footer>
 
             <div class="content-backdrop fade"></div>
