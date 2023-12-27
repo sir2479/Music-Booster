@@ -182,6 +182,8 @@ public class ArtistController {
 		
 		ImageFile imageFile = artistService.findImageFileByArtistId(artist_id);
 		
+		
+		
 		if (imageFile != null) {
 			artistService.removeImageFile(imageFile.getFile_artist_id());
 		}	

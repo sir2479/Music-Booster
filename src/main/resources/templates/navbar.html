@@ -25,10 +25,10 @@
 					  <span th:if="${session.loginMember}">
                       <img th:if="${session.loginMember.image_file_saved_name}"
                       	th:src="@{'/../download//' + ${session.loginMember.image_file_saved_name}}" 
-                     	alt class="w-px-40 h-auto rounded-circle"/>
+                     	alt class="w-px-40  rounded-circle"/>
                       <img th:unless="${session.loginMember.image_file_saved_name}"
                       	src="../assets/img/mub/profile-empty.png" 
-                     	alt class="w-px-40 h-auto rounded-circle"/>
+                     	alt class="w-px-40  rounded-circle"/>
                       </span>
                     </div>
                   </a>
