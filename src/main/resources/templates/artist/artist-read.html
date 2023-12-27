@@ -64,11 +64,8 @@
               <div class="row">
 	<table th:object="${artist}">
 	<div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
-	  <div class="card h-100">
-        <div class="card-header d-flex align-items-center justify-content-between">
-	  	  <img width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />     
-	    </div>
-	  </div>
+	  	  <img width="400px" height="400px" 
+	  	  	th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />     
 	</div>
 
       
@@ -112,27 +109,15 @@
                           [[${artist.artist_member_id}]]의 Music
                         </button>
                       </li>
-                      <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-top-messages"
-                          aria-controls="navs-top-messages"
-                          aria-selected="false"
-                        >
-                          User_Comment
-                        </button>
-                      </li>
+                      
                     </ul>
                     <div class="tab-content">
                       <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
                         <p>
                           [[${artist.artist_profile}]]
                         </p>
-                        <p class="mb-0">
-                         공백
+                        <p>
+						  [[${member.member_email}]]
                         </p>
                       </div>
                       <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
@@ -164,14 +149,14 @@
                       </ul>    
                     </div>
                       </div>
-                      <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
+                     <!-- <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
                         <p>
 						  [[${member.member_email}]]
                         </p>
                         <p class="mb-0">
                           공백
                         </p>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>

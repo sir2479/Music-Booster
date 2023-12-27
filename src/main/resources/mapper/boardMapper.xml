@@ -80,5 +80,11 @@
     </if>
   </select>
   
+  <select id="homeBoard" resultType="board">
+    select * from board
+    	where board_category = #{board_category}
+    	order by board_create_time desc
+  </select>
+  
 </mapper>
 

@@ -16,9 +16,10 @@ import com.example.mub.model.board.BoardCategory;
 public interface BoardMapper {
 	void saveBoard(Board board);
 	List<Board> findAllBoards(@Param("board_category")BoardCategory board_category, @Param("searchText")String searchText ,RowBounds rowBounds);
-    Board findBoard(Long board_id);
+	Board findBoard(Long board_id);
     void addHit(Long board_id);
     void updateBoard(Board updateBoard);
     void removeBoard(Long board_id);
     int getTotal(@Param("board_category") BoardCategory board_category, @Param("searchText")String searchText);
+    List<Board> homeBoard(BoardCategory board_category);
 }
