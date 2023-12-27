@@ -50,22 +50,8 @@
 	  
 function deleteMember() {
   if (confirm("정말 삭제하시겠습니까?") == true ) {
-		$.ajax({
-      type: "DELETE",
-      url: "/deleteMember", // 실제 삭제를 처리하는 서버 측 URL로 변경
-      success: function(data) {
-        console.log(data);
-        alert('삭제되었습니다');
-        location.replace('/');
-      },
-      error: function(xhr, status, error) {
-        console.log(xhr);
-        console.log(status);
-        console.log(error);
-        alert('삭제에 실패했습니다.');
-        return location.replace('/');        
-      }
-    });
+	  alert('삭제되었습니다.')
+	  document.delete.submit();
  }else {
     return false; 
   }
