@@ -31,6 +31,9 @@
         .center {
         text-align: center;
     }
+    .left {
+		text-align: left;
+	}
 </style>
 
   <body>
@@ -58,33 +61,24 @@
 			  
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Music Booster</span> 아티스트</h4>
-              
+              <div class="row">
 	<table th:object="${artist}">
-	
-	<tr>
-	  <th></th>
-	  <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
-	</tr>
-      <tr>
-        <th>제목</th>
-        <td th:text="*{artist_name}"></td>
-      </tr>
-      <tr>
-        <th>내용</th>
-        <td th:text="*{artist_profile}"></td>
-      </tr>
-      <tr>
-        <th>작성자</th>
-        <td th:text="*{artist_member_id}"></td>
-      </tr>
+	<div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+	  	  <img width="400px" height="400px" 
+	  	  	th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />     
+	</div>
+
+      
+      
 	
 	
-	<div class="container-xxl flex-grow-1 container-p-y">
+
+		
 
               <!-- Tabs -->
               <!--<h5 class="py-3 my-4"></h5>-->
 
-              <div class="row">
+              
                 <div class="col-xl-6">
                  <!-- <h6 class="text-muted"></h6>-->
                   <div class="nav-align-top mb-4">
@@ -99,7 +93,7 @@
                           aria-controls="navs-top-home"
                           aria-selected="true"
                         >
-                          Artist_Profile
+                          [[${artist.artist_member_id}]]의 Artist_Profile
                         </button>
                       </li>
                       <li class="nav-item">
@@ -112,57 +106,67 @@
                           aria-controls="navs-top-profile"
                           aria-selected="false"
                         >
-                          Music
+                          [[${artist.artist_member_id}]]의 Music
                         </button>
                       </li>
-                      <li class="nav-item">
-                        <button
-                          type="button"
-                          class="nav-link"
-                          role="tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#navs-top-messages"
-                          aria-controls="navs-top-messages"
-                          aria-selected="false"
-                        >
-                          User_Comment
-                        </button>
-                      </li>
+                      
                     </ul>
-                    <div class="tab-content" th:object="${music}">
+                    <div class="tab-content">
                       <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
                         <p>
                           [[${artist.artist_profile}]]
                         </p>
-                        <p class="mb-0">
-                         공백
+                        <p>
+						  [[${member.member_email}]]
                         </p>
                       </div>
                       <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
+                        
+                          <div class="col-md-6 col-lg-4 order-2 mb-4">
+                  
+                      <h5 class="card-title m-0 me-2 fw-bold"> [[${artist.artist_member_id}]]의 Music</h5>
+                      
+                    </div>
+                    <div class="card-body">
+                      <ul class="p-0 m-0" th:each="music, musicStat : ${music}">
+                        <li class="d-flex mb-4 pb-1">
+						  <div class="user-progress d-flex align-items-center gap-1">
+							<!-- <div th:text="${musicStat.count}" style="width: 50px;"></div> -->
+						  </div>
+						  <div class="avatar flex-shrink-0 me-3">
+                            <img  width="40px" height="40px"
+								th:src="@{'/../download//' + ${music.image_file_saved_name}}"/>
+                          </div>	
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2"> 
+                          	  <a th:text="${music.music_name}" th:href="@{/music/music-read(music_id=${music.music_id})}"></a>
+                            </div>
+                            <div class="user-progress d-flex align-items-center gap-1">
+                              <h6 class="mb-0" th:text="${music.artist_name}"></h6>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>    
+                    </div>
+                      </div>
+                     <!-- <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
                         <p>
-                          [[${artist.artist_profile}]]
-                          <img  width="400px" height="400px" th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />
-                          
+						  [[${member.member_email}]]
                         </p>
                         <p class="mb-0">
                           공백
                         </p>
-                      </div>
-                      <div class="tab-pane fade" id="navs-top-messages" role="tabpanel">
-                        <p>
-                          Messages1
-                        </p>
-                        <p class="mb-0">
-                          공백
-                        </p>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
                </div>
                </table>
-              </div>
-              
+
+      <tr>
+        <th>작성자</th>
+        <td>&nbsp;&nbsp;&nbsp;[[${artist.artist_member_id}]]</td>
+      </tr>     
 	
 	<p class="right" >
 		<input type="button" onclick="location.href='/artist/artist-home'" value="목록으로" class="btn btn-sm btn-outline-primary">

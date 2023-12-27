@@ -37,9 +37,10 @@ public class MusicController {
 
 	@GetMapping("music-home")
     public String musicHome(Model model,
-    		@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+    		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+    		@RequestParam(value="searchText", defaultValue = "") String searchText) {
 		
-		List<Music> musics = musicService.findAllMusic();
+		List<Music> musics = musicService.findAllMusic(searchText);
 		List<Music> rankMusics = musicService.findMusicsDescLike();
 				
 		// 추천 음악
@@ -69,12 +70,17 @@ public class MusicController {
 			musics.get(i).setImage_file_saved_name(imageFiles.get(i).getFile_saved_name());
 		}
 		
+		
+		// 음악 랭킹
 		List<ImageFile> rankImageFiles = new ArrayList<>();
 		
 		for(int i = 0 ; i < rankMusics.size() ; i++) {
 			rankImageFiles.add(musicService.findImageFileByMusicId(rankMusics.get(i).getMusic_id()));
 			rankMusics.get(i).setImage_file_saved_name(rankImageFiles.get(i).getFile_saved_name());
-		}
+		}		
+		if(rankImageFiles.size() > 6) {
+			rankImageFiles = rankImageFiles.subList(0, 6);
+		}	
 
 		
 		// 위시리스트 확인 (빈 하트인지 빨간 하트인지)

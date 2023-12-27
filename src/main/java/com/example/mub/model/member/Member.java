@@ -17,6 +17,5 @@ public class Member {
 	private String position;	
 	private String profile;	
 	
-
-	
+	private String image_file_saved_name;
 }

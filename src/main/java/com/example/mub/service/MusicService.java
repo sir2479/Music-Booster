@@ -50,9 +50,9 @@ public class MusicService {
 		}			
 	}
 	
-	public List<Music> findAllMusic(){
+	public List<Music> findAllMusic(String searchText){
 		
-		return musicMapper.findAllMusics();
+		return musicMapper.findAllMusics(searchText);
 	}
 	
 	public Music findMusicByMusicId(Long music_id) {
