@@ -44,60 +44,55 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light"></span></h4>
-			    	<th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
-						<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
-			 		</th:block>
+			    <th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
+				  <h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
+			 	</th:block>
+			    <span class="text-muted fw-light">글쓰기</span>
+			  </h4>
 
 	<!-- Basic Bootstrap Table -->
-	<div>
-	  <h5 class="card-header">글쓰기</h5>
-	  <p>
-	    <form action="write" method="post" th:object="${writeForm}">
-	      <div class="table-responsive text-nowrap">
-	        <table>
-	          <tr>
-	            <th>제목</th>
-	            <td>
-	              <input type="text" th:field="*{board_title}">
-	              <div class="error" th:errors="*{board_title}"></div>
-	            </td>
-	          </tr>
-	          <tr>
-	            <th>내용</th>
-	            <td>
-	              <textarea rows="30" cols="90" th:field="*{board_content}"></textarea>
-	              <div th:errorClass="error" th:errors="*{board_content}"></div>
-	            </td>
-	          </tr>
-	        </table>
-	        <input type="hidden" th:field="*{board_category}">
-	        <p>
-	          <div class="text-center">
-	            <input type="button" th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" value="목록으로" class="btn btn-sm btn-outline-primary">
-	            <input type="submit" value="등록하기" class="btn btn-sm btn-outline-primary">
-	          </div>
-	        </p>
-	      </div>
-	    </form>
-	  </div>
-	  <!--/ Basic Bootstrap Table -->
-	</div>
-	<!-- / Content -->
-	
-	<footer th:replace="~{footer :: #footer}"></footer>
-	
-	<div class="content-backdrop fade"></div>
-	</div>
-	<!-- Content wrapper -->
-	</div>
-	<!-- / Layout page -->
-	</div>
-	
-	<!-- Overlay -->
-	<div class="layout-overlay layout-menu-toggle"></div>
-	</div>
-	<!-- / Layout wrapper -->
-	
-	</body>
+              <div class="row">
+                <div class="col-xl">
+                  <div class="card mb-4">
+                    <div class="card-body">
+					  <form action="write" method="post" th:object="${writeForm}">
+                        <div class="mb-3">
+                          <label class="form-label" for="basic-default-fullname">제목</label>
+                          <input type="text" th:field="*{board_title}" class="form-control" id="basic-default-fullname"/>
+                          <div class="error" th:errors="*{board_title}"></div>
+                        </div>
+
+
+                        <div class="mb-3">
+                          <label class="form-label" for="basic-default-message">내용</label>
+                          <textarea
+                          	th:field="*{board_content}"
+                            id="basic-default-message"
+                            class="form-control"
+                            style="height: 500px;"
+                          ></textarea>
+                        </div>
+                        <input type="hidden" th:field="*{board_category}">
+                      </form>
+                    <button type="submit" class="btn btn-primary">등록하기</button>
+                    <button th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" class="btn btn-primary">목록으로</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                    <!--/ Basic Bootstrap Table -->
+            </div>
+            <!-- / Content -->
+                        
+            <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+    <!-- / Layout page -->
+<!-- Overlay -->
+	   <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</div>
+<!-- / Layout wrapper -->
+</body>
+<body th:replace="~{scr :: #scr}"></body>
 </html>
