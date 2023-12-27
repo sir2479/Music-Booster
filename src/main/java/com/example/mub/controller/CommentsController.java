@@ -71,6 +71,7 @@ public class CommentsController {
 												@ModelAttribute Comments comments){
 			//수정권한이 있는지 체크
 			Comments findComments = commentsMapper.findComments(comments_id);
+			log.info("findComments", findComments);
 			findComments.setComments_content(comments.getComments_content());
 			
 			commentsMapper.updateComments(findComments);

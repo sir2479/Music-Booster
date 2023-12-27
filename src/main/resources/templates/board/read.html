@@ -69,7 +69,7 @@
                     str += "	<td>" + obj.comments_content + "</td><p>";
                     str += "	<td>" + obj.comments_create_time + "</td><p>";
 					if(obj.comment_edit_time != null){
-						str += "<small class='float-end text-navy'>수정일 : " + obj.comment_edit_time + "</small><br />";
+						str += "<small class='float-end text-navy'>수정일 : " + obj.comments_edit_time + "</small><br />";
 					};					if(session.member_id == obj.member_id){
 						str += "	<td>" +"<a onclick='removeComments(" + obj.comments_id + ")'><i class='float-end btn btn-primary btn-sm'  style='margin-left: 5px;'>삭제</i></a>"+ "</td><p>";
 					};
@@ -91,7 +91,7 @@
 		function removeComments(comments_id){
 			if(confirm("삭제하시겠습니까?")){
 				$.ajax({
-					url: "/comments/" + comments_id,
+					url: "/comment/" + comments_id,
 					type: "delete",
 					success: function(data){
 						console.log(data);
@@ -119,7 +119,7 @@
 			let content = $("#updateComments").val();
 			if(confirm("수정하시겠습니까?")){
 				$.ajax({
-					url: "/comments/" + comments_id,
+					url: "/comment/" + comments_id,
 					type: "put",
 					data: {
 						"comments_content": content
