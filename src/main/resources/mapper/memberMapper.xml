@@ -45,6 +45,7 @@
         <if test="password != null"> password = #{password},</if>
         member_name = #{member_name},
         phone = #{phone},
+        position = #{position},
         birthday = #{birthday},
         profile = #{profile}
     </set>

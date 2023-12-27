@@ -228,7 +228,7 @@ public class MemberController {
 //            return "/member/update";
 //        }
 		
-		memberService.updateMember(member, imageFile, previousFile);
+		memberService.updateMember(member, previousFile, imageFile);
 		
 		return "redirect:/";
         }
