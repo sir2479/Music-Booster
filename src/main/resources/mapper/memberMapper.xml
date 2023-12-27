@@ -11,8 +11,8 @@
       password,
       member_name,
       phone,
-      birthday,
-      position
+      position,
+      birthday
       ) VALUES (
         #{member_id},
         #{member_email},
@@ -20,8 +20,8 @@
         #{password},
         #{member_name},
         #{phone},
-        #{birthday},
-        #{position}           
+        #{position}, 
+        #{birthday}                 
     )
   </insert>
   

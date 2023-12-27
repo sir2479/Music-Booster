@@ -86,12 +86,12 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Adventure starts here 🚀</h4>
-              <p class="mb-4">Make your app management easy and fun!</p>
+              <h4 class="mb-2">회원가입</h4>
+              <p class="mb-4">인디음악의 세계에 들어갈 준비하기!</p>
 
               <form class="mb-3" action="signup" method="post" th:object=${signup}>
                 <div class="mb-3">
-                  <label for="username" class="form-label">member_id</label>
+                  <label for="username" class="form-label">아이디</label>
                   <input
                     type="text"
                     class="form-control"
@@ -102,7 +102,7 @@
                 </div>
                 
                 <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">Password</label>
+                  <label class="form-label" for="password">비밀번호</label>
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
@@ -118,7 +118,7 @@
           
                 
                 <div class="mb-3">
-                  <label for="name" class="form-label">Name</label>
+                  <label for="name" class="form-label">이름</label>
                   	<input 
                   		type="text" 
                   		class="form-control" 
@@ -128,7 +128,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="nickname" class="form-label">Nickname</label>
+                  <label for="nickname" class="form-label">닉네임</label>
                   	<input 
                   		type="text" 
                   		class="form-control" 
@@ -138,7 +138,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="phone" class="form-label">Phone</label>
+                  <label for="phone" class="form-label">휴대전화</label>
                   	<input 
                   		type="text" 
                   		class="form-control" 
@@ -147,7 +147,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
+                  <label for="email" class="form-label">이메일</label>
                   	<input 
                   		type="email" 
                   		class="form-control" 
@@ -157,7 +157,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="position" class="form-label">Position</label>
+                  <label for="position" class="form-label">포지션</label>
                   	<select name="position">
 						<option th:value="${'member'}">일반사용자</option>	  
 						<option th:value="${'artist'}">아티스트</option>
@@ -165,7 +165,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="birth" class="form-label">Birth</label>
+                  <label for="birth" class="form-label">생년월일</label>
                   	<input 
                   		type="date" 
                   		class="form-control" 
@@ -187,13 +187,13 @@
                     </label>
                   </div>
                 </div>-->
-                <button class="btn btn-primary d-grid w-100" type="submit">Sign up</button>
+                <button class="btn btn-primary d-grid w-100" type="submit">회원가입</button>
               </form>
 
               <p class="text-center">
-                <span>Already have an account?</span>
+                <span>이미 계정을 가지고 있나요?</span>
                 <a href="auth-login-basic.html">
-                  <span>Sign in instead</span>
+                  <span>로그인</span>
                 </a>
               </p>
             </div>

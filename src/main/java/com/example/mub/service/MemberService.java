@@ -45,21 +45,9 @@ public class MemberService {
 	}
 	
 	@Transactional
-	public void updateMember(Member member, MultipartFile newFile, ImageFile previousFile) {
+	public void updateMember(Member member, ImageFile imageFile, MultipartFile previousFile) {
+		memberMapper.updateMember(member);						
 
-		memberMapper.updateMember(member);
-		
-		if(previousFile !=null && newFile != null && newFile.getSize() >0) {
-			removeImageFile(previousFile.getFile_member_id());
-		}
-		
-		if(newFile != null && newFile.getSize() > 0) {
-			AttachedFile attachedFile = fileService.saveFile(newFile);
-			ImageFile imageFile = new ImageFile(attachedFile);
-			imageFile.setFile_member_id(member.getMember_id());
-			// 첨부파일 내용을 데이터베이스에 저장
-			fileMapper.imageFileUpload(imageFile);
-		}	
 	}
 	
 	public void deleteMember(String member_id) {

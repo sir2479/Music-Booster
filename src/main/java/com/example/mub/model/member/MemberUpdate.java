@@ -56,7 +56,14 @@ public class MemberUpdate {
 }
 	
 	public boolean isPasswordConfirmed() {
-	    return getPassword() != null;
+		String password = getPassword();
+		String passwordCheck = getPasswordCheck();
+		if(password == passwordCheck) {
+			return true;
+		} else {
+			return false;
+		}
+	    
 	}
 	
 	
