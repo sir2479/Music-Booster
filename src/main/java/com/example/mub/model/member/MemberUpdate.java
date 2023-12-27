@@ -33,7 +33,7 @@ public class MemberUpdate {
 	private LocalDate birthday;	
 	
 	private String position;
-	@DateTimeFormat(pattern="yyyy-MM-dd") @Past
+	@DateTimeFormat(pattern="yyyy-MM-dd") 
 	private LocalDate hire_date;	
 
 	private String profile;	

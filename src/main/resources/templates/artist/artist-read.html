@@ -115,9 +115,7 @@
                     </ul>
                     <div class="tab-content">
                       <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
-                        <p>
-                          [[${artist.artist_profile}]]
-                        </p>
+                        <textarea class="form-control" readonly th:text="${artist.artist_profile}" cols="40" rows="10"></textarea>
                         <p>
 						  [[${member.member_email}]]
                         </p>

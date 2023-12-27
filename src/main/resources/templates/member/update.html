@@ -199,11 +199,7 @@ function deleteMember() {
                             <label for="password" class="form-label">비밀번호</label>
                             <input class="form-control" type="password" id="password" name="password" th:value="${member.password}" />
                             <div class="error" th:errors="*{password}"></div>
-                          </div>                          
-						  <div class="mb-3 col-md-6">
-  							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
-  							<input class="form-control" type="password" id="passwordCheck" name="passwordCheck" th:value="${member.passwordCheck}" />  							                          
-						  </div>         
+                          </div>                               
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>
                             <div class="input-group input-group-merge">
@@ -217,13 +213,6 @@ function deleteMember() {
                             </div>
                           </div>
                           
-                          <div class="mb-3 col-md-6">
-                  			<label for="position" class="form-label">포지션</label><br>
-                  			<select name="position">
-								<option th:value="${'member'}">일반사용자</option>	  
-								<option th:value="${'artist'}">아티스트</option>
-							</select>
-                		  </div>
                           
                           <div class="mb-3 col-md-6">
                             <label for="member_birthday" class="form-label">생년월일</label>
@@ -243,7 +232,15 @@ function deleteMember() {
              				  name="hire_date"
                               th:value="*{hire_date}"
                             />
-                          </div>	                          
+                          </div>
+                          	<div class="mb-3 col-md-6">
+                  			<label for="position" class="form-label">포지션</label><br>
+                  			<select name="position">
+								<option th:value="${'member'}">일반사용자</option>	  
+								<option th:value="${'artist'}">아티스트</option>
+							</select>
+                		  </div>
+                                                    
                          <div>
                           <div class="mb-3">
                             <label for="member_profile" class="form-label">프로필</label>
@@ -276,17 +273,7 @@ function deleteMember() {
                         </div>
                       </div>
                       <form action="delete" method="post" name="delete">
-                        <div class="form-check mb-3">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="accountActivation"
-                            id="accountActivation"
-                          />
-                          <label class="form-check-label" for="accountActivation">
-                            계정을 삭제하는데 동의합니다.
-                            </label>
-                        </div>
+                        
                         <td id="submit">
                         <input type="button" value="계정삭제" onclick="deleteMember()"
                         	class="btn btn-danger deactivate-account">
