@@ -47,7 +47,6 @@ public class MemberService {
 	@Transactional
 	public void updateMember(Member member, ImageFile imageFile, MultipartFile previousFile) {
 		memberMapper.updateMember(member);						
-
 	}
 	
 	public void deleteMember(String member_id) {

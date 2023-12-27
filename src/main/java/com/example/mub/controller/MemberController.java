@@ -190,6 +190,8 @@ public class MemberController {
         log.info("previousFile: {} ", previousFile);
 	
 
+	
+
 
 		
 //        // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
@@ -221,15 +223,18 @@ public class MemberController {
 //        }
         
         // 비밀번호와 비밀번호 확인이 일치하지 않을 경우 처리
-        if (!memberUpdate.isPasswordConfirmed()) {
-            result.reject("passwordMismatch", "비밀번호를 입력하지 않았거나 일치하지 않습니다.");
-            return "/member/update";
-        }
+//        if (!memberUpdate.isPasswordConfirmed()) {
+//            result.reject("passwordMismatch", "비밀번호를 입력하지 않았거나 일치하지 않습니다.");
+//            return "/member/update";
+//        }
 		
 		memberService.updateMember(member, imageFile, previousFile);
 		
 		return "redirect:/";
         }
+
+
+
 
 	
 	
