@@ -41,7 +41,6 @@ public class MemberController {
 	private final FileMapper fileMapper;
 	
 
-	
 	// 회원가입 페이지 이동
 	@GetMapping("signup")
 	public String signup(Model model) {

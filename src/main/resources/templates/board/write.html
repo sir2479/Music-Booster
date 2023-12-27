@@ -73,9 +73,9 @@
                           ></textarea>
                         </div>
                         <input type="hidden" th:field="*{board_category}">
+                    	<button type="submit" class="btn btn-primary">등록하기</button>
+                  	  <button th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" class="btn btn-primary">목록으로</button>
                       </form>
-                    <button type="submit" class="btn btn-primary">등록하기</button>
-                    <button th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" class="btn btn-primary">목록으로</button>
                     </div>
                   </div>
                 </div>
@@ -83,9 +83,13 @@
                     <!--/ Basic Bootstrap Table -->
             </div>
             <!-- / Content -->
+            
+            <!-- 하단 -->
+            <footer th:replace="~{footer :: #footer}"></footer>           
                         
             <div class="content-backdrop fade"></div>
         </div>
+        
         <!-- Content wrapper -->
     <!-- / Layout page -->
 <!-- Overlay -->

@@ -93,9 +93,9 @@ public class BoardController {
         
         
         // board 객체에 로그인한 사용자의 아이디를 추가한다.
+        log.info("writeform: {}", board);
         board.setBoard_member(loginMember.getMember_id());
         board.setBoard_category(board_category);
-        log.info("writeform: {}", board);
         // 데이터베이스에 저장한다.
         boardService.saveBoard(board);
         log.info("테스트용 로그");

@@ -51,7 +51,7 @@
 		where comments_id = #{comments_id}
 	</update>
 
-	<delete id="deleteComments">
+	<delete id="removeComments">
 		delete from comments where comments_id = #{comments_id}
 	</delete>
 	
