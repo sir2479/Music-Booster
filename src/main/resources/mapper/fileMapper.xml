@@ -52,6 +52,10 @@
   	select * from music_file where file_music_id = #{file_music_id}
   </select>
   
+  <select id="findImageFileByMemberId" resultType="imagefile">
+  	select * from image_file where file_member_id = #{file_member_id}
+  </select>
+  
   <select id="findImageFileByArtistId" resultType="imagefile">
   	select * from image_file where file_artist_id = #{file_artist_id}
   </select>
@@ -59,6 +63,10 @@
   <select id="findImageFileByMusicId" resultType="imagefile">
   	select * from image_file where file_music_id = #{file_music_id}
   </select>
+  
+  <delete id="removeImageFileByMemberId">
+  	delete image_file where file_member_id = #{file_member_id}
+  </delete>
   
   <delete id="removeImageFileByArtistId">
   	delete image_file where file_artist_id = #{file_artist_id}

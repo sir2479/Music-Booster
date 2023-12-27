@@ -10,7 +10,7 @@ public class ImageFile {
 	private String file_original_name;
 	private String file_saved_name;
 	private Long file_size;
-	private Long file_member_id;
+	private String file_member_id;
 	private Long file_board_id;
 	private Long file_artist_id;
  	private Long file_music_id;

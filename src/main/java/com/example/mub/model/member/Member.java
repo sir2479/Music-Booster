@@ -16,4 +16,6 @@ public class Member {
 	private LocalDate hire_date;	
 	private String position;	
 	private String profile;	
+	
+	private String image_file_saved_name;
 }

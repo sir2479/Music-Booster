@@ -38,6 +38,8 @@ public class MemberUpdate {
 
 	private String profile;	
 	
+	private String image_file_saved_name;
+	
 	public Member toMember(MemberUpdate memberUpdate) {
 		Member member = new Member();
 		member.setMember_id(memberUpdate.getMember_id());

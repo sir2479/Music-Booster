@@ -49,6 +49,11 @@
 	  from
 	  	music m join artist a
 	  	on (m.music_artist_id = a.artist_id)
+	  where(
+	    <if test="_parameter != null">
+    	  music_name like '%' || #{searchText} || '%'
+ 	    </if>
+ 	    ) 
 	  order by
 	  	music_id desc
 	</select>

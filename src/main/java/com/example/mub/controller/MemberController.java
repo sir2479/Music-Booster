@@ -11,12 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.mub.model.file.ImageFile;
 import com.example.mub.model.member.Member;
 import com.example.mub.model.member.MemberLogin;
 import com.example.mub.model.member.MemberSignup;
 import com.example.mub.model.member.MemberUpdate;
+import com.example.mub.repository.FileMapper;
 import com.example.mub.service.MemberService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private final MemberService memberService;
+	private final FileMapper fileMapper;
 	
 
 	
@@ -143,10 +150,10 @@ public class MemberController {
 		}
 
 		Member member = memberService.findMember(loginMember.getMember_id());
+		ImageFile imageFile = fileMapper.findImageFileByMemberId(member.getMember_id());
 
+		model.addAttribute("imageFile", imageFile);
 		model.addAttribute("member", member);
-		
-		log.info("memberID : {}", member.getMember_id());
 	
 		return "member/update";
 		
@@ -155,13 +162,15 @@ public class MemberController {
 	
 	// 회원 정보 수정
 	@PostMapping("update")
-	public String update_action (@Validated @ModelAttribute("member") MemberUpdate memberUpdate,
-								BindingResult result,
-								HttpServletRequest request,
-								@RequestParam(defaultValue = "/") String redirectURL,
-								@SessionAttribute(value = "loginMember", required = false) Member loginMember) {
-		
-		log.info("아이디 가져오기 : {} ",memberUpdate.getMember_id());
+	public String update_action (
+					@Validated @ModelAttribute("member") MemberUpdate memberUpdate,
+					@RequestParam String member_id,
+					@RequestParam(required = false) MultipartFile imageFile,
+					@SessionAttribute(value = "loginMember", required = false) Member loginMember,
+					BindingResult result,
+					HttpServletRequest request) {
+
+		log.info("member_id: {} ", member_id);
 
 	    if (result.hasErrors()) {
 	    	log.info("에러발생");	        
@@ -173,16 +182,19 @@ public class MemberController {
 		
 		member.setMember_id(member.getMember_id().replace(",", ""));
 		
-        // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
-        if (!memberUpdate.getMember_email().contains("@")) {
-            // BindingResult 객체에 GlobalError 를 추가한다.
-            result.reject("emailError", "이메일 형식이 잘못되었습니다.");
-            // member/joinForm.html 페이지를 리턴한다.
-            return "member/update";
-        }
-        
         log.info("이메일@ 통과 후 : {} ", member);
         
+        ImageFile previousFile = fileMapper.findImageFileByMemberId(member.getMember_id());
+        log.info("previousFile: {} ", previousFile);
+		
+//        // 이메일 주소에 '@' 문자가 포함되어 있는지 확인한다.
+//        if (!memberUpdate.getMember_email().contains("@")) {
+//            // BindingResult 객체에 GlobalError 를 추가한다.
+//            result.reject("emailError", "이메일 형식이 잘못되었습니다.");
+//            // member/joinForm.html 페이지를 리턴한다.
+//            return "member/update";
+//        }
+           
 //        // 이메일 중복 확인을 위해 데이터베이스에서 기존 회원 정보 가져오기
 //        Member existingMember = memberService.findMemberByEmail(memberUpdate.getMember_email());
 //        
@@ -205,14 +217,11 @@ public class MemberController {
         
         // 비밀번호와 비밀번호 확인이 일치하지 않을 경우 처리
         if (!memberUpdate.isPasswordConfirmed()) {
-            log.info("member : {} ", member);
             result.reject("passwordMismatch", "비밀번호를 입력하지 않았습니다.");
             return "member/update";
         }
 		
-		log.info("if문 통과 후 member : {}", member);
-		
-		memberService.updateMember(member);
+		memberService.updateMember(member, imageFile, previousFile);
 		
 		return "redirect:/";
         }

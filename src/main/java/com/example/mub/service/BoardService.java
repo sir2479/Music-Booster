@@ -57,11 +57,7 @@ public class BoardService {
 
 	public List<Board> findAllBoards(BoardCategory board_category, String searchText, int startRecord, int countPerPage) {
 		RowBounds rowBounds = new RowBounds(startRecord, countPerPage);
-		log.info("rowBounds: {}",rowBounds);
-		log.info("카테고리: {}",board_category);		
-		List<Board> findAllBoards = boardMapper.findAllBoards(board_category, searchText ,rowBounds);
-		log.info("서치: {}",searchText);			
-		log.info("findAllBoards: {}",findAllBoards);		
+
 		return boardMapper.findAllBoards(board_category, searchText, rowBounds);
 	}
 
