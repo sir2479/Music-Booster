@@ -45,6 +45,9 @@ public class HomeController {
 		
 		// 게시판
 		List<Board> homeBoard = boardMapper.homeBoard(BoardCategory.NEWS);
+		if(homeBoard.size() > 6) {
+			homeBoard = homeBoard.subList(0, 9);
+		}	
 		model.addAttribute("boards", homeBoard);	
 		
 		// 음악 랭킹
