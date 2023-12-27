@@ -24,7 +24,7 @@
             <!-- 홈으로 -->
             <li class="menu-item" th:classappend="${#httpServletRequest.requestURI == '/' ? 'active' : ''}">
               <a href="/" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-home"></i>
                 <div data-i18n="Analytics">메인화면</div>
               </a>
             </li>
@@ -98,18 +98,21 @@
 			    <li class="menu-item" 
 			    	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'BALLAD' ? 'active' : ''}">
 			      <a href="/board/list?board_category=BALLAD" class="menu-link">
+					  <i class="menu-icon tf-icons bx bxs-album"></i>
 			        <div data-i18n="Account">발라드</div>
 			      </a>
 			    </li>
                 <li class="menu-item" 
                 	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'DANCE' ? 'active' : ''}">
                   <a href="/board/list?board_category=DANCE" class="menu-link">
+					  <i class="menu-icon tf-icons bx bxs-hand-up"></i>
                     <div data-i18n="Notifications">댄스</div>
                   </a>
                 </li>
                 <li class="menu-item" 
                 	th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'RAP_HIPHOP' ? 'active' : ''}">
                   <a href="/board/list?board_category=RAP_HIPHOP" class="menu-link">
+					 <i class="menu-icon tf-icons bx bx-headphone"></i>
                     <div data-i18n="Connections">랩/힙합</div>
                   </a>
                 </li>
@@ -123,7 +126,7 @@
             <li class="menu-item"
             	th:classappend="${#httpServletRequest.requestURI == '/artist/artist-home' ? 'active' : ''}">
 				<a href="/artist/artist-home" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-crown"></i>
+                <i class="menu-icon tf-icons bx bxs-microphone-alt"></i>
                 <div data-i18n="Boxicons">아티스트</div>
               </a>
             </li>
@@ -135,7 +138,7 @@
             <li class="menu-item"
             	th:classappend="${#httpServletRequest.requestURI == '/music/music-home' ? 'active' : ''}">
               <a href="/music/music-home" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
+                <i class="menu-icon tf-icons bx bx-music"></i>
                 <div data-i18n="Support">음악</div>
               </a>
             </li>
@@ -149,25 +152,7 @@
             
           
       
-            <!-- 임시 -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">임시</span></li>
-            <li class="menu-item">
-              <a
-                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
-                target="_blank"
-                class="menu-link"
-              >
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Documentation">설명서</div>
-              </a>
-            </li>
             
-            <li class="menu-item">
-              <a href="/blank-page" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="Boxicons">blank-page</div>
-              </a>
-            </li>
           </ul>
         </aside>
         <!-- / Menu -->
