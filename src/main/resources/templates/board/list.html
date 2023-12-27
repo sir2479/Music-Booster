@@ -28,8 +28,18 @@
     .right {
         text-align: right;
     }
-        .center {
+
+    .center {
         text-align: center;
+    }
+
+    .search-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .search-container .input-group {
+        margin-left: auto;
     }
 </style>
   
@@ -65,31 +75,30 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4">
-			    <span class="text-muted fw-light">/</span> </h4>
+			    <span class="text-muted fw-light"></span> </h4>
 					<th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
 						<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
 			 		</th:block>
               <!-- Basic Bootstrap Table -->
               <div class="card">
                 <h5 class="card-header"></h5>
-				  <p>
-				<!--<div th:if="${asd != null}">
-					<h3>에러요</h3>
-				</div>-->
-				        
-                <div class="table-responsive text-nowrap">
-				   <p class="right">
-					  <label for"searchText">검색</label>
-						  	<input type="search" id="searchText" name="searchText" th:value="${searchText}">
-						  	<input type="hidden" id="board_category" name="board_category"
-												th:value="${board_category}">
-						 	 <input type="button" onclick="search()" value="검색">
-<!--					 	 <span th:if="${searchText} != ${board.board_title}">
-							  <th>검색 결과가 없습니다.</th> 
-							  <a href="history.back();"></a>
-					 	 </span> -->
-				  </p>
-                  <table class="table">
+                  
+                   <!-- 검색기능 -->
+                           	 <p>
+                                <div class="search-container">
+                                    <form class="d-flex" style="margin-right:5%">
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="tf-icons bx bx-search" type="button" onclick="search()"></i>
+                                            </span>
+                                            <input type="search" id="searchText" name="searchText" th:value="${searchText}" class="form-control">
+                                            <input type="hidden" id="board_category" name="board_category" th:value="${board_category}">
+                                        </div>
+                                    </form>
+                                </div>
+                            </p>
+                  <!-- 테이블 -->
+                  <table class="table table-striped">
                     <thead>
                       <tr class="center">
                         <th>NO</th>
@@ -98,9 +107,11 @@
                         <th>조회수</th>
                         <th>작성일</th>
                       </tr>
+                      </thead>
                       <div class="center" th:if="${boards.size() == 0}">
 			            <h4>검색 결과가 없습니다.</h4>
 			        </div>
+			        <tbody class="table-border-bottom-0">
                       <tr th:each="board, boardStat: ${boards}">
 					      <td th:text="${boardStat.count}" class="center"></td>
 					      <td class="center">
@@ -108,51 +119,67 @@
 							  </td>
 					      <td th:text="${board.board_member}" class="center"></td>
 					      <td th:text="${board.board_hit}" class="center"></td>
-					      <td th:text="${#temporals.format(board.board_create_time, 'yyyy-MM-dd HH:mm')}" class="center"></td>
+					      <td th:text="${#temporals.format(board.board_create_time, 'yy-MM-dd HH:mm')}" class="center"></td>
 					  </tr>
-					</thead>
+					</tbody>
                   </table>
                   
-                    <p>
-							  <div id="navigator" class="center">
-								 <a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount / navi.totalPageCount})}"><<</a>&nbsp;
-								   </th:block>		  	
-		  
-								  <th:block th:if="${navi.currentPage - navi.pagePerGroup > 0}">			  
-								 <a th:href="@{/board/list(board_category=${board_category},page=${navi.endPageGroup - navi.pagePerGroup})}"><</a>&nbsp;
-								   </th:block>
-								    
-<!--								  <th:block th:if="${navi.currentPage - 1 > 0}">			  
-								  	<a th:href="@{/board/list(page=${navi.currentPage - 1}, searchText=${searchText})}"><</a>&nbsp;&nbsp;
-								  </th:block>-->
-								  	
-									<th:block th:if="${navi.endPageGroup ne 0}">
-									    <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
-									        <span th:if="${counter == navi.currentPage}">
-									            <span th:text="${counter}"></span>&nbsp;
-									        </span>
-									        <span th:unless="${counter == navi.currentPage}">
-									            <a th:href="@{/board/list(board_category=${board_category},page=${counter})}" th:text="${counter}"></a>&nbsp;
-									        </span>
-									    </th:block>
-									</th:block>
-									  
-<!--								  <th:block th:if="${navi.currentPage < navi.totalPageCount}">
-								  &nbsp;<a th:href="@{/board/list(page=${navi.currentPage + 1}, searchText=${searchText})}">></a>&nbsp;
-								  </th:block>-->
-								  
-								  <th:block th:if="${navi.currentPage + navi.pagePerGroup < navi.totalPageCount +1}">
-								  &nbsp;<a th:href="@{/board/list(board_category=${board_category},page=${navi.startPageGroup + navi.pagePerGroup})}">></a>
-								  </th:block>
-								  
-								  &nbsp;<a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount})}">>></a>
-<!--		  						</div>
--->	 						 </div>
+                  <!-- 페이지 이동 -->
+					<nav aria-label="Page navigation" class="d-flex justify-content-center">
+					    <ul class="pagination">
+					        <li class="page-item first">
+					            <a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount / navi.totalPageCount})}" class="page-link">
+					                <i class="tf-icon bx bx-chevrons-left"></i>
+					            </a>
+					        </li>
+					
+					        <li class="page-item prev">
+					            <th:block th:if="${navi.currentPage - navi.pagePerGroup > 0}">
+					                <a th:href="@{/board/list(board_category=${board_category},page=${navi.endPageGroup - navi.pagePerGroup})}" class="page-link">
+					                    <i class="tf-icon bx bx-chevron-left"></i>
+					                </a>
+					            </th:block>
+					        </li>
+					
+					        <th:block th:if="${navi.endPageGroup ne 0}">
+					            <th:block th:each="counter : ${#numbers.sequence(navi.startPageGroup, navi.endPageGroup)}">
+					                <li id="navigator" class="page-item">
+					                    <span th:if="${counter == navi.currentPage}">
+					                        <span th:text="${counter}" class="page-link" style="background-color:blue; color: white;"></span>
+					                    </span>
+					                    <span th:unless="${counter == navi.currentPage}">
+					                        <a th:href="@{/board/list(board_category=${board_category},page=${counter})}" th:text="${counter}" class="page-link"></a>
+					                    </span>
+					                </li>
+					            </th:block>
+					        </th:block>
+					
+					        <li class="page-item next">
+					            <th:block th:if="${navi.currentPage + navi.pagePerGroup < navi.totalPageCount +1}">
+					                <a th:href="@{/board/list(board_category=${board_category},page=${navi.startPageGroup + navi.pagePerGroup})}" class="page-link">
+					                    <i class="tf-icon bx bx-chevron-right"></i>
+					                </a>
+					            </th:block>
+					        </li>
+					
+					        <li class="page-item last">
+					            <a th:href="@{/board/list(board_category=${board_category},page=${navi.totalPageCount})}" class="page-link">
+					                <i class="tf-icon bx bx-chevrons-right"></i>
+					            </a>
+					        </li>
+					    </ul>
+					</nav>
+
+                
+ 				
+
 						
 
-  <p class="right">                  
-    <input type="button" onclick="location.href='/'" class="btn btn-sm btn-outline-primary" value="메인으로">
-    <input type="button" th:onclick="|location.href='@{/board/write(board_category=${board_category})}'|" class="btn btn-sm btn-outline-primary" value="글쓰기">
+  <p class="center">   
+	<button onclick="location.href='/'"  
+    class="btn btn-primary">메인으로</button>
+    <button th:onclick="|location.href='@{/board/write(board_category=${board_category})}'|" 
+    class="btn btn-primary">글쓰기</button>	                 
   </p>
   
   
@@ -162,7 +189,7 @@
             </div>
             <!-- / Content -->
 
-            <footer th:replace="~{footer :: #footer}"></footer>
+          
 
             <div class="content-backdrop fade"></div>
           </div>

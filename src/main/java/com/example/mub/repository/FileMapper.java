@@ -14,9 +14,13 @@ public interface FileMapper {
 	
 	void imageFileUpload(ImageFile file);
 	
+	ImageFile findImageFileByMemberId(String file_member_id);
+	
 	ImageFile findImageFileByArtistId(Long file_artist_id);
 	
 	ImageFile findImageFileByMusicId(Long file_music_id);
+	
+	void removeImageFileByMemberId(String member_id);
 	
 	void removeImageFileByArtistId(Long file_artist_id);
 }

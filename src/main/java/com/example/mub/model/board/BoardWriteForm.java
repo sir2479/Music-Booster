@@ -14,7 +14,7 @@ public class BoardWriteForm {
 
 	private String board_member;	// 작성자
 
-	@NotBlank(message="내용이없습니다.")
+	@NotBlank(message="내용이 없습니다.")
 	private String board_content; //내용	
 	
 	private String board_create_time;	//작성일

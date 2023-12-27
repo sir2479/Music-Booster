@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -24,9 +24,40 @@
   <head th:replace="~{head :: #head}"></head>
   <head>
     <title>Blank Page</title>
+    <style>
+		error {
+			background-color: red;
+			font-size: 15px;
+		}
+		
+	</style>
+   
   </head>
 
   <body>
+	<script>
+	  function setImg(input) {
+		if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  reader.onload = function(e) {
+		    document.getElementById('img').src = e.target.result;
+		  };
+		  reader.readAsDataURL(input.files[0]);
+		} else {
+		  document.getElementById('img').src = "";
+		}
+	  }
+	  
+	  function deleteMember() {
+			console.log("deleteMember 실행");
+        	if (confirm('정말 삭제하시겠습니까?')) {
+				alert('삭제되었습니다');
+            	location.replace('/');
+			}
+		}
+	</script>
+		  
+	  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -54,18 +85,22 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="card mb-4">
-                    <h5 class="card-header">사진 수정</h5>
                     <!-- Account -->
+                    <form th:action="@{/member/update(member_id=${member_id})}" 
+                    	method="POST" th:object="${member}" enctype="multipart/form-data">
+                    <h5 class="card-header">사진 수정</h5>
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="../assets/img/avatars/1.png"
+                        <img th:if="${imageFile}"
+                          th:src="@{'/../download//' + ${imageFile.file_saved_name}}"
                           alt="user-avatar"
                           class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
+                          height="128"
+                          width="128"
+                          id="img"
                         />
+                        <img th:unless="${imageFile}" class="img-fluid rounded mb-2" 
+								id="img" width="128" height="128" />
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">새 사진 올리기</span>
@@ -73,9 +108,10 @@
                             <input
                               type="file"
                               id="upload"
+                              name="imageFile"
+                              onchange="setImg(this);"
                               class="account-file-input"
                               hidden
-                              accept="image/png, image/jpg"
                             />
                           </label>
                           <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
@@ -88,21 +124,25 @@
                       </div>
                     </div>
                     <hr class="my-0" />
+                    
+        
+                    
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                      
                         <div class="row">
-
+					            <div th:if="${#fields.hasGlobalErrors()}">
+      					<p class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+    				</div>
 
                           <div class="mb-3 col-md-6">
-                            <label for="id" class="form-label">아이디</label>
+                            <label for="member_id" class="form-label">아이디</label>
                             <input
                               type="text"
                               class="form-control"
                               id="member_id"
                               name="member_id"
-                              disabled
-                              th:value="${session.loginMember.member_id}"
-                              
+            				  readonly
+                              th:value="*{member_id}"
                             />
                             
                           </div>
@@ -112,11 +152,10 @@
                             <input
                               class="form-control"
                               type="text"
-                              id="member_email"
-                              name="member_email"
-                              th:value="#{member_email}"
+                              
+                              th:field="${member.member_email}"
                             />
-                           
+                            <div class="error" th:errors="*{member_email}"></div>                           
                           </div>    
                                                 
                           <div class="mb-3 col-md-6">
@@ -124,12 +163,11 @@
                             <input
                               type="text"
                               class="form-control"
-                              id="member_nickname"
-                              name="member_nickname"
-                              th:value="#{member_nickname}"
-                              placeholder="사용할 멤버ID를 입력하세요"
-                            />
-                          </div>                   
+                              th:field="${member.nickname}"                             
+                            /> 
+                             <div class="error" th:errors="*{nickname}"></div>                        
+                          </div>       
+                              
 						  <div class="mb-3 col-md-6">
                             <label for="member_name" class="form-label">이름</label>
                             <input
@@ -137,36 +175,36 @@
                               class="form-control"
                               id="member_name"
                               name="member_name"
-							  th:value="#{member_name}"
+							  
+							  th:value="${member.member_name}"
                             />
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label for="password" class="form-label">비밀번호</label>
-                            <input class="form-control" type="password" id="password" name="password" />
-                          </div>
-                          
-                          <div class="mb-3 col-md-6">
-                            <label for="passwordcheck" class="form-label">비밀번호 확인</label>
-                            <input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />
-                          </div>                                
-                      
+                            <input class="form-control" type="password" id="password" name="password" th:value="${member.password}" />
+                            <div class="error" th:errors="*{password}"></div>
+                          </div>                          
+						  <div class="mb-3 col-md-6">
+  							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
+  							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />  							                          
+						  </div>         
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>
                             <div class="input-group input-group-merge">
                               <input
                                 type="text"
-                                id="member_phone"
-                                name="member_phone"
+                                id="phone"
+                                name="phone"
                                 class="form-control"
-                                th:value="#{member_phone}"
+                                th:value="${member.phone}"
                               />
                             </div>
                           </div>
                           
                           <div class="mb-3 col-md-6">
-                  			<label for="member_position" class="form-label">포지션</label><br>
-                  			<select name="member_position">
+                  			<label for="position" class="form-label">포지션</label><br>
+                  			<select name="position">
 								<option th:value="${'member'}">일반사용자</option>	  
 								<option th:value="${'artist'}">아티스트</option>
 							</select>
@@ -175,23 +213,20 @@
                           <div class="mb-3 col-md-6">
                             <label for="member_birthday" class="form-label">생년월일</label>
                             <input type="date" 
-                              class="form-control" 
-                              id="member_birthday" 
-                              name="member_birthday" 
-                              th:value="${session.loginMember.birthday}" 
-                              disabled 
-                            />
+                            class="form-control" 
+                            id="birthday" 
+                            name="birthday" 
+                            th:value="${#temporals.format(member.birthday, 'yyyy-MM-dd')}" />
                           </div>
                           
                           <div class="mb-3 col-md-6">
-                            <label for="member_edit_date" class="form-label">가입일</label>
+                            <label for="member_hire_date" class="form-label">가입일</label>
                             <input
                               type="date"
+                              
                               class="form-control"
-                              id=""
-                              name="member_edit_date"
-                              th:value="${session.loginMember.hire_date}"
-                              disabled
+             				  name="hire_date"
+                              th:value="*{hire_date}"
                             />
                           </div>	                          
                           
@@ -200,19 +235,20 @@
                             <input
                               type="text"
                               class="form-control"
-                              id="member_profile"
-                              name="member_profile"
-                              th:value="#{member_profile}"
+                              id="profile"
+                              name="profile"
+                              th:value="${member.profile}"
                             />
                           </div>	                          
                                                                              
                         </div>
                         <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2" onclick="location.href='/'">변경하기</button>
+                          <button type="submit" class="btn btn-primary me-2">변경하기</button>
                           <button type="reset" class="btn btn-outline-secondary">취소하기</button>
                         </div>
-                      </form>
+                      
                     </div>
+                    </form>
                     <!-- /Account -->
                   </div>
                   <div class="card">
@@ -232,11 +268,12 @@
                             name="accountActivation"
                             id="accountActivation"
                           />
-                          <label class="form-check-label" for="accountActivation"
-                            >계정을 삭제하는데 동의합니다.</label
-                          >
+                          <label class="form-check-label" for="accountActivation">
+                            계정을 삭제하는데 동의합니다.
+                            </label>
                         </div>
-                        <input type="submit" value="계정삭제" class="btn btn-danger deactivate-account">
+                        <input type="submit" value="계정삭제" onclick="deleteMember()"
+                        	class="btn btn-danger deactivate-account">
                       </form>
                     </div>
                   </div>

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.mub.repository.MusicMapper">
 
 	<insert id="uploadMusic">
@@ -48,6 +49,11 @@
 	  from
 	  	music m join artist a
 	  	on (m.music_artist_id = a.artist_id)
+	  where(
+	    <if test="_parameter != null">
+    	  music_name like '%' || #{searchText} || '%'
+ 	    </if>
+ 	    ) 
 	  order by
 	  	music_id desc
 	</select>
@@ -72,7 +78,7 @@
 	<select id="findMusicByArtistId" resultType="music">
 	  select * from music where music_artist_id = #{music_artist_id}
 	</select>
-	
+
 	<select id="findMusicByGenre" resultType="music">
 	  select
 	  	m.music_id,
@@ -120,5 +126,4 @@
 	  </if>
 	</select>
 
-	
 </mapper>

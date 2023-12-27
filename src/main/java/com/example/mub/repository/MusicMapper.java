@@ -11,7 +11,7 @@ public interface MusicMapper {
 
 	void uploadMusic(Music music);
 	
-	List<Music> findAllMusics();
+	List<Music> findAllMusics(String searchText);
 	
 	Music findMusicByMusicId(Long Music_id);
 	
