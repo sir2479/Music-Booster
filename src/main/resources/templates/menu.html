@@ -82,7 +82,7 @@
 			<li class="menu-item" 
 				th:classappend="${#httpServletRequest.requestURI.startsWith('/board/list') && #httpServletRequest.getParameter('board_category') == 'NEWS' ? 'active' : ''}">
 			  <a href="/board/list?board_category=NEWS" class="menu-link">
-			    <i class="menu-icon tf-icons bx bx-table"></i>
+			    <i class="menu-icon tf-icons bx bx-news"></i>
 			    <div data-i18n="Tables">새소식</div>
 			  </a>
 			</li>
