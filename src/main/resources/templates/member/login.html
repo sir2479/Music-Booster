@@ -32,7 +32,8 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/mub/mub_logo.png" />
+    
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,31 +77,30 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="/" class="app-brand-link gap-2">
-                  
-                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                  <img src="/assets/img/mub/mub_logo2.png" 
+				  style="height: 80px; padding: 0px; position: relative; right: 0px; top: 0px;" alt="logo" />
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Sneat! 👋</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p>
+
 
               <form class="mb-3" action="login" method="POST" th:object=${login}>
                 <div class="mb-3">
-                  <label for="text" class="form-label">Email or Username</label>
+                  <label for="text" class="form-label">아이디</label>
                   <input
                     type="text"
                     class="form-control"
                     th:field="*{member_id}"
-                    placeholder="Enter your email or username"
+                    placeholder="아이디를 입력해 주세요"
                     autofocus
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a>
+                    <label class="form-label" for="password">비밀번호</label>
+<!--                    <a href="/member/auth-forgot-password-basic">
+                      <small>비밀번호를 잊어버리셨나요?</small>
+                    </a>-->
                   </div>
                   <div class="input-group input-group-merge">
                     <input
@@ -116,18 +116,18 @@
                 <div class="mb-3">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                    <label class="form-check-label" for="remember-me"> 기억하기 </label>
                   </div>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  <button class="btn btn-primary d-grid w-100" type="submit">로그인</button>
                 </div>
               </form>
 
               <p class="text-center">
-                <span>New on our platform?</span>
+                <span>아이디가 없으신가요?</span>
                 <a href="signup">
-                  <span>Create an account</span>
+                  <span>회원가입</span>
                 </a>
               </p>
             </div>

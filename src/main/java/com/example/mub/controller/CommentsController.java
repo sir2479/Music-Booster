@@ -75,7 +75,7 @@ public class CommentsController {
 		}
 		
 		//리플 삭제
-		@DeleteMapping("{comments_board}/{comments_id}")
+		@DeleteMapping("{comments_id}")
 		public ResponseEntity<String> removeComments(@SessionAttribute("loginMember") Member loginMebmer,
 													@PathVariable Long comments_board,
 													@PathVariable Long comments_id,
