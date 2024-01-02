@@ -202,7 +202,7 @@ public class MemberController {
 		// 로그인한 멤버의 ID를 이용해 계정을 삭제하는 서비스 메서드 호출
 	    memberService.deleteMember(loginMember.getMember_id());
 		
-		return "redirect:/";
+	    return "redirect:/";
 	}
 	
 	
