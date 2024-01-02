@@ -17,5 +17,17 @@ public class Member {
 	private String position;	
 	private String profile;	
 	
+	private String passwordCheck;
 	private String image_file_saved_name;
+	
+	public boolean isPasswordConfirmed(String password, String passwordCheck) {
+		
+		if(password == passwordCheck) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
+
+

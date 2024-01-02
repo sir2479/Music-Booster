@@ -64,8 +64,10 @@
               <div class="row">
 	<table th:object="${artist}">
 	<div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
+
 	  	  <img width="400px" height="400px" 
 	  	  	th:src="'/../download//' + ${imageFile.file_saved_name}" alt="ArtistImageFile" />     
+
 	</div>
 
       
@@ -113,9 +115,7 @@
                     </ul>
                     <div class="tab-content">
                       <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
-                        <p>
-                          [[${artist.artist_profile}]]
-                        </p>
+                        <textarea class="form-control" readonly th:text="${artist.artist_profile}" cols="40" rows="10"></textarea>
                         <p>
 						  [[${member.member_email}]]
                         </p>

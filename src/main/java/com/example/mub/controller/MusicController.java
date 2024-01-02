@@ -41,7 +41,6 @@ public class MusicController {
     		@RequestParam(value="searchText", defaultValue = "") String searchText) {
 		
 		List<Music> musics = musicService.findAllMusic(searchText);
-		List<Music> rankMusics = musicService.findMusicsDescLike();
 				
 		// 추천 음악
 		// 랜덤 숫자 생성
@@ -72,14 +71,15 @@ public class MusicController {
 		
 		
 		// 음악 랭킹
+		List<Music> rankMusics = musicService.findMusicsDescLike();
 		List<ImageFile> rankImageFiles = new ArrayList<>();
 		
 		for(int i = 0 ; i < rankMusics.size() ; i++) {
 			rankImageFiles.add(musicService.findImageFileByMusicId(rankMusics.get(i).getMusic_id()));
 			rankMusics.get(i).setImage_file_saved_name(rankImageFiles.get(i).getFile_saved_name());
 		}		
-		if(rankImageFiles.size() > 6) {
-			rankImageFiles = rankImageFiles.subList(0, 6);
+		if(rankMusics.size() > 6) {
+			rankMusics = rankMusics.subList(0, 6);
 		}	
 
 		
@@ -102,14 +102,9 @@ public class MusicController {
 		            	music.setWishlist(false);
 		            }
 		        }
-		        //log.info("musicWishlist: {}", music.isWishlist());
 		    }
 		}
 
-
-//		log.info("musics: {}", musics);
-//		log.info("musicFiles: {}", musicFiles);
-//		log.info("rankMusic: {}", rankMusic);
 		
 		model.addAttribute("musics", musics);
 		model.addAttribute("musicFile", musicFiles);
@@ -127,8 +122,7 @@ public class MusicController {
 		MusicUploadForm musicUploadForm = new MusicUploadForm();
 		musicUploadForm.setMusic_artist_id(artist.getArtist_id());
 		musicUploadForm.setArtist_name(artist.getArtist_name());
-		
-		log.info("musicUploadForm: {}", musicUploadForm);
+
 		model.addAttribute("uploadForm", musicUploadForm);
 
         return "music/upload";
@@ -139,15 +133,10 @@ public class MusicController {
     			@Validated @ModelAttribute("uploadForm") MusicUploadForm musicUploadForm,
     			@RequestParam MultipartFile musicFile,
     			@RequestParam(required = false) MultipartFile imageFile) {
-		 
-		log.info("musicUploadForm: {}", musicUploadForm);
-		log.info("musicFile: {}", musicFile);
-		log.info("imageFile: {}", imageFile);
-		
+
 		Music music = musicUploadForm.toMusic(musicUploadForm);
 		
-		musicService.uploadMusic(music, musicFile, imageFile);
-		
+		musicService.uploadMusic(music, musicFile, imageFile);		
 
 		return "redirect:/music/music-home";
     }
@@ -227,9 +216,6 @@ public class MusicController {
 	@GetMapping("emptyHeart/{music_id}")
 	public ResponseEntity<String> emptyHeart(@PathVariable Long music_id,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember){
-		
-		log.info("music_id: {}", music_id);
-		log.info("loginMember: {}", loginMember.getMember_id());
 		
 		Wishlist wishlist = new Wishlist();
 		wishlist.setMember_id(loginMember.getMember_id());

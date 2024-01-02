@@ -32,7 +32,8 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/mub/mub_logo.png" />
+    
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,6 +77,7 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="/" class="app-brand-link gap-2">
+
                   
                   <span class="app-brand-text demo text-body fw-bolder">Music Booster</span>
                 </a>
@@ -83,7 +85,11 @@
               <!-- /Logo -->
               <h4 class="mb-2">로그인</h4>
               <p class="mb-4">인디음악의 세계에 접속하기!</p>
-
+                  <img src="/assets/img/mub/mub_logo2.png" 
+				  style="height: 80px; padding: 0px; position: relative; right: 0px; top: 0px;" alt="logo" />
+                </a>
+              </div>
+              <!-- /Logo -->
               <form class="mb-3" action="login" method="POST" th:object=${login}>
                 <div class="mb-3">
                   <label for="text" class="form-label">아이디</label>
@@ -98,9 +104,9 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">비밀번호</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>비밀번호를 잊으셨나요?</small>
-                    </a>
+<!--                    <a href="/member/auth-forgot-password-basic">
+                      <small>비밀번호를 잊어버리셨나요?</small>
+                    </a>-->
                   </div>
                   <div class="input-group input-group-merge">
                     <input
@@ -125,7 +131,7 @@
               </form>
 
               <p class="text-center">
-                <span>처음인가요?</span>
+                <span>아이디가 없으신가요?</span>
                 <a href="signup">
                   <span>회원가입</span>
                 </a>

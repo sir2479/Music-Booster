@@ -68,14 +68,6 @@
                     str += "	<td>" + obj.comments_member + "</td><p>";
                     str += "	<td>" + obj.comments_content + "</td><p>";
                     str += "	<td>" + obj.comments_create_time + "</td><p>";
-					if(obj.comment_edit_time != null){
-						str += "<small class='float-end text-navy'>수정일 : " + obj.comments_edit_time + "</small><br />";
-					};					if(session.member_id == obj.member_id){
-						str += "	<td>" +"<a onclick='removeComments(" + obj.comments_id + ")'><i class='float-end btn btn-primary btn-sm'  style='margin-left: 5px;'>삭제</i></a>"+ "</td><p>";
-					};
-					if(session.member_id == obj.member_id){
-						str += "	<td>" +"<a onclick=\"getUpdateComments(" + obj.comments_id + ",'" + obj.comments_content + "')\"><i class='float-end btn btn-primary btn-sm'>수정</i></a>"+ "</td><p>";
-					};	
                     str += "</tr>";
                     
                 });
@@ -89,10 +81,10 @@
         }
         		//댓글 삭제
 		function removeComments(comments_id){
-			if(confirm("삭제하시겠습니까?")){
+			if(confirm("삭제하시겠습니까?")== true){
 				$.ajax({
 					url: "/comment/" + comments_id,
-					type: "delete",
+					type: $("removeComments"),
 					success: function(data){
 						console.log(data);
 						getFindAllComments();
@@ -102,8 +94,11 @@
 						alert("삭제할 수 없습니다.");
 					}
 				});
+				}else{
+					return false;
+				}
 			}
-		}
+		
 		
 		//댓글 수정 창
 		function getUpdateComments(comments_id, comments_content){
@@ -119,7 +114,7 @@
 			let content = $("#updateComments").val();
 			if(confirm("수정하시겠습니까?")){
 				$.ajax({
-					url: "/comment/" + comments_id,
+					url: "/comments/" + comments_id,
 					type: "put",
 					data: {
 						"comments_content": content
@@ -208,23 +203,15 @@
 						<tr>
 							<th class="text-center">내용</th>
 							<td>
-								<span th:text="*{board_content}" class="form-control" id="basic-default-fullname" rows="10" style="height: 500px;"></span>
+								<span th:text="*{board_content}" class="form-control" id="basic-default-fullname" rows="10"  style="height: 500px;"></span>
 							</td>
 						</tr>
-<!--<tr>
-<th class="text-center">첨부파일</th>
-<td>
-<a th:if="${file}" th:text="${file.original_filename}"
-th:href="@{/board/download/{id}(id=${file.attachedFile_id})}"></a>
-<p th:unless="${file}">첨부파일이 없습니다</p>
-</td>
-</tr>-->
-</tbody>
-</table>
-<input type="hidden" th:field="*{board_category}">
+						</tbody>
+					</table>
+				<input type="hidden" th:field="*{board_category}">
 
-<!-- 목록, 수정, 삭제 -->
-<div class="text-center">
+					<!-- 목록, 수정, 삭제 -->
+					<div class="text-center">
  						<th:block th:if="${session.loginMember != null}">
                            <button th:if="${session.loginMember.member_id == board.board_member}" th:onclick="|location.href='@{/board/update(board_id=${board.board_id},board_category=${board_category})}'|"  
                            class="btn btn-primary">수정하기</button>
@@ -232,34 +219,47 @@ th:href="@{/board/download/{id}(id=${file.attachedFile_id})}"></a>
                            class="btn btn-primary">삭제하기</button>
                         </th:block>
                     <button th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" class="btn btn-primary">목록으로</button>
-<hr/>
-</div>
+					<hr/>
+					</div>
 
 <!-- 댓글 -->
-<div class="col-12">
-<div class="card">
-<div class="card-header">
-<h5 class="card-title mb-0">댓글</h5>
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h5 class="card-title mb-0">댓글</h5>
+			</div>
+			<div class="card-body">
+				<div class="d-flex align-items-start">
+					<div class="flex-grow-1">
+					
+							<textarea rows="2" class="form-control" id="comments" name="comments" placeholder="댓글을 입력하세요."></textarea>
+							<input type="button" onclick="writeComments()" class="float-end btn btn-primary btn-sm" style="margin-top: 10px;" value="댓글 작성">
+					
+					
+						<!--	<button th:onclick="|location.href='@{/member/login}'|" 
+   							 class="btn btn-primary">로그인하기</button>-->
+   										
+
+					</div>
+				</div>
+				<!-- 댓글 출력 -->
+				<table class="table table-striped">
+					<div id="findAllComments"></div>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
 </div>
-<div class="card-body">
-<div class="d-flex align-items-start">
-<div class="flex-grow-1">
-<textarea rows="2" class="form-control" id="comments" name="comments" placeholder="댓글을 입력하세요."></textarea>
-<input type="button" onclick="writeComments()" class="float-end btn btn-primary btn-sm" style="margin-top: 10px;" value="댓글 작성">
 </div>
 </div>
-<!-- 댓글 출력 -->
-<table class="table table-striped">
-<div id="findAllComments"></div>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 </div>
 </main>
+            <footer th:replace="~{footer :: #footer}"></footer>
+
+</div>
 </div>
 </div>
 </div>
@@ -270,5 +270,6 @@ th:href="@{/board/download/{id}(id=${file.attachedFile_id})}"></a>
 
 
 </body>
-
+  </body>
+  <body th:replace="~{scr :: #scr}"></body>
 </html>

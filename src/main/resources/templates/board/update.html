@@ -24,6 +24,16 @@
   <head>
  <title>글 수정</title>
 </head>
+<script>
+	function updateCheck(){
+		if(confirm("수정하시겠습니까?") == true){
+			alert("수정되었습니다.")
+			document.updateForm.submit();
+	} else{
+		return false;
+	}
+}
+</script>
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -41,14 +51,15 @@
             
             <!-- Content -->            
             <div class="container-xxl flex-grow-1 container-p-y">
-                <form th:action="@{/board/update(board_id=${board.board_id},board_category=${param.board_category})}" th:object="${board}" method="post">
+                <form th:action="@{/board/update(board_id=${board.board_id},board_category=${param.board_category})}" th:object="${board}" method="post" name="updateForm">
                     <h4 class="fw-bold py-3 mb-4">
                         <th:block th:with="board_category=${T(com.example.mub.model.board.BoardCategory).valueOf(param.board_category)}">
 							<h1 class="h3 mb-3" th:text="${board_category.description}"></h1>
                     </th:block>
                     <span class="text-muted fw-light">수정하기</span>
                     </h4>
-                    <!-- Basic Bootstrap Table -->
+                    
+                    <!-- 테이블 -->
               <div class="row">
                 <div class="col-xl">
                   <div class="card mb-4">
@@ -60,7 +71,6 @@
                           <div class="error" th:errors="*{board_title}"></div>
                         </div>
 
-
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-message">내용</label>
                           <textarea
@@ -70,20 +80,26 @@
                             style="height: 500px;"
                           ></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">수정하기</button>
+                        <td id="submit">
+                        <input type="button" class="btn btn-primary" onclick="updateCheck()" value="수정하기">
+                        </td>
                         <button th:onclick="|location.href='@{/board/list(board_category=${param.board_category})}'|" class="btn btn-primary">목록으로</button>
                             <input type="hidden" th:field="*{board_hit}">
                             <input type="hidden" th:field="*{board_create_time}">
                             <input type="hidden" th:field="*{board_member}">
                             <input type="hidden" th:field="*{board_category}">
-                      </form>
                     </div>
                   </div>
                 </div>
               </div>
-                    <!--/ Basic Bootstrap Table -->
+            </form>
+                    <!--/ 테이블 -->
             </div>
             <!-- / Content -->
+            
+            <!-- 하단 -->
+            <footer th:replace="~{footer :: #footer}"></footer>
+            
                         
             <div class="content-backdrop fade"></div>
         </div>

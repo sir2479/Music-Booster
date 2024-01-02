@@ -48,13 +48,14 @@
 		}
 	  }
 	  
-	  function deleteMember() {
-			console.log("deleteMember 실행");
-        	if (confirm('정말 삭제하시겠습니까?')) {
-				alert('삭제되었습니다');
-            	location.replace('/');
-			}
-		}
+function deleteMember() {
+  if (confirm("정말 삭제하시겠습니까?") == true ) {
+	  alert('삭제되었습니다.')
+	  document.delete.submit();
+ }else {
+    return false; 
+  }
+}
 	</script>
 		  
 	  
@@ -86,7 +87,7 @@
                 <div class="col-md-12">
                   <div class="card mb-4">
                     <!-- Account -->
-                    <form th:action="@{/member/update(member_id=${member_id})}" 
+                    <form th:action="@{/member/update(member_id=${member.member_id})}" 
                     	method="POST" th:object="${member}" enctype="multipart/form-data">
                     <h5 class="card-header">사진 수정</h5>
                     <div class="card-body">
@@ -115,7 +116,7 @@
                             />
                           </label>
                           <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
+                            <i class="bx bx-reset d-block d-sm-none" value="reset"></i>
                             <span class="d-none d-sm-block">리셋</span>
                           </button>
 
@@ -141,7 +142,7 @@
                               class="form-control"
                               id="member_id"
                               name="member_id"
-            				  readonly
+                              disabled
                               th:value="*{member_id}"
                             />
                             
@@ -184,12 +185,7 @@
                             <label for="password" class="form-label">비밀번호</label>
                             <input class="form-control" type="password" id="password" name="password" th:value="${member.password}" />
                             <div class="error" th:errors="*{password}"></div>
-                          </div>                          
-						 <div class="mb-3 col-md-6">
-  							<label for="passwordcheck" class="form-label">비밀번호 확인</label>
-  							<input class="form-control" type="password" id="passwordcheck" name="passwordcheck" />  
-  													                          
-						  </div>          
+                          </div>                               
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="member_phone">전화번호</label>
                             <div class="input-group input-group-merge">
@@ -203,13 +199,6 @@
                             </div>
                           </div>
                           
-                          <div class="mb-3 col-md-6">
-                  			<label for="position" class="form-label">포지션</label><br>
-                  			<select name="position">
-								<option th:value="${'member'}">일반사용자</option>	  
-								<option th:value="${'artist'}">아티스트</option>
-							</select>
-                		  </div>
                           
                           <div class="mb-3 col-md-6">
                             <label for="member_birthday" class="form-label">생년월일</label>
@@ -229,8 +218,16 @@
              				  name="hire_date"
                               th:value="*{hire_date}"
                             />
-                          </div>	                          
-                          
+                          </div>
+                          	<div class="mb-3 col-md-6">
+                  			<label for="position" class="form-label">포지션</label><br>
+                  			<select name="position">
+								<option th:value="${'member'}">일반사용자</option>	  
+								<option th:value="${'artist'}">아티스트</option>
+							</select>
+                		  </div>
+                                                    
+                         <div>
                           <div class="mb-3">
                             <label for="member_profile" class="form-label">프로필</label>
                             <input
@@ -245,9 +242,9 @@
                         </div>
                         <div class="mt-2">
                           <button type="submit" class="btn btn-primary me-2">변경하기</button>
-                          <button type="reset" class="btn btn-outline-secondary">취소하기</button>
+                          <button type="reset" class="btn btn-outline-secondary">리셋</button>                          
                         </div>
-                      
+                      </div>
                     </div>
                     </form>
                     <!-- /Account -->
@@ -273,8 +270,10 @@
                             계정을 삭제하는데 동의합니다.
                             </label> -->
                         </div>
-                        <input type="submit" value="계정삭제" onclick="deleteMember()"
+                        <td id="submit">
+                        <input type="button" value="계정삭제" onclick="deleteMember()"
                         	class="btn btn-danger deactivate-account">
+                        	</td>
                       </form>
                     </div>
                   </div>

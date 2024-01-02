@@ -42,10 +42,7 @@ public class BoardController {
     private final int countPerPage = 10;
     private final int pagePerGroup = 5;
 
-
-
     
-
     
     // 글쓰기 페이지 이동
     @GetMapping("write")
@@ -62,9 +59,7 @@ public class BoardController {
         model.addAttribute("writeForm", boardWriteForm);
         log.info("model: {}", model);
         
-               
-        
-//         board/writeForm.html 을 찾아 리턴한다.
+//      board/writeForm.html 을 찾아 리턴한다.
         return "board/write";
     }
 
@@ -75,10 +70,7 @@ public class BoardController {
                         @RequestParam("board_category") BoardCategory board_category,
                         BindingResult result, 
                         RedirectAttributes redirect) {
-        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-//        if (loginMember == null) {
-//            return "redirect:/member/login";
-//        }
+
         // validation 에러가 있으면 board/write.html 페이지를 다시 보여준다.
         if (result.hasErrors()) {
             return "board/write";
@@ -87,20 +79,12 @@ public class BoardController {
         // 파라미터로 받은 BoardWriteForm 객체를 Board 타입으로 변환한다.
         Board board = BoardWriteForm.toBoard(boardWriteForm);
         
-//        board.setBoard_member("abcd");
-//        
-//        board.setBoard_category(null);
-        
-        
         // board 객체에 로그인한 사용자의 아이디를 추가한다.
+        log.info("writeform: {}", board);
         board.setBoard_member(loginMember.getMember_id());
         board.setBoard_category(board_category);
-        log.info("writeform: {}", board);
         // 데이터베이스에 저장한다.
         boardService.saveBoard(board);
-        log.info("테스트용 로그");
-        
-        log.info("보드: {}", board);
         
 		redirect.addAttribute("board_category", board.getBoard_category());
 
@@ -114,30 +98,14 @@ public class BoardController {
 						@RequestParam(value="searchText", defaultValue = "") String searchText,
 						@RequestParam("board_category") BoardCategory board_category,
 						Model model) {
-	    try {  
-		int total = boardService.getTotal(board_category,searchText);
-		
-		log.info("토탈: {}",total);
-		
-		log.info("서치 테스트: {}", searchText);
+		try {  
+		int total = boardService.getTotal(board_category,searchText);	
 
-		log.info("보드 카테고리 테스트: {}", board_category);
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);	
 		
-
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		log.info("navi: {}", navi);
+		List<Board> boards = boardService.findAllBoards(
+				board_category,searchText ,navi.getStartRecord(), navi.getCountPerPage());
 		
-		
-		List<Board> boards = boardService.findAllBoards(board_category,searchText ,navi.getStartRecord(), navi.getCountPerPage());
-		
-		log.info("보드실행: {}", boards);
-		
-		// 데이터베이스에 저장된 모든 Board 객체를 리스트 형태로 받는다.
-//		if (boards.size()==0 && boards.isEmpty()) 
-//		{
-//			log.info("검색 결과가 없습니다.");
-//			return "redirect:/board/list";
-//		}
 		// Board 리스트를 model 에 저장한다.
 		model.addAttribute("boards", boards);
 		model.addAttribute("navi", navi);
@@ -148,7 +116,6 @@ public class BoardController {
 	    }
 
 		// board/list.html 를 찾아서 리턴한다.
-	    log.info("보드콘트롤러에서 실행됨: 리턴 직전 문장 실행됨");
 		return "board/list";
 		}
 	
@@ -157,28 +124,16 @@ public class BoardController {
     public String read(@SessionAttribute(value = "loginMember", required = false) Member loginMember,
                        @RequestParam Long board_id,
                        Model model) {
-        // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-//        if (loginMember == null) {
-//            return "redirect:/member/login";
-//        }
-
-        log.info("id: {}", board_id);
 
         // board_id 에 해당하는 게시글을 데이터베이스에서 찾는다.
         Board board = boardMapper.findBoard(board_id);
-        
-        log.info("board: {}", board);
-        
 
-        
          //board_id에 해당하는 게시글이 없으면 리스트로 리다이렉트 시킨다.
         if (board == null) {
             log.info("게시글 없음");
             return "redirect:/board/list";
         }
 
-        // 조회수 1 증가
-//        board.addHit();
         // 조회수를 증가하여 데이터베이스에 업데이트 한다.
         boardMapper.addHit(board_id);
         // 모델에 Board 객체를 저장한다.
@@ -199,8 +154,6 @@ public class BoardController {
             return "redirect:/member/login";
         }
 
-        log.info("id: {}", board_id);
-
         // board_id에 해당하는 게시글이 없거나 게시글의 작성자가 로그인한 사용자의 아이디와 다르면 수정하지 않고 리스트로 리다이렉트 시킨다.
         Board board = boardService.findBoard(board_id);
         if (board == null || !board.getBoard_member().equals(loginMember.getMember_id())) {
@@ -209,9 +162,8 @@ public class BoardController {
         }
         // model 에 board 객체를 저장한다.
         model.addAttribute("board", Board.toBoardUpdateForm(board));
-        log.info("겟매핑 업데이트 마지막 전: {}", board);
-        log.info("겟매핑 업데이트 마지막 전: {}", model);
-//         board/update.html 를 찾아서 리턴한다.
+
+//      board/update.html 를 찾아서 리턴한다.
         return "board/update";
     }
 
@@ -223,20 +175,18 @@ public class BoardController {
                          @RequestParam("board_category") BoardCategory board_category,
                          BindingResult result,
                          RedirectAttributes redirect) {
+    	
         // 로그인 상태가 아니면 로그인 페이지로 보낸다.
-    	log.info("테스트 포스트 업데이트");
         if (loginMember == null) {
             return "redirect:/member/login";
         }
-//
-        log.info("board: {}", updateBoard);
+
         // validation 에 에러가 있으면 board/update.html 페이지로 돌아간다.
         if (result.hasErrors()) {
             return "board/update";
         }
 
         // board_id 에 해당하는 Board 정보를 데이터베이스에서 가져온다.
-        log.info("테스트용 로그");
         Board board = boardService.findBoard(board_id);
         // Board 객체가 없거나 작성자가 로그인한 사용자의 아이디와 다르면 수정하지 않고 리스트로 리다이렉트 시킨다.
         if (board == null || !board.getBoard_member().equals(loginMember.getMember_id())) {
@@ -280,7 +230,6 @@ public class BoardController {
         boardMapper.removeBoard(board_id);
         // board/list 로 리다이렉트 한다.
         return "redirect:/board/list";
-    }
+    }   
     
-	
 }
